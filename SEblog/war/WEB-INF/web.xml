@@ -16,6 +16,61 @@
     <url-pattern>/seblog/greet</url-pattern>
   </servlet-mapping>
   
+  <!--登录服务注册  -->
+   <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.login.server.LoginServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login/login</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 注册服务注册 -->
+  <servlet>
+    <servlet-name>registerServlet</servlet-name>
+    <servlet-class>com.login.server.RegisterServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>registerServlet</servlet-name>
+    <url-pattern>/login/register</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>tryServlet</servlet-name>
+    <servlet-class>com.index.server.TryServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>tryServlet</servlet-name>
+    <url-pattern>/index/try</url-pattern>
+  </servlet-mapping>
+ 
+ 
+ <!-- 获取文章服务注册 -->
+  <servlet>
+    <servlet-name>aricleServlet</servlet-name>
+    <servlet-class>com.index.server.ArticleServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>aricleServlet</servlet-name>
+    <url-pattern>/index/article</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 首页请求登录状态 -->
+  <servlet>
+    <servlet-name>infoServlet</servlet-name>
+    <servlet-class>com.index.server.InfoServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>infoServlet</servlet-name>
+    <url-pattern>/index/info</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SEblog.html</welcome-file>

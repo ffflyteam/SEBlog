@@ -10,7 +10,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
-	//@SuppressWarnings("deprecation")
 	public String greetServer(String input) throws IllegalArgumentException {
 		return input;
 	}

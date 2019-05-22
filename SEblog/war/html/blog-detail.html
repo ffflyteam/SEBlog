@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/materialize.css">
+  <link rel="stylesheet" href="../css/blog-detail.css">
+</head>
+<body id="body">
+		<!-- 导航栏 -->
+  <div class="navbar-fixed">
+    <nav class="navbar-container">
+      <div class="nav-wrapper container">
+        <a href="#!" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="#">写博客</a></li>
+          <li><a href="#">消息</a></li>
+          <li id="lg"><a href="./login.html">登录</a></li>
+          <li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">名字</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  
+
+  <!--下拉列表 -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">个人中心</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">我的关注</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">我的博客</a></li>
+  </ul>
+
+
+
+	<!-- 侧边信息栏 -->
+  <div class="info-container">
+  	<div class="blogInfo-container">
+		<ul class="blogInfo-ul">
+			<li>类型</li>
+			<li>阅读</li>
+			<li>转发</li>
+			<li>收藏</li>
+		</ul>
+		<ul class="blogdata-ul">
+			<li><span id="type">历史</span></li>
+			<li><span id="read">1000</span></li>
+			<li><span id="tran">10000</span></li>
+			<li><span id="coll">2000</span></li>
+		</ul>
+	</div>
+	<div class="divider"></div>
+	<div class="userInfo-container">
+		<img id="userurl" src="../images/user_default.jpg" alt="">
+		
+			<span id="name">用户名</span>
+			<a class="focusBtn" id="focus">关注</a>
+		
+	</div>
+	<div class="divider"></div>
+	<div class="userInfoMore-container">
+		<ul class="userInfo-ul">
+			<li>性别：<span id="sex">男</span></li>
+			<li>生日：<span id="birt">1998-03</span></li>
+		</ul>
+	</div>
+  </div>
+
+	<!-- 侧边操作菜单 -->
+	<div class="operate-container">
+		<ul class="operate-ul">
+			<li><a href="#">评论</a></li>
+			<li><a href="#">转发</a></li>
+			<li><a href="#">收藏</a></li>
+		</ul>
+	</div>
+
+
+  <!-- 博客内容 -->
+  <div class="all-container">
+  	<!-- 博客基本信息 -->
+  	<div class="next-container">
+	<div>
+		<h3 class="article-title">这个程序员在阿里五年晋升三次，Coding 是立身之本</h3>
+		<div class="blog-container">
+			<span id="time">2019-5-22 09:55:55</span>
+			<span id="author">作者名</span>
+			<span id="read">阅读数：1999</span>
+		</div>
+		<div class="divider"></div>
+	</div>
+	<!-- 博客文章详情 -->
+	<div class="content-container">
+		<div class="content">
+			<h4>关于晋升</h4>
+			<p>马上要开始晋升季了，在晋升这个话题里，我也希望可以提供一些我的心得，因为非常幸运地，我在这五年内晋升了三次。晋升，一定是天时、地利、人和缺一不可的，抛开运气成分，我总结一下我的地利、人和的部分。
+
+关于地利，我的经验是，专注、深耕一个领域，比如我是做机器学习工程平台的，从 14 年“近卫军”培训结束就开始做，到现在还在做这个事情，而且未来我还会持续做这件事，所以，对我来说，在一个领域内不断地学习，是成长的必要条件。</p>
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<div class="comment-container">
+		<ul class="comment-list">
+			<li class="comment-line-container">
+				<a href="#"><img src="../images/user_default.jpg" alt=""></a>
+				<div class="commentInfo-container">
+					<span id="commentName">评论名</span>
+					<span id="commentContent">评论内荣哈哈哈哈</span>
+					<span id="commentTime">19:00:00</span>
+				</div>
+			</li>
+			<li class="replay-container"></li>
+		</ul>
+
+		<ul class="comment-list">
+			<li class="comment-line-container">
+				<a href="#"><img src="../images/user_default.jpg" alt=""></a>
+				<div class="commentInfo-container">
+					<span id="commentName">评论名</span>
+					<span id="commentContent">评论内荣哈哈哈哈</span>
+					<span id="commentTime">19:00:00</span>
+				</div>
+			</li>
+			<li class="replay-container"></li>
+		</ul>
+
+		<ul class="comment-list">
+			<li class="comment-line-container">
+				<a href="#"><img src="../images/user_default.jpg" alt=""></a>
+				<div class="commentInfo-container">
+					<span id="commentName">评论名</span>
+					<span id="commentContent">评论内荣哈哈哈哈</span>
+					<span id="commentTime">19:00:00</span>
+				</div>
+				<div class="like"><a href="#">赞</a></div>
+			</li>
+			<li class="replay-container"></li>
+		</ul>
+	</div>
+
+	</div>
+  </div>
+
+	<script src="../detail/detail.nocache.js"></script>
+  <script src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/materialize.min.js"></script>
+  <script src="../js/index.js"></script>
+</body>
+</html>

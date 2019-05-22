@@ -3,29 +3,91 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Login</title>
-	<link rel="stylesheet" href="../css/materialize.css">
+  	<link rel="stylesheet" href="../css/materialize.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
 </head>
-<body>
+<body id="body">
 	
-	<div class="container" style="border: 1px solid black;overflow: hidden;">
-		<div class="row">
-			<div class="input-field col s6 push-s3">
-				<input type="text" id="username" placeholder="请输入用户名" />
-				<label for="username">用户名</label>
+	<div class="container">
+		<div id="select-container" class="row">
+			<span id="select-login" class="col s6 selected">登录</span>
+			<span id="select-register" class="col s6">注册</span>
+		</div>
+		<div id="login-container">
+			<div class="row">
+				<div class="input-field col s10 push-s1">
+					<input type="text" id="username"/>
+					<label for="username">输入账号</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s10 push-s1">
+					<input type="password" id="password"/>
+					<label for="password">输入密码</label>
+				</div>
+			</div>
+			
+			<div class="row">
+				<button class="btn col s10 push-s1" id="login">登录</button>
 			</div>
 		</div>
-		<div class="row">
-			<div class="input-field col s6 push-s3">
-				<input type="password" id="password" placeholder="请输入密码" />
-				<label for="password">密码</label>
+		<div id="register-container" class="invisible">
+			<div class="row">
+				<div class="input-field col s10 push-s1">
+					<input type="text" id="username2"/>
+					<label for="username2">输入账号</label>
+				</div>
 			</div>
-		</div>
-		
-		<div class="row">
-			<button class="btn col s4 push-s4" id="login">登录</button>
+
+			<div class="row">
+				<div class="input-field col s5 push-s1">
+					<select name="" id="choice" style="display: block;">
+						<option selected disabled value="2">性别</option>
+						<option value="1">男</option>
+						<option value="0">女</option>
+					</select>
+				</div>
+				<div class="input-field col s5 push-s1">
+					<input type="text" id="nickName"/>
+					<label for="nickName">昵称</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s10 push-s1">
+					<input type="password" id="password2"/>
+					<label for="password2">输入密码</label>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s10 push-s1">
+					<input type="password" id="check-password"/>
+					<label for="check-password2">确认密码</label>
+				</div>
+			</div>			
+			<div class="row">
+				<button class="btn col s10 push-s1" id="register">注册</button>
+			</div>
 		</div>
 	</div>
 
+
+<!-- 		<!—-错误提示弹框—->
+	<div class="mask"></div>
+	<div id="error">
+		<div id="photo">
+			<img src="../images/alert.gif" alt="" width="100%" height="100%">
+		</div>
+		<div id="information">
+			<div><h5>error</h5></div>
+			<div><a href="#" id="ok">确定</a></div>
+		</div>
+	</div> -->
+	
+
+	
+	<a href="./index.html">首页</a>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
 	<script src="../login/login.nocache.js"></script>

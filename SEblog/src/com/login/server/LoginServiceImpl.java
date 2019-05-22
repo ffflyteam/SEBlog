@@ -1,16 +1,27 @@
 package com.login.server;
 
-import com.login.client.LoginService;
+import org.json.JSONObject;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.login.client.LoginService;
+import com.DAO.ResultConst;
+import com.DAO.UserDao;
 
-/**
- * The server-side implementation of the RPC service.
- */
 @SuppressWarnings("serial")
-public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
+public class LoginServiceImpl extends RemoteServiceServlet implements LoginService{
 
-	public String loginServer(String input) throws IllegalArgumentException {
-		return input;
+	@Override
+	public int login(String input) {
+		try {
+			JSONObject jsonObject = new JSONObject(input);
+			int accountId = jsonObject.getInt("accountId");
+			String password = jsonObject.getString("password");
+			this.getThreadLocalRequest().getSession().setAttribute("accountId", accountId);  //����session
+			return UserDao.instance.login(accountId, password);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return ResultConst.LOGIN_ERROR.getId();
+		}
 	}
-	
+
 }
