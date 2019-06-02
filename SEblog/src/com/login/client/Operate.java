@@ -46,7 +46,7 @@ public class Operate {
 		if(mask!=null) {
 			DOM.getElementById("mask").setAttribute("style", "display:block");
 			DOM.getElementById("error").setAttribute("style", "display:block");
-			Window.alert("sss");
+			DOM.getElementById("msg").setInnerHTML(str);
 			return;
 		}
 		//设置阴影层
@@ -76,6 +76,7 @@ public class Operate {
 		photoContainerElement.appendChild(imgElement);
 		
 		Element h5 = DOM.createElement("h5");
+		h5.setId("msg");
 		h5.setInnerHTML(str);
 		Element h5ContainerElement = DOM.createElement("div");
 		h5ContainerElement.appendChild(h5);

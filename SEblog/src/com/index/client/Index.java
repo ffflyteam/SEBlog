@@ -1,5 +1,8 @@
 package com.index.client;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -11,49 +14,34 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.index.client.Operate;
 import com.index.shared.BlogType;
 
+import java_cup.internal_error;
+
 public class Index implements EntryPoint{
-	
-	private final ArticleServiceAsync article = GWT.create(ArticleService.class);
-	private final InfoServiceAsync info = GWT.create(InfoService.class);
+
+	private final IndexServiceAsync index = GWT.create(IndexService.class);
+
 	public void onModuleLoad() {
 		
 		//请求登录信息，用来判断导航栏显示内容
-		info.infoServer("", new AsyncCallback<BlogInfo>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				Operate.setAlert("请刷新页面获取登录状态", false);
-			}
-
-			@Override
-			public void onSuccess(BlogInfo result) {
-				// TODO Auto-generated method stub
-				if(result!=null) {
-					DOM.getElementById("name").setInnerHTML("w喂喂喂");
-					DOM.getElementById("us").setAttribute("style", "display:block");
-					DOM.getElementById("lg").setAttribute("style", "display:none;");
-				}
-			}
-		});
+		
+		
 		//请求获得推荐博客内容
 		JSONObject json = new JSONObject();
 		json.put("type", new JSONString("2"));
-		article.articleServer(json.toString(), new AsyncCallback<String>() {
+		index.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				Operate.setAlert("请刷新页面重新获取推荐博客内容", false);
+				Operate.setAlert("请刷新页面获取热门博客", false);
 			}
 
 			@Override
-			public void onSuccess(String result) {
+			public void onSuccess(Map<Integer, List<Blog>> result) {
 				// TODO Auto-generated method stub
-				Operate.addArticle(result);
+				Operate.addArticle(result,0);
 			}
 		});
 		
@@ -75,21 +63,22 @@ public class Index implements EntryPoint{
 						Element aTargetElement = DOM.eventGetCurrentTarget(event);
 						aTargetElement.addClassName("selected");
 						String type = aTargetElement.getParentElement().getAttribute("type");
-						Window.alert(type);
+						int typeNum = Integer.valueOf(type);
+						Window.alert("类型"+typeNum);
 						JSONObject json = new JSONObject();
 						json.put("type", new JSONString(type));
-						article.articleServer(json.toString(), new AsyncCallback<String>() {
+						index.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
 								// TODO Auto-generated method stub
-								Operate.setAlert("网络有问题，请重试", false);
+								Operate.setAlert("加载失败，请重试", false);
 							}
 
 							@Override
-							public void onSuccess(String result) {
+							public void onSuccess(Map<Integer, List<Blog>> result) {
 								// TODO Auto-generated method stub
-								Operate.addArticle(result);
+								Operate.addArticle(result, typeNum);
 							}
 						});
 						

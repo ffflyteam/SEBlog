@@ -5,6 +5,11 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+<session-config>
+	<session-timeout>30</session-timeout>
+</session-config>
+
+
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
@@ -38,37 +43,38 @@
     <url-pattern>/login/register</url-pattern>
   </servlet-mapping>
   
-   <servlet>
-    <servlet-name>tryServlet</servlet-name>
-    <servlet-class>com.index.server.TryServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>tryServlet</servlet-name>
-    <url-pattern>/index/try</url-pattern>
-  </servlet-mapping>
- 
  
  <!-- 获取文章服务注册 -->
   <servlet>
-    <servlet-name>aricleServlet</servlet-name>
-    <servlet-class>com.index.server.ArticleServiceImpl</servlet-class>
+    <servlet-name>indexServlet</servlet-name>
+    <servlet-class>com.index.server.IndexServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>aricleServlet</servlet-name>
+    <servlet-name>indexServlet</servlet-name>
     <url-pattern>/index/article</url-pattern>
   </servlet-mapping>
   
   <!-- 首页请求登录状态 -->
+
+
+  <!-- 文章详情页面请求文章内容 -->
   <servlet>
-    <servlet-name>infoServlet</servlet-name>
-    <servlet-class>com.index.server.InfoServiceImpl</servlet-class>
+  	<servlet-name>detailServlet</servlet-name>
+  	<servlet-class>com.detail.server.DetailServiceImpl</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-    <servlet-name>infoServlet</servlet-name>
-    <url-pattern>/index/info</url-pattern>
+  	<servlet-name>detailServlet</servlet-name>
+  	<url-pattern>/detail/detail</url-pattern>
+  </servlet-mapping>
+  <!-- 获取文章评论相关信息 -->
+  <servlet>
+  	<servlet-name>commentDetailServlet</servlet-name>
+  	<servlet-class>com.detail.server.CommentDetailServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>commentDetailServlet</servlet-name>
+  	<url-pattern>/detail/comment</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

@@ -1,16 +1,7 @@
 package com.login.client;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.json.JsonArray;
-import com.google.gwt.dev.json.JsonBoolean;
-import com.google.gwt.dev.json.JsonNumber;
-import com.google.gwt.dev.json.JsonObject;
-import com.google.gwt.dev.json.JsonString;
-import com.google.gwt.dev.json.JsonValue;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -101,30 +92,8 @@ public class Login implements EntryPoint {
 					info.put("accountId", userName);
 					info.put("password",passWord);
 					String form = info.toString();
-
-//					RequestBuilder loginBuilder = new RequestBuilder(RequestBuilder.POST, "/login");
-//					loginBuilder.setTimeoutMillis(2000);
-//					try {
-//						Request req = loginBuilder.sendRequest(form, new RequestCallback() {
-//							
-//							@Override
-//							public void onResponseReceived(Request request, Response response) {
-//								// TODO Auto-generated method stub
-//								Window.open("index.html", "_blank", null);
-//							}
-//							
-//							@Override
-//							public void onError(Request request, Throwable exception) {
-//								// TODO Auto-generated method stub
-//								Operate.setAlert("连接服务器失败，请重试！",false);
-//							}
-//						});
-//					} catch (RequestException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-					
-					loginService.login(form, new AsyncCallback<Integer>() {
+					Window.alert(form);
+					loginService.login(form, new AsyncCallback<int []>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -132,12 +101,18 @@ public class Login implements EntryPoint {
 							Operate.setAlert("网络出现问题哦，请重试！", false);
 						}
 						@Override
-						public void onSuccess(Integer result) {
+						public void onSuccess(int[] result) {
 							// TODO Auto-generated method stub
-							if(result == 0) {
-								Window.open("./index.html","_self", null);
+							String desc;
+							if(result[0] == 0) {
+								if(result[1]==0) {
+									Window.open("./index.html","_self", null);
+								}
+								else {
+									Window.open("./manager.html","_self", null);
+								}
 							}else {
-								String desc = ResultConst.getRsById(result).getDescribe();
+								desc = ResultConst.getRsById(result[0]).getDescribe();
 								Operate.setAlert(desc, false);
 							}
 						}

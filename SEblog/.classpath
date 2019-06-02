@@ -4,6 +4,14 @@
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="con" path="com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/GitHub/SEblog/gson-2.8.5-sources.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/smartgwt.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/smartgwt-skins.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/json-20090211.jar"/>
+	<classpathentry kind="lib" path="D:/GitHub/SEBlog/SEblog/jar/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

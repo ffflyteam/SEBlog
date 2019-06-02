@@ -1,0 +1,64 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+.brand-logo {
+	margin-left: -17%;
+}
+.container {
+	margin-top: 150px!important;
+	position: relative;
+}
+.navbar-container {
+	background-color: rgb(154,189,65);
+}
+.aside-nav {
+	width: 16%;
+	position: absolute;
+	top: 65px;
+	left: 0;
+	height: 500px;
+	background-color: rgb(154,189,65);
+}
+.collapsible {
+	box-shadow: none!important;
+	margin: 0!important;
+	border: 0!important;
+
+}
+.aside-nav ul {
+	margin: 0!important;
+}
+.aside-nav ul li ul {
+	margin: 0!important;
+	background-color: rgb(66,66,66);
+	padding: 10px;
+}
+.aside-nav ul li ul li {
+	height: 30px;
+	text-align: center;
+	margin: 10px auto;
+}
+.aside-nav ul li ul li:hover {
+	cursor: pointer;
+}
+.aside-nav ul li ul li span {
+	color: rgb(247,255,188);
+	line-height: 30px;
+	/*margin-left: */
+}
+.aside-nav>ul li div {
+	background-color: rgb(154,189,69);
+}
+.aside-nav>ul li div span {
+	color: rgb(247,255,188);
+}
+
+.content-container {
+	width: 84%;
+	background-color: rgb(245,245,245);
+	height: 500px;
+	position: absolute;
+	top: 65px;
+	right: 0;
+}

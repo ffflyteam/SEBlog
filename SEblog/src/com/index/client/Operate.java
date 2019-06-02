@@ -1,13 +1,17 @@
 package com.index.client;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
+import com.index.shared.BlogType;
 
 public class Operate {
 	
@@ -46,7 +50,7 @@ public class Operate {
 		if(mask!=null) {
 			DOM.getElementById("mask").setAttribute("style", "display:block");
 			DOM.getElementById("error").setAttribute("style", "display:block");
-			Window.alert("sss");
+			DOM.getElementById("msg").setInnerHTML(str);
 			return;
 		}
 		//设置阴影层
@@ -77,6 +81,7 @@ public class Operate {
 		
 		Element h5 = DOM.createElement("h5");
 		h5.setInnerHTML(str);
+		h5.setId("msg");
 		Element h5ContainerElement = DOM.createElement("div");
 		h5ContainerElement.appendChild(h5);
 		informationElement.appendChild(h5ContainerElement);
@@ -108,37 +113,63 @@ public class Operate {
 		});
 	};
 
-	public static void addArticle(String str){
-		JSONObject dataJsonValue = (JSONObject) JSONParser.parseLenient(str);
-		Window.alert(dataJsonValue.get("code").toString());
-		Window.alert(dataJsonValue.get("data").toString());
-		JSONArray array = (JSONArray) JSONParser.parseLenient(dataJsonValue.get("data").toString());
+	public static void addArticle(Map<Integer, List<Blog>> data,int type){
+		Window.alert(data.toString());
 		String hString = DOM.getElementById("blog-list").getInnerHTML();
-		for(int i = 0; i < array.size();i++) {
-			hString += addArticleHelper((JSONObject)array.get(i));
+		if(type==0) {
+			List<Blog> blogList = getRecommend(data);
+			hString = "";
+			for(int i = 0; i < blogList.size();i++) {
+				hString += addArticleHelper(blogList.get(i));
+			}
+		}else {
+			hString = "";
+			for(int i = 0; i < data.get(type).size();i++) {
+				hString += addArticleHelper(data.get(type).get(i));
+			}
+		
 		}
+		
 		DOM.getElementById("blog-list").setInnerHTML(hString);
 	}
 	
-	private static String addArticleHelper(JSONObject json) {
+	//选取每个类型的前几个代码
+	public static List<Blog> getRecommend(Map<Integer, List<Blog>> data) {
+		ArrayList<Blog> blogList = new ArrayList<>();
+		for(Entry<Integer, List<Blog>> entry : data.entrySet()) {
+			List<Blog> blogs = entry.getValue();
+			for(int i=0; i<2 && i<blogs.size(); i++) {
+				blogList.add(blogs.get(i));
+			}
+		}
+		blogList.sort(new Comparator<Blog>() {
+			@Override
+			public int compare(Blog o1, Blog o2) {
+				return o2.getReadNum() - o1.getReadNum();
+				}
+			});
+		return blogList;
+	}
+	
+	private static String addArticleHelper(Blog blog2) {
 		String blog ="<li>"+ "<div class=\"list-container\"> " + 
 				"        <div class=\"userinfo\"> " + 
 				"          <div class=\"left\"> " + 
-				"            <img src=\""+json.get("userurl").toString().replace("\"", "") + "\" alt=\"\"> " + 
-				"            <span class=\"name\">"+ json.get("username").toString().replace("\"", "") +"</span> " + 
+				"            <img src=\""+ "../images/user_default.jpg" + "\" alt=\"\"> " + 
+				"            <span class=\"name\">"+ blog2.getUser().getUserName() +"</span> " + 
 				"            <div class=\"interval\"></div> " + 
-				"            <span class=\"type\">"+ json.get("type").toString().replace("\"", "") +"</span> " + 
+				"            <span class=\"type\">"+ BlogType.getBlogTypeById(blog2.getType()).getDesc() +"</span> " + 
 				"          </div> " + 
 				"           " + 
 				"          <div class=\"right\"> " + 
-				"            <span>"+ json.get("time").toString().replace("\"", "") +"</span> " + 
+				"            <span>"+ blog2.getPublishDateTime() +"</span> " + 
 				"            <div class=\"interval\"></div> " + 
-				"            <span>"+ json.get("read").toString().replace("\"", "") +"</span> " + 
+				"            <span>"+ blog2.getReadNum() +"</span> " + 
 				"          </div> " + 
 				"           " + 
 				"        </div> " + 
-				"        <div class=\"title\"><h4><a target=\"_blank\" href=\""+ "./blog-detail.html?id="+ json.get("titleId").toString().replace("\"", "") +"\" data-id=\"" + json.get("titleId").toString().replace("\"", "") +"\">"+ json.get("title").toString().replace("\"", "") +"</a></h4></div> " + 
-				"        <div class=\"summary\" id=\"summary\">"+ json.get("summary").toString().replace("\"", "") +"</div> " + 
+				"        <div class=\"title\"><h4><a target=\"_blank\" href=\""+ "./blog-detail.html?id="+ blog2.getBlogId() +"\" data-id=\"" + blog2.getBlogId() +"\">"+ blog2.getTitle() +"</a></h4></div> " + 
+				"        <div class=\"summary\" id=\"summary\">"+ blog2.getContent().substring(0, 40) +"</div> " + 
 				"      </div>"+
 					"</li>";
 		return blog;

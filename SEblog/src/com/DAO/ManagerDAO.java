@@ -19,7 +19,7 @@ public class ManagerDAO {
 	private ManagerDAO() {
 	}
 	
-	public int login(int managerId, String password) {
+	public int login(String managerId, String password) {
 		if(!isAccountExist(managerId)) {
 			return ResultConst.MANAGER_ACCOUNT_NOT_EXIST.getId();
 		}
@@ -32,19 +32,19 @@ public class ManagerDAO {
 	public void deleteBlog(int blogId) {
 		Object[] params = new Object[] {blogId};
 		List<Comment> allComments = BlogDAO.instance.getAllCommentById(blogId);
-		for(Comment comment : allComments) {			//É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½Û£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		for(Comment comment : allComments) {			//É¾³ýÆÀÂÛµÄÆÀÂÛ£¬¼°µãÔÞÊý
 			deleteComment(comment.getCommentId());
 		}
-		DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //É¾ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½
-		DBConnection.instance.executeQuery(DELETE_BLOG, params);  //É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //É¾ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Í²ï¿½ï¿½ÍµÄ¹ï¿½Ïµ
+		DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //É¾³ý²©¿ÍµÄÆÀÂÛ
+		DBConnection.instance.executeQuery(DELETE_BLOG, params);  //É¾³ý²©¿Í
+		DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //É¾³ýÓÃ»§ºÍ²©¿ÍµÄ¹ØÏµ
 	};
 	
 	public boolean deleteComment(int commentId) {
 		List<Comment> allComments = BlogDAO.instance.getAllCommentById(commentId);
 		if(!allComments.isEmpty()) {
 			for(Comment comment : allComments) {
-				deleteComment(comment.getCommentId());//ï¿½Ý¹ï¿½
+				deleteComment(comment.getCommentId());//µÝ¹é
 			}
 		}
 		Object[] arr = new Object[] {commentId};
@@ -58,7 +58,7 @@ public class ManagerDAO {
 		return CommonHelper.instance.isSqlExecuteSucc(result);
 	}
 	
-	public boolean isPasswordCorrect(int managerId, String password) {
+	public boolean isPasswordCorrect(String managerId, String password) {
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_MANAGER_INFO_BY_ID_AND_PASSWORD, new Object[] {managerId, password});
 		try {
 			return rs.next();
@@ -68,7 +68,7 @@ public class ManagerDAO {
 		}
 	}
 	
-	public boolean isAccountExist(int managerId) {
+	public boolean isAccountExist(String managerId) {
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_MANAGER_INFO, new Object[] {managerId});
 		return rs != null;
 	}

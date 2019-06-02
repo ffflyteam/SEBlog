@@ -1,8 +1,8 @@
 package com.DAO;
 
 public enum UserStat {
-	NORMAL(0),   //ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½
-	BE_FROZEN(1),  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	NORMAL(0),   //Õý³£Ê¹ÓÃÖÐ
+	BE_FROZEN(1),  //±»¶³½á
 	;
 	
 	private int id;

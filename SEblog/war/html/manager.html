@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>管理页面</title>
+	<link rel="stylesheet" href="../css/manager.css">
+	<link rel="stylesheet" href="../css/materialize.css">
+</head>
+<body>
+	<div class="container">
+		<nav class="navbar-container">
+			<div class="nav-wrapper container">
+				<a href="#!" class="brand-logo">管理博客</a>
+        		<ul class="right hide-on-med-and-down">
+        		  	<li><a href="manager.html">首页</a></li>
+        		  	<li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">管理员：名字</a></li>
+        		</ul>
+			</div>
+		</nav>
+
+		<!-- 左侧菜单  -->
+		<div class="aside-nav">
+			<ul class="collapsible" data-collapsible="accordion">
+    			<li>
+      				<div class="collapsible-header"><span>管理文章</span></div>
+      				<div class="collapsible-body">
+      					<ul>
+							<li><span>管理文章</span></li>
+						</ul>
+      				</div>
+    			</li>
+    			<li>
+    			  	<div class="collapsible-header"><span>管理账号</span></div>
+    			  	<div class="collapsible-body">
+						<ul>
+							<li><span>未冻结账号</span></li>
+							<li><span>已经冻结账号</span></li>
+						</ul>
+    			  	</div>
+    			</li>
+    			<li>
+    			  	<div class="collapsible-header"><span>用户反馈</span></div>
+    			  	<div class="collapsible-body">
+						<ul>
+							<li><span>处理用户举报内容</span></li>
+						</ul>
+    			  	</div>
+    			</li>
+  			</ul>
+		</div>
+
+		<!-- 操作内容 -->
+		<div class="content-container">
+			<div class="table-container"></div>
+		</div>
+	</div>
+	
+	<!-- 下拉列表 -->
+	<ul id='dropdown1' class='dropdown-content'>
+    	<li><a href="#!">退出</a></li>
+  	</ul>
+
+
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/materialize.min.js"></script>
+	<script src="../js/manager.js"></script>
+</body>
+</html>

@@ -15,13 +15,6 @@ public class User implements Serializable{
 	private int stat;
 	
 	public User() {
-		/*accountId = 0;
-		password = "";
-		userName=  "";
-		sex = 0;
-		birthDay = new Date();
-		address = "";
-		stat = 0;*/
 	}
 	
 	public User(int accountId, String password, String userName, short sex, Date birthDay, String address, int stat) {
@@ -64,44 +57,33 @@ public class User implements Serializable{
 	}
 	
 	public String toString() {
-		/*JSONObject jsonObject = new JSONObject();
-		try {
-			jsonObject.put("Account", accountId);
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			jsonObject.put("UserName", userName);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			jsonObject.put("Sex", sex == 0 ? "Å®" : "ï¿½ï¿½");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			jsonObject.put("BirthDay", birthDay.toString());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			jsonObject.put("Address", address);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return jsonObject.toString();*/
 		StringBuilder sb = new StringBuilder();
 		sb.append("'Account':").append(accountId);
 		sb.append(",'UserName':").append(userName);
-		sb.append(",'Sex':").append(sex == 0 ? "Å®" : "ï¿½ï¿½");
+		sb.append(",'Sex':").append(sex == 0 ? "Å®" : "ÄÐ");
 		sb.append(",'BirthDay':").append(birthDay.toString());
 		sb.append(",'Address':").append(address);
 		return sb.toString();
 	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setSex(short sex) {
+		this.sex = sex;
+	}
+
+	public void setBirthDay(Date birthDay) {
+		this.birthDay = birthDay;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 }

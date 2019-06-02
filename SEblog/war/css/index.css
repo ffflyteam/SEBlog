@@ -24,7 +24,7 @@ nav.navbar-container a {
 .side-navbar {
 	position: fixed;
 	top: 100px;
-	left: 350px;
+	left: 20%;
 }
 .side-navbar ul {
 	background-color: #fff;

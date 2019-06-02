@@ -1,13 +1,27 @@
 package com.DAO;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum BlogType {
 	
-	JI_SHU(1, "æŠ€æœ¯"),
-	RE_MEN(2, "çƒ­é—¨"),
+	DEFAULT(0, "Ä¬ÈÏ/ÎÞ·ÖÀà"),
+	JI_SHU(1, "¼¼Êõ"),
 	;
 	
 	private int id;
 	private String desc;
+	
+	private static Map<Integer, BlogType> blogTypeMap = new HashMap<>();
+	static {
+		for(BlogType blogType : values()) {
+			blogTypeMap.put(blogType.getId(), blogType);
+		}
+	}
+	
+	public static BlogType getBlogTypeById(int id) {
+		return blogTypeMap.getOrDefault(id, DEFAULT);
+	}
 	
 	private BlogType(int id, String desc) {
 		this.id = id;

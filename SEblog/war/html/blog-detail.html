@@ -55,10 +55,9 @@
 	<div class="divider"></div>
 	<div class="userInfo-container">
 		<img id="userurl" src="../images/user_default.jpg" alt="">
-		
-			<span id="name">用户名</span>
-			<a class="focusBtn" id="focus">关注</a>
-		
+		<span id="nickName" data-authorid="167">用户名</span>
+		<a class="focusBtn" id="focus">关注</a>
+		<a class="focusBtn" id="cancelFocus">取消关注</a>
 	</div>
 	<div class="divider"></div>
 	<div class="userInfoMore-container">
@@ -72,11 +71,47 @@
 	<!-- 侧边操作菜单 -->
 	<div class="operate-container">
 		<ul class="operate-ul">
-			<li><a href="#">评论</a></li>
-			<li><a href="#">转发</a></li>
-			<li><a href="#">收藏</a></li>
+			<li><a  href="#modal1">评论</a></li>
+			<li><a id="forward" href="#">转发</a></li>
+			<li><a id="collect" href="#">收藏</a></li>
 		</ul>
 	</div>
+
+  <!-- 评论模态 -->
+    <div id="modal1" class="modal bottom-sheet container">
+    <div class="modal-content">
+      <h6>请输入你的评论：</h6>
+      <textarea name="" id="comment-text" cols="30" rows="30"></textarea>
+    </div>
+    <div class="modal-footer">
+      <a id="cancel" href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
+      <a id="comment"  href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">评论</a>
+    </div>
+  </div>
+
+	<!-- 举报模态 -->
+	<div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>确认举报此条评论吗？</h4>
+      <p>您的举报将有我们后台管理员进行审核，如举报通过，则会删除该评论</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">确认</a>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
+    </div>
+  </div>
+
+	  <!-- 回复评论模态 -->
+    <div id="modal3" class="modal bottom-sheet container">
+    <div class="modal-content">
+      <h6>请输入你的回复：</h6>
+      <textarea name="" id="replay-text" cols="30" rows="30"></textarea>
+    </div>
+    <div class="modal-footer">
+      <a id="cancel" href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">取消</a>
+      <a id="replay"  href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">回复</a>
+    </div>
+  </div>
 
 
   <!-- 博客内容 -->
@@ -84,70 +119,70 @@
   	<!-- 博客基本信息 -->
   	<div class="next-container">
 	<div>
-		<h3 class="article-title">这个程序员在阿里五年晋升三次，Coding 是立身之本</h3>
+		<h3 class="article-title" id="title">这个程序员在阿里五年晋升三次，Coding 是立身之本</h3>
 		<div class="blog-container">
 			<span id="time">2019-5-22 09:55:55</span>
 			<span id="author">作者名</span>
-			<span id="read">阅读数：1999</span>
+			<span id="readNum">阅读数：1999</span>
 		</div>
 		<div class="divider"></div>
 	</div>
 	<!-- 博客文章详情 -->
 	<div class="content-container">
-		<div class="content">
-			<h4>关于晋升</h4>
-			<p>马上要开始晋升季了，在晋升这个话题里，我也希望可以提供一些我的心得，因为非常幸运地，我在这五年内晋升了三次。晋升，一定是天时、地利、人和缺一不可的，抛开运气成分，我总结一下我的地利、人和的部分。
-
-关于地利，我的经验是，专注、深耕一个领域，比如我是做机器学习工程平台的，从 14 年“近卫军”培训结束就开始做，到现在还在做这个事情，而且未来我还会持续做这件事，所以，对我来说，在一个领域内不断地学习，是成长的必要条件。</p>
+		<div class="content" id="content">
+			<h4>关于晋升</h4>			<p>马上要开始晋升季了，在晋升这个话题里，我也希望可以提供一些我的心得，因为非常幸运地，我在这五年内晋升了三次。晋升，一定是天时、地利、人和缺一不可的，抛开运气成分，我总结一下我的地利、人和的部分。关于地利，我的经验是，专注、深耕一个领域，比如我是做机器学习工程平台的，从 14 年“近卫军”培训结束就开始做，到现在还在做这个事情，而且未来我还会持续做这件事，所以，对我来说，在一个领域内不断地学习，是成长的必要条件。</p>
 		</div>
 	</div>
 	<div class="divider"></div>
 
-	<div class="comment-container">
+	<div class="comment-container" id="comment-container">
 		<ul class="comment-list">
 			<li class="comment-line-container">
-				<a href="#"><img src="../images/user_default.jpg" alt=""></a>
+				<a href="#"><img src="../images/user_default.jpg" alt=""><span>评论名</span></a>
 				<div class="commentInfo-container">
-					<span id="commentName">评论名</span>
-					<span id="commentContent">评论内荣哈哈哈哈</span>
+					<span id="commentContent">评论内荣哈哈哈哈评论内荣哈哈哈哈评论内荣哈哈哈哈评论内荣哈哈哈哈评论内荣哈哈哈哈评论内荣哈哈哈哈评论内荣哈哈哈哈</span>
 					<span id="commentTime">19:00:00</span>
 				</div>
+				<div class="like right">
+					<span><a href="#modal2">举报</a></span>
+					<span><a href="#modal3">回复</a></span>
+					<span><a href="#">赞</a></span>
+				</div>
 			</li>
-			<li class="replay-container"></li>
+			<li class="replay-container">
+				<ul class="comment-list">
+					<li class="comment-line-container">
+						<div>
+							<a href="#"><img src="../images/user_default.jpg" alt=""><span id="commentName">评论人</span></a>
+							<span>回复</span>
+							<a href="#"><img src="../images/user_default.jpg" alt=""><span id="commentName">被评论名</span></a>
+						</div>
+						
+						<div class="commentInfo-container">
+							<span id="commentContent">评论内荣哈哈哈哈</span>
+							<span id="commentTime">19:00:00</span>
+						</div>
+						<div class="like right">
+							<span><a href="#">举报</a></span>
+							<span><a href="#">回复</a></span>
+							<span><a href="#">赞</a></span>
+						</div>
+					</li>
+				</ul>
+			</li>
 		</ul>
 
-		<ul class="comment-list">
-			<li class="comment-line-container">
-				<a href="#"><img src="../images/user_default.jpg" alt=""></a>
-				<div class="commentInfo-container">
-					<span id="commentName">评论名</span>
-					<span id="commentContent">评论内荣哈哈哈哈</span>
-					<span id="commentTime">19:00:00</span>
-				</div>
-			</li>
-			<li class="replay-container"></li>
-		</ul>
-
-		<ul class="comment-list">
-			<li class="comment-line-container">
-				<a href="#"><img src="../images/user_default.jpg" alt=""></a>
-				<div class="commentInfo-container">
-					<span id="commentName">评论名</span>
-					<span id="commentContent">评论内荣哈哈哈哈</span>
-					<span id="commentTime">19:00:00</span>
-				</div>
-				<div class="like"><a href="#">赞</a></div>
-			</li>
-			<li class="replay-container"></li>
-		</ul>
+		
 	</div>
 
 	</div>
   </div>
 
+
+
 	<script src="../detail/detail.nocache.js"></script>
   <script src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/materialize.min.js"></script>
-  <script src="../js/index.js"></script>
+  <script src="../js/blog-detail.js"></script>
 </body>
 </html>

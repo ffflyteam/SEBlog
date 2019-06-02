@@ -11,6 +11,6 @@ public class CommonHelper {
 	}
 	
 	public int getSqlExecuteResultConst(int res) {
-		return res == ResultConst.EXECUTE_SQL_ERROR.getId() ? ResultConst.EXECUTE_SQL_ERROR.getId() : ResultConst.SUCCESS.getId();
+		return res == ResultConst.EXECUTE_SQL_ERROR.getId() ? res : ResultConst.SUCCESS.getId();
 	}
 }
