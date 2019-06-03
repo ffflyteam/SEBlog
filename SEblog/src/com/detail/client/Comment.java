@@ -13,7 +13,10 @@ public class Comment implements Serializable{
 	private Date commentDateTime;
 	private String content;
 	private List<Comment> allComments;
-
+	
+	public Comment() {
+	}
+	
 	public Comment(int commentId, int objectId, User user, Date commentDateTime, String content, List<Comment> allComments) {
 		super();
 		this.commentId = commentId;
