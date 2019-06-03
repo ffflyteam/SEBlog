@@ -51,7 +51,177 @@
 
 		<!-- 操作内容 -->
 		<div class="content-container">
-			<div class="table-container"></div>
+			<div id="user-not-froze" style="display: none;">
+				<div>
+					<input id="not-froze-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="not-froze-btn">查询</button>
+				</div>
+				<table class="user-table">
+					<thead>
+						<tr>
+							<th>用户ID</th>
+							<th>用户昵称</th>
+							<th>性别</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">冻结</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">冻结</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">冻结</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">冻结</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id="user-frozen" style="display: none;">
+				<div>
+					<input id="frozen-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="froze-btn">查询</button>
+				</div>
+
+				<table class="user-table">
+					<thead>
+						<tr>
+							<th>用户ID</th>
+							<th>用户昵称</th>
+							<th>性别</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">解冻</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">解冻</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">解冻</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">解冻</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id="user-feedback">
+				<div>
+					<input id="feedback-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="feedback-btn">查询</button>
+				</div>
+				<table id="feedback-table">
+					<thead>
+						<tr>
+							<th>评论ID</th>
+							<th>评论者</th>
+							<th>评论内容</th>
+							<th>举报者</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>评论ID</td>
+							<td>我是评论者</td>
+							<td>哈哈哈哈哈哈哈哈</td>
+							<td>举报者</td>
+							<td>
+								<a href="#">已读</a>
+								<a href="#">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id="article" style="display: none;">
+				<div>
+					<input id="article-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="article-btn">查询</button>
+				</div>
+				<table id="user-ariticle">
+					<thead>
+						<tr>
+							<th>文章ID</th>
+							<th>文章作者</th>
+							<th>文章标题</th>
+							<th>发表时间</th>
+							<th>转载量</th>
+							<th>阅读量</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><a href="#">123321</a></td>
+							<td>用户ID</td>
+							<td>第一个博客</td>
+							<td>2016-10-12 12:00:00</td>
+							<td>1000</td>
+							<td>10000</td>
+							<td><a href="#">删除</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	

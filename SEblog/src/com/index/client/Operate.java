@@ -120,6 +120,7 @@ public class Operate {
 			List<Blog> blogList = getRecommend(data);
 			hString = "";
 			for(int i = 0; i < blogList.size();i++) {
+				Window.alert(blogList.get(i).toString());
 				hString += addArticleHelper(blogList.get(i));
 			}
 		}else {
@@ -127,7 +128,6 @@ public class Operate {
 			for(int i = 0; i < data.get(type).size();i++) {
 				hString += addArticleHelper(data.get(type).get(i));
 			}
-		
 		}
 		
 		DOM.getElementById("blog-list").setInnerHTML(hString);

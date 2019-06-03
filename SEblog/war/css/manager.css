@@ -17,7 +17,7 @@
 	position: absolute;
 	top: 65px;
 	left: 0;
-	height: 500px;
+	height: 650px;
 	background-color: rgb(154,189,65);
 }
 .collapsible {
@@ -57,8 +57,34 @@
 .content-container {
 	width: 84%;
 	background-color: rgb(245,245,245);
-	height: 500px;
+	height: 650px;
 	position: absolute;
 	top: 65px;
 	right: 0;
+}
+
+/*操作表格*/
+.content-container {
+	/*padding: 10px;*/
+	overflow: hidden;
+
+}
+.content-container table th,
+.content-container table td {
+	text-align: center;
+}
+div.content-container div button {
+	background-color: rgb(154,189,65);
+}
+div.content-container div div {
+	width: 50%;
+	margin: 0 auto;
+}
+div.content-container>div {
+	margin: 30px 40px;
+}
+div.content-container input {
+	display: inline-block;
+	width: 40%;
+	margin-right: 30px;
 }

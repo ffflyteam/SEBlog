@@ -4,8 +4,14 @@ import java.util.Map;
 
 public enum BlogType {
 	
-	DEFAULT(0, "Ĭ��/�޷���"),
-	JI_SHU(1, "����"),
+	DEFAULT(0, "默认"),
+	JI_SHU(1, "IT"),
+	XIN_WEN(2,"新闻"),
+	LI_SHI(3,"历史"),
+	WEN_XUE(4,"文学"),
+	CAI_JING(5,"财经"),
+	TI_YU(6,"体育"),
+	RI_CHANG(7,"日常"),
 	;
 	
 	private int id;

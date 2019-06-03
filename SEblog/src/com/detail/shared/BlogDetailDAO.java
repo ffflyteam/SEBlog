@@ -203,7 +203,7 @@ public class BlogDetailDAO {
 		try {
 			while(rs.next()) {
 				try {
-					List<Comment> allComment = getAllCommentById(objectId);
+					List<Comment> allComment = getAllCommentById(rs.getInt("CommentId"));
 					User user = UserDetailDAO.instance.getUserInfo(rs.getInt("UserId"));
 					Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), allComment);
 					allComments.add(comment);

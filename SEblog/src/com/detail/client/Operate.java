@@ -12,6 +12,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
+import com.google.gwt.user.client.Window;
 
 public class Operate {
 	
@@ -164,6 +165,7 @@ public class Operate {
 	
 	//加载评论
 	public static void loadComment(List<Comment> comment){
+		Window.alert(comment.toString());
 		for(int i = 0; i < comment.size();i++) {
 			commentToArticle(comment.get(i));
 		}
