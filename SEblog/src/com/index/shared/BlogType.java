@@ -20,7 +20,7 @@ public enum BlogType {
 	}
 	
 	public static BlogType getBlogTypeById(int id) {
-		return blogTypeMap.getOrDefault(id, DEFAULT);
+		return blogTypeMap.get(id);
 	}
 	
 	private BlogType(int id, String desc) {

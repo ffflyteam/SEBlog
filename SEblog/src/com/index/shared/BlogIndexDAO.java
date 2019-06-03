@@ -15,29 +15,29 @@ import com.index.client.Blog;
 import com.index.client.Comment;
 import com.index.client.User;
 
-public class BlogDAO {
-	private static final String SELECT_USER_BLOGS_INFO = "SELECT A.BlogId,PublishDateTime,UserId,Title,Content,CollectsNum,TransfersNum,CommentsNum,ReadNum,Type FROM "
+public class BlogIndexDAO {
+	/*private static final String SELECT_USER_BLOGS_INFO = "SELECT A.BlogId,PublishDateTime,UserId,Title,Content,CollectsNum,TransfersNum,CommentsNum,ReadNum,Type FROM "
 			+ "(SELECT BlogId,PublishDateTime,UserId,Title,Content,ReadNum,Type FROM `blog_info`) AS A"
 			+ " LEFT JOIN (SELECT BlogId,COUNT(*) AS TransfersNum FROM user_blog_relation WHERE `Type` = 2 OR `Type` = 3 GROUP BY BlogId) AS B ON A.BlogId = B.BlogId "
 			+ " LEFT JOIN (SELECT BlogId,COUNT(*) AS CollectsNum FROM user_blog_relation WHERE `Type` = 1 OR `Type` =3 GROUP BY BlogId) AS C ON C.Blog = A.BlogId "
 			+ " LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentsNum FROM comments GROUP BY ObjectId) AS D ON D.ObjectId = A.BlogId "
-			+ " WHERE UserId = ? ORDER BY PublishDateTime DESC";
+			+ " WHERE UserId = ? ORDER BY PublishDateTime DESC";*/
 	private static final String SELECT_ALL_HOT_BLOG = "SELECT `Type`,GROUP_CONCAT(BlogId ORDER BY ReadNum DESC) AS AllBlogs FROM `blog_info` GROUP BY `Type` LIMIT 50";
 	private static final String SELECT_BLOG_BY_ID = "SELECT * FROM `blog_info` WHERE BlogId = ?";
 	private static final String SELECT_ALL_COMMENTS = "SELECT * FROM `comments` WHERE ObjectId = ? ORDER BY LikeNum DESC";
-	private static final String SELECT_COMMENT_BY_ID = "SELECT * FROM `comments` WHERE CommentId = ?";
-	private static final String INCREASE_READ_NUM = "UPDATE `blog_info` SET ReadNum = ReadNum + 1 WHERE BlogId = ?";
-	public static final BlogDAO instance = new BlogDAO();
+	//private static final String SELECT_COMMENT_BY_ID = "SELECT * FROM `comments` WHERE CommentId = ?";
+	//private static final String INCREASE_READ_NUM = "UPDATE `blog_info` SET ReadNum = ReadNum + 1 WHERE BlogId = ?";
+	public static final BlogIndexDAO instance = new BlogIndexDAO();
 	
 	private static final ConcurrentHashMap<Integer, Blog> blogSecondDAO = new ConcurrentHashMap<>();
 	//private static final Map<Integer, Comment> commentSecondDao = new LinkedHashMap<>();
 	private static final int blogCacheSize = 512;
 	//private static final int commentCacheSize = 1024;
 	
-	private BlogDAO() {
+	private BlogIndexDAO() {
 	}
 	
-	public List<Blog> getUserAllBlogInfo(int accountId) {
+	/*public List<Blog> getUserAllBlogInfo(int accountId) {
 		ArrayList<Blog> allBlogs = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_BLOGS_INFO, new Object[] {accountId});
 		try {
@@ -56,7 +56,7 @@ public class BlogDAO {
 			return Collections.emptyList();
 		}
 		return allBlogs;
-	}
+	}*/
 	
 	public List<Blog> getRecommend(Map<Integer, List<Blog>> data) {
 		ArrayList<Blog> blogList = new ArrayList<>();
@@ -106,7 +106,7 @@ public class BlogDAO {
 		}
 	}
 	
-	public Blog getBlogWithIncreaseReadNum(int blogId) {
+	/*public Blog getBlogWithIncreaseReadNum(int blogId) {
 		if(hitCache(blogId)) {
 			increaseBlogReadNum(blogId);
 			return blogSecondDAO.get(blogId);
@@ -130,7 +130,7 @@ public class BlogDAO {
 			t.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 	
 	public Blog getBlogById(int blogId) {
 		if(blogSecondDAO.contains(blogId)) {
@@ -143,7 +143,7 @@ public class BlogDAO {
 		try {
 			if(rs.next()) {
 				//List<Comment> allComments = getAllCommentById(blogId);
-				User user = UserDAO.instance.getUserInfo(rs.getInt("UserId"));
+				User user = UserIndexDAO.instance.getUserInfo(rs.getInt("UserId"));
 				Blog blog = new Blog(blogId, rs.getDate("PublishDateTime"), user, rs.getString("Title"),
 						rs.getString("Content"), rs.getInt("CommentsNum"), rs.getInt("TransfersNum"), rs.getInt("CollectsNum"), 
 						rs.getInt("ReadNum"), rs.getInt("Type"));
@@ -156,25 +156,25 @@ public class BlogDAO {
 		}
 	}
 	
-	public int increaseBlogReadNum(int blogId, Blog blog) {//����û�е����
+	/*public int increaseBlogReadNum(int blogId, Blog blog) {//����û�е����
 		int res = DBConnection.instance.executeQuery(INCREASE_READ_NUM, new Object[] {blogId});
 		if(blogSecondDAO.size() < blogCacheSize) {
 			blogSecondDAO.putIfAbsent(blogId, blog);
 			blog.increaseReadNum();
 		}
 		return res;
-	}
+	}*/
 	
-	public int increaseBlogReadNum(int blogId) {
+	/*public int increaseBlogReadNum(int blogId) {
 		int res = DBConnection.instance.executeQuery(INCREASE_READ_NUM, new Object[] {blogId});
 		if(CommonHelper.instance.isSqlExecuteSucc(res)) {
 			Blog blog = blogSecondDAO.get(blogId);
 			blog.increaseReadNum();
 		}
 		return res;
-	}
+	}*/
 	
-	public boolean isBlog(int objectId) {
+	/*public boolean isBlog(int objectId) {
 		if(blogSecondDAO.contains(objectId)) {
 			return true;
 		}
@@ -193,7 +193,7 @@ public class BlogDAO {
 	public void removeBlogByIdFromSecondDAO(int blogId) {
 		blogSecondDAO.remove(blogId);
 	}
-	
+	*/
 	/*public void removeCommentByIdFromSecondDAO(int commentId) {
 		commentSecondDao.remove(commentId);
 	}*/
@@ -205,7 +205,7 @@ public class BlogDAO {
 			while(rs.next()) {
 				try {
 					List<Comment> allComment = getAllCommentById(objectId);
-					User user = UserDAO.instance.getUserInfo(rs.getInt("UserId"));
+					User user = UserIndexDAO.instance.getUserInfo(rs.getInt("UserId"));
 					Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), allComment);
 					allComments.add(comment);
 				} catch (Throwable t) {
@@ -219,21 +219,21 @@ public class BlogDAO {
 		return allComments;
 	}
 	
-	public Comment getCommentById(int commentId) {
-		/*if(commentSecondDao.containsKey(commentId)) {
+	/*public Comment getCommentById(int commentId) {
+		if(commentSecondDao.containsKey(commentId)) {
 			return commentSecondDao.get(commentId);
-		}*/
+		}
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_COMMENT_BY_ID, new Object[] {commentId});
 		try {
 			List<Comment> allComments = getAllCommentById(commentId);
-			User user = UserDAO.instance.getUserInfo(rs.getInt("UserId"));
+			User user = UserIndexDAO.instance.getUserInfo(rs.getInt("UserId"));
 			Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), allComments);
 			return comment;
 		} catch (Throwable t) {
 			t.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 	
 	public boolean hitCache(int blogId) {
 		return blogSecondDAO.contains(blogId);

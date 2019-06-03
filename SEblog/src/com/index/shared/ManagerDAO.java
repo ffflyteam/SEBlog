@@ -33,7 +33,7 @@ public class ManagerDAO {
 	
 	public void deleteBlog(int blogId) {
 		Object[] params = new Object[] {blogId};
-		List<Comment> allComments = BlogDAO.instance.getAllCommentById(blogId);
+		List<Comment> allComments = BlogIndexDAO.instance.getAllCommentById(blogId);
 		for(Comment comment : allComments) {			//ɾ�����۵����ۣ���������
 			deleteComment(comment.getCommentId());
 		}
@@ -43,7 +43,7 @@ public class ManagerDAO {
 	};
 	
 	public boolean deleteComment(int commentId) {
-		List<Comment> allComments = BlogDAO.instance.getAllCommentById(commentId);
+		List<Comment> allComments = BlogIndexDAO.instance.getAllCommentById(commentId);
 		if(!allComments.isEmpty()) {
 			for(Comment comment : allComments) {
 				deleteComment(comment.getCommentId());//�ݹ�

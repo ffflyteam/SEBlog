@@ -2,67 +2,60 @@ package com.index.shared;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.index.client.Blog;
-import com.index.client.Comment;
 import com.index.client.User;
 
-public class UserDAO {
-	//�û���Ϣ
-	private static final String INSERT_USER_INFO = "INSERT INTO `user_info` VALUES(?,?,?,?,?,?,0)";
+public class UserIndexDAO {
+	//用户信息
+	//private static final String INSERT_USER_INFO = "INSERT INTO `user_info` VALUES(?,?,?,?,?,?,0)";
 	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
-	private static final String SELECT_USER_STAT_BY_ID = "SELECT `Stat` FROM `user_info` WHERE UserId = ?";
-	private static final String SELECT_USER_INFO_BY_ID_AND_PASSWORD = "SELECT * FROM `user_info` WHERE UserId = ? AND Password = ?";
-	private static final String UPDATE_USER_INFO = "UPDATE `user_info` SET PassWord = ?,UserName = ?,Sex = ?,BirthDay = ?,Address = ? WHERE UserId = ?";
-	//�û��ղػ�ת�ز���
-	private static final String SELECT_USER_AND_BLOG_RELATION = "SELECT `Type` FROM `user_blog_relation` WHERE UserId = ? AND BlogId = ?";
+	//private static final String SELECT_USER_STAT_BY_ID = "SELECT `Stat` FROM `user_info` WHERE UserId = ?";
+	//private static final String SELECT_USER_INFO_BY_ID_AND_PASSWORD = "SELECT * FROM `user_info` WHERE UserId = ? AND Password = ?";
+	//private static final String UPDATE_USER_INFO = "UPDATE `user_info` SET PassWord = ?,UserName = ?,Sex = ?,BirthDay = ?,Address = ? WHERE UserId = ?";
+	//用户收藏或转载博客
+	/*private static final String SELECT_USER_AND_BLOG_RELATION = "SELECT `Type` FROM `user_blog_relation` WHERE UserId = ? AND BlogId = ?";
 	private static final String SELECT_ALL_COLLECT_BLOGS = "SELECT `BlogId` FROM `user_blog_relation` WHERE UserId = ? AND (`Type` = ? OR `Type` = 3) ORDER BY CollectTime DESC";
 	private static final String SELECT_ALL_TRANSFER_BLOGS = "SELECT `BlogId` FROM `user_blog_relation` WHERE UserId = ? AND (`Type` = ? OR `Type` = 3) ORDER BY TransferTime DESC";
 	private static final String INSERT_USER_AND_BLOG_RELATION_FOR_COLLECT = "INSERT INTO `user_blog_relation` VALUES(?,?,?,?,null)";
 	private static final String INSERT_USER_AND_BLOG_RELATION_FOR_TRANSFER = "INSERT INTO `user_blog_relation` VALUES(?,?,?,null,?)";
 	private static final String UPDATE_RELATION_WITH_BLOG_FOR_COLLECT = "UPDATE `user_blog_relation` SET `Type` = ?,CollectTime = ? WHERE UserId = ? AND BlogId = ?";
 	private static final String UPDATE_RELATION_WITH_BLOG_FOR_TRANSFER = "UPDATE `user_blog_relation` SET `Type` = ?,TransferTime = ? WHERE UserId = ? AND BlogId = ?";
-	//�û��Լ��Ĳ���
-	private static final String INSERT_BLOG_INFO = "INSERT INTO `blog_info` VALUES(0,?,?,?,?,0,0,0,?)";
-	private static final String DELETE_BLOG = "DELETE FROM `blog_info` WHERE BlogId = ? AND UserId = ?";
+	*///用户自己的博客
+	//private static final String INSERT_BLOG_INFO = "INSERT INTO `blog_info` VALUES(0,?,?,?,?,0,0,0,?)";
+	//private static final String DELETE_BLOG = "DELETE FROM `blog_info` WHERE BlogId = ? AND UserId = ?";
 	private static final String CHANGE_BLOG_TYPE = "UPDATE `blog_info` SET `Type` = ? WHERE `BlogId` = ?";
-	private static final String DELETE_USER_BLOG_RELATION = "DELETE FROM user_blog_relation WHERE BlogId = ?";
-	private static final String SELECT_ALL_BLOG = "SELECT `BlogId` FROM blog_info WHERE UserId = ? ORDER BY PublishDateTime DESC";
-	//��������
-	private static final String INSERT_COMMENT_INFO = "INSERT INTO `comments` VALUES(0,?,?,?,?,0)";
-	private static final String DELETE_COMMENT_BY_ID_USERID = "DELETE FROM `comments` WHERE CommentId = ? AND UserId = ?";
-	private static final String DELETE_COMMENT = "DELETE FROM `comments` WHERE CommentId = ?";
-	private static final String DELETE_ALL_COMMENTS_BY_OBJECTID = "DELETE FROM `comments` WHERE ObjectId = ?";
-	//���۵��޻�ȡ����
-	private static final String CLICK_LIKE = "INSERT INTO `user_comment_like` VALUES(?,?)";
-	private static final String CANCLE_LIKE = "DELETE FROM `user_comment_like` WHERE CommentId = ? AND UserId = ?";
-	private static final String INCREASE_LIKE_NUM = "UPDATE `comments` SET LikeNum = LikeNum + 1 WHERE CommentId = ?";
-	private static final String DECREASE_LIKE_NUM = "UPDATE `comments` SET LikeNum = LikeNum - 1 WHERE CommentId = ?";
-	private static final String DELECT_COMMENT_LIKE = "DELETE FROM user_comment_like WHERE CommentId = ?";
-	//�û���ϵ
-	private static final String INSERT_USER_RELATION = "INSERT INTO `user_relation` VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE Type = ?";
-	private static final String SELECT_USER_RELATIONS = "SELECT * FROM `user_relation` WHERE UserId = ? AND Type <> 0 ORDER BY CreateTime DESC";
-	private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
-	private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
+	//private static final String DELETE_USER_BLOG_RELATION = "DELETE FROM user_blog_relation WHERE BlogId = ?";
+	//private static final String SELECT_ALL_BLOG = "SELECT `BlogId` FROM blog_info WHERE UserId = ? ORDER BY PublishDateTime DESC";
+	//博客评论
+	//private static final String INSERT_COMMENT_INFO = "INSERT INTO `comments` VALUES(0,?,?,?,?,0)";
+	//private static final String DELETE_COMMENT_BY_ID_USERID = "DELETE FROM `comments` WHERE CommentId = ? AND UserId = ?";
+	//private static final String DELETE_COMMENT = "DELETE FROM `comments` WHERE CommentId = ?";
+	//private static final String DELETE_ALL_COMMENTS_BY_OBJECTID = "DELETE FROM `comments` WHERE ObjectId = ?";
+	//评论点赞或取消赞
+	//private static final String CLICK_LIKE = "INSERT INTO `user_comment_like` VALUES(?,?)";
+	//private static final String CANCLE_LIKE = "DELETE FROM `user_comment_like` WHERE CommentId = ? AND UserId = ?";
+	//private static final String INCREASE_LIKE_NUM = "UPDATE `comments` SET LikeNum = LikeNum + 1 WHERE CommentId = ?";
+	//private static final String DECREASE_LIKE_NUM = "UPDATE `comments` SET LikeNum = LikeNum - 1 WHERE CommentId = ?";
+	//private static final String DELECT_COMMENT_LIKE = "DELETE FROM user_comment_like WHERE CommentId = ?";
+	//用户关系
+	//private static final String INSERT_USER_RELATION = "INSERT INTO `user_relation` VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE Type = ?";
+	//private static final String SELECT_USER_RELATIONS = "SELECT * FROM `user_relation` WHERE UserId = ? AND Type <> 0 ORDER BY CreateTime DESC";
+	//private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
+	//private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
 	
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
-	public static final UserDAO instance = new UserDAO();
+	//private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
+	public static final UserIndexDAO instance = new UserIndexDAO();
 	
-	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//�ɸĳ�Redis
+	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//可改成Redis
 	private static final int userCacheSize = 64;
 	
-	private UserDAO() {
+	private UserIndexDAO() {
 	}
 	
-	//��ȡ�û��Լ���Ϣ
+	//获取用户自己信息
 	public User getUserInfo(int userId) {
 		if(!userSecondDao.containsKey(userId)) {
 			ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
@@ -94,7 +87,7 @@ public class UserDAO {
 		}
 	}
 	
-	//�û�ע��
+	/*//用户注册
 	public int register(int accountId, String password, String userName, short sex, Date birthDay, String address) throws SQLException {
 		if(isUserRegistered(accountId)) {
 			return ResultConst.ACCOUNT_HAS_BEEN_REGISTERED.getId();
@@ -102,10 +95,10 @@ public class UserDAO {
 		Object[] params = new Object[] {accountId, password, userName, sex, birthDay, address};
 		int res = DBConnection.instance.executeQuery(INSERT_USER_INFO, params);
 		return !CommonHelper.instance.isSqlExecuteSucc(res) ? ResultConst.REGISTER_ERROR.getId() : ResultConst.SUCCESS.getId();
-	}
+	}*/
 	
-	//�û���¼
-	public int login(int accountId, String password) {
+	//用户登录
+	/*public int login(int accountId, String password) {
 		if(!isUserRegistered(accountId)) {
 			return ResultConst.ACCOUNT_NOT_EXIST.getId();
 		}
@@ -116,10 +109,10 @@ public class UserDAO {
 			return ResultConst.ACCOUNT_HAS_BEEN_FROZEN.getId();
 		}
 		return ResultConst.SUCCESS.getId();
-	}
+	}*/
 	
-	//�޸�����
-	public boolean setUserInfo(int accountId, String password, String userName, short sex, String birthDayStr, String address) {
+	//修改资料
+	/*public boolean setUserInfo(int accountId, String password, String userName, short sex, String birthDayStr, String address) {
 		Date birthDay;
 		try {
 			birthDay = sdf.parse(birthDayStr);
@@ -150,40 +143,40 @@ public class UserDAO {
 			return true;
 		}
 		return false;
-	}
+	}*/
 	
-	//��������
-	public int makeBlog(int accountId, String title, String content, int type) {
+	//创建博客
+	/*public int makeBlog(int accountId, String title, String content, int type) {
 		Object[] params = new Object[] {new Date(),accountId, title, content, type};
 		int res = DBConnection.instance.executeQuery(INSERT_BLOG_INFO, params);
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
-	}
+	}*/
 	
-	//ɾ������
-	public int deleteBlog(int blogId, int accountId) {
+	//删除博客
+	/*public int deleteBlog(int blogId, int accountId) {
 		Object[] params = new Object[] {blogId};
 		try {
 			List<Comment> allComments = BlogDAO.instance.getAllCommentById(blogId);
-			for(Comment comment : allComments) {			//ɾ�����۵����ۣ���������
+			for(Comment comment : allComments) {			//删除评论的评论，及点赞数
 				deleteComment(comment.getCommentId());
 			}
 		} catch (Throwable t) {
 			return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
 		}
-		int rs = DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //ɾ�����͵�����
+		int rs = DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //删除博客的评论
 		if(!CommonHelper.instance.isSqlExecuteSucc(rs)) {
 			return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
 		}
-		rs = DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //ɾ���û��Ͳ��͵Ĺ�ϵ
+		rs = DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //删除用户和博客的关系
 		if(!CommonHelper.instance.isSqlExecuteSucc(rs)) {
 			return ResultConst.CACLE_RELATION_BLOG_ERROR.getId();
 		}
-		rs = DBConnection.instance.executeQuery(DELETE_BLOG, new Object[] {blogId, accountId});  //ɾ������
+		rs = DBConnection.instance.executeQuery(DELETE_BLOG, new Object[] {blogId, accountId});  //删除博客
 		BlogDAO.instance.removeBlogByIdFromSecondDAO(blogId);
 		return CommonHelper.instance.getSqlExecuteResultConst(rs);
-	}
+	}*/
 	
-	//��ȡ�Լ������в���
+	/*//获取自己的所有博客
 	public List<Blog> getAllBlog(int accountId) {
 		ArrayList<Blog> allBlogList = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_ALL_BLOG, new Object[] {accountId});
@@ -204,11 +197,11 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return allBlogList;
-	}
+	}*/
 	
-	//�޸Ĳ��ͷ���
+	//修改博客分类
 	public boolean changeBlogType(int blogId, int type) {
-		Blog blog = BlogDAO.instance.getBlogById(blogId);
+		Blog blog = BlogIndexDAO.instance.getBlogById(blogId);
 		if(blog != null) {
 			blog.setType(type);
 		}
@@ -216,15 +209,15 @@ public class UserDAO {
 		return CommonHelper.instance.isSqlExecuteSucc(result);
 	}
 	
-	//��ȡ�ղص����в���
-	public List<Blog> getAllCollectBlog(int accountId) {
+	//获取收藏的所有博客
+	/*public List<Blog> getAllCollectBlog(int accountId) {
 		ArrayList<Blog> allCollectBlogList = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_ALL_COLLECT_BLOGS, new Object[] {accountId, RelationWithBlog.COLLECT.getId()});
 		try {
 			while(rs.next()) {
 				try {
 					int blogId = rs.getInt("BlogId");
-					Blog blog = BlogDAO.instance.getBlogById(blogId);
+					Blog blog = BlogIndexDAO.instance.getBlogById(blogId);
 					if(blog == null) {
 						continue;
 					}
@@ -239,7 +232,7 @@ public class UserDAO {
 		return allCollectBlogList;
 	}
 	
-	//��ȡת�ص����в���
+	//获取转载的所有博客
 	public List<Blog> getAllTransferBlog(int accountId) {
 		ArrayList<Blog> allTransferBlogList = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_ALL_TRANSFER_BLOGS, new Object[] {accountId, RelationWithBlog.TRANSFER.getId()});
@@ -250,7 +243,7 @@ public class UserDAO {
 			while(rs.next()) {
 				try {
 					int blogId = rs.getInt("BlogId");
-					Blog blog = BlogDAO.instance.getBlogById(blogId);
+					Blog blog = BlogIndexDAO.instance.getBlogById(blogId);
 					if(blog == null) {
 						continue;
 					}
@@ -263,21 +256,21 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return allTransferBlogList;
-	}
+	}*/
 	
-	//����
-	public int makeComment(int objectId, int userId, String content) {
+	//评论
+	/*public int makeComment(int objectId, int userId, String content) {
 		String dateStr = sdf.format(new Date());
 		int res = DBConnection.instance.executeQuery(INSERT_COMMENT_INFO, new Object[] {userId, objectId, dateStr, content});
-		/*if(CommonHelper.instance.isSqlExecuteSucc(res) && BlogDAO.instance.isBlog(objectId) && BlogDAO.instance.hitCache(objectId)) {
+		if(CommonHelper.instance.isSqlExecuteSucc(res) && BlogDAO.instance.isBlog(objectId) && BlogDAO.instance.hitCache(objectId)) {
 			Blog blog = BlogDAO.instance.getBlogById(objectId);
 			//BlogDAO.instance.reloadCommentByBlogId(blog);
-		}*/
+		}
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
-	}
+	}*/
 	
-	//ɾ�����ۣ�ֻ��ɾ���Լ������µ����ۣ�����˲������Լ�������
-	public int deleteComment(int commentId, int accountId, int objectId) {
+	//删除评论，只能删除自己博客下的评论，或别人博客下自己的评论
+	/*public int deleteComment(int commentId, int accountId, int objectId) {
 		Blog blog = BlogDAO.instance.getBlogById(objectId);
 		if(blog == null) {
 			Comment comment = BlogDAO.instance.getCommentById(commentId);
@@ -307,7 +300,7 @@ public class UserDAO {
 		List<Comment> allComments = BlogDAO.instance.getAllCommentById(commentId);
 		if(!allComments.isEmpty()) {
 			for(Comment comment : allComments) {
-				deleteComment(comment.getCommentId());//�ݹ�
+				deleteComment(comment.getCommentId());//递归
 			}
 		}
 		//BlogDAO.instance.removeCommentByIdFromSecondDAO(commentId);
@@ -316,13 +309,13 @@ public class UserDAO {
 		int result = DBConnection.instance.executeQuery(DELETE_COMMENT, arr);
 		return CommonHelper.instance.isSqlExecuteSucc(result);
 	}
-	
-	//�ղػ�ת�ز���,�ղ�type=1��ת��type=2,�����RelationWithBlog
+	*/
+	/*//收藏或转载博客,收藏type=1，转载type=2,详情见RelationWithBlog
 	public int collectOrTransferBlog(int blogId, int accountId, int type) {
 		if(type != RelationWithBlog.COLLECT.getId() && type != RelationWithBlog.TRANSFER.getId()) {
 			return ResultConst.PARAMS_ERROR.getId();
 		}
-		Blog blog = BlogDAO.instance.getBlogById(blogId);
+		Blog blog = BlogIndexDAO.instance.getBlogById(blogId);
 		if(blog == null) {
 			return ResultConst.BLOG_NOT_EXIST.getId();
 		}
@@ -332,13 +325,13 @@ public class UserDAO {
 			String sql;
 			if(rs.next()) {//|| (rs.getInt("Type") != 1 && rs.getInt("Type") != 2)
 				int typeId = rs.getInt("Type");
-				if(typeId == type || typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId()) {  //3Ϊ��ת�����ղر�־
+				if(typeId == type || typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId()) {  //3为即转载又收藏标志
 					return ResultConst.HAS_COLLECT_OR_TRANSFER_BLOG.getId();
 				}
-				if(type == RelationWithBlog.COLLECT.getId() && BlogDAO.instance.hitCache(blogId)) {
+				if(type == RelationWithBlog.COLLECT.getId() && BlogIndexDAO.instance.hitCache(blogId)) {
 					blog.increaseCollectsNum();
 				}
-				if(type == RelationWithBlog.TRANSFER.getId() && BlogDAO.instance.hitCache(blogId)) {
+				if(type == RelationWithBlog.TRANSFER.getId() && BlogIndexDAO.instance.hitCache(blogId)) {
 					blog.increaseTransferNum();
 				}
 				int flag = typeId == RelationWithBlog.NO_RELATION.getId() ? type : RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId();
@@ -353,8 +346,8 @@ public class UserDAO {
 			return ResultConst.EXECUTE_SQL_ERROR.getId();
 		}
 	}
-	
-	public boolean isCollected(int accountId, int blogId) {
+	*/
+	/*public boolean isCollected(int accountId, int blogId) {
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_AND_BLOG_RELATION, new Object[] {accountId, blogId});
 		try {
 			if(rs.next()) {
@@ -368,12 +361,12 @@ public class UserDAO {
 		}
 	}
 	
-	//ȡ���ղػ�ת��
+	//取消收藏或转载
 	public int cancleCollectOrTransfer(int blogId, int accountId, int type) {
 		if(type != RelationWithBlog.COLLECT.getId() && type != RelationWithBlog.TRANSFER.getId()) {
 			return ResultConst.PARAMS_ERROR.getId();
 		}
-		Blog blog = BlogDAO.instance.getBlogById(blogId);
+		Blog blog = BlogIndexDAO.instance.getBlogById(blogId);
 		if(blog == null) {
 			return ResultConst.BLOG_NOT_EXIST.getId();
 		}
@@ -396,10 +389,10 @@ public class UserDAO {
 				res = DBConnection.instance.executeQuery(sql, new Object[] {RelationWithBlog.NO_RELATION.getId(), null, accountId, blogId});
 			}
 			if(CommonHelper.instance.isSqlExecuteSucc(res)) {
-				if(type == RelationWithBlog.COLLECT.getId() && BlogDAO.instance.hitCache(blogId)) {
+				if(type == RelationWithBlog.COLLECT.getId() && BlogIndexDAO.instance.hitCache(blogId)) {
 					blog.decreaseCollectsNum();
 				}
-				if(type == RelationWithBlog.TRANSFER.getId() && BlogDAO.instance.hitCache(blogId)) {
+				if(type == RelationWithBlog.TRANSFER.getId() && BlogIndexDAO.instance.hitCache(blogId)) {
 					blog.decreaseTransferNum();
 				}
 			}
@@ -407,9 +400,9 @@ public class UserDAO {
 		} catch (Throwable t) {
 			return ResultConst.EXECUTE_SQL_ERROR.getId();
 		}
-	}
+	}*/
 	
-	//�����۵���
+	/*//给评论点赞
 	public int clickLike(int accountId, int commentId) {
 		int res = DBConnection.instance.executeQuery(CLICK_LIKE, new Object[] {commentId,accountId});
 		if(CommonHelper.instance.isSqlExecuteSucc(res)) {
@@ -419,7 +412,7 @@ public class UserDAO {
 		return ResultConst.CLICK_LIKE_ERROR.getId();
 	}
 	
-	//ȡ��֮ǰ�����
+	//取消之前点的赞
 	public int cancleLike(int accountId, int commentId) {
 		int result = DBConnection.instance.executeQuery(CANCLE_LIKE, new Object[] {commentId,accountId});
 		if(CommonHelper.instance.isSqlExecuteSucc(result)) {
@@ -429,17 +422,17 @@ public class UserDAO {
 		return ResultConst.CANCLE_LIKE_ERROR.getId();
 	}
 	
-	//�����˵Ĺ�ϵ
+	//与他人的关系
 	public int happenRelation(int accountId, int otherId, int type) {
 		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId,otherId,type,type, new Date()});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
-	//ȡ�������˵Ĺ�ϵ
+	//取消与他人的关系
 	public int cancleRelation(int accountId, int otherId, int type) {
 		int res = DBConnection.instance.executeQuery(CHANGE_USER_RELATION, new Object[] {accountId,otherId,type});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
-	//��ȡ�����й�ϵ���û�
+	//获取所有有关系的用户
 	public Map<User, Integer> getAllRelationWithOthers(int accountId) {
 		Map<User, Integer> resMap = new LinkedHashMap<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_RELATIONS, new Object[] {accountId});
@@ -458,9 +451,9 @@ public class UserDAO {
 			t.printStackTrace();
 		}
 		return resMap;
-	}
+	}*/
 	
-	public boolean isRelated(int accountId, int otherId) {
+	/*public boolean isRelated(int accountId, int otherId) {
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_RELATION, new Object[] {accountId, otherId});
 		try {
 			return rs.next();
@@ -487,9 +480,9 @@ public class UserDAO {
 			e.printStackTrace();
 			return false;
 		}
-	}
+	}*/
 	
-	public boolean isPasswordCorrect(int accountId, String password) {
+	/*public boolean isPasswordCorrect(int accountId, String password) {
 		if(userSecondDao.containsKey(accountId)) {
 			return userSecondDao.get(accountId).getPassword().equals(password);
 		}
@@ -520,6 +513,6 @@ public class UserDAO {
 			e.printStackTrace();
 			return false;
 		}
-	}
+	}*/
 	
 }
