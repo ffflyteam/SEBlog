@@ -76,7 +76,7 @@
 div.content-container div button {
 	background-color: rgb(154,189,65);
 }
-div.content-container div div {
+div.content-container>div[class!=c-pages]>div {
 	width: 50%;
 	margin: 0 auto;
 }
@@ -87,4 +87,13 @@ div.content-container input {
 	display: inline-block;
 	width: 40%;
 	margin-right: 30px;
+}
+
+div.c-pages {
+	text-align: center;
+	position: absolute;
+	bottom: 15px;
+}
+div.cp-item {
+	display: inline-block;
 }
