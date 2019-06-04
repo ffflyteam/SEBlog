@@ -20,9 +20,12 @@ public class Detail implements EntryPoint{
 
 	private final DetailServiceAsync Detail = GWT.create(DetailService.class);
 	private final CommentDetailServiceAsync comment = GWT.create(CommentDetailService.class);
+	private final CollectAndRelationServiceAsync collAR = GWT.create(CollectAndRelationService.class);
+	private final MakeRelationWithOtherServiceAsync makeRelation = GWT.create(MakeRelationWithOtherService.class);
 	@Override
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
+		int accountId = 1;
 		String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
 		int blogId = Integer.valueOf(blogIdStr);
 		Window.alert(blogIdStr);
@@ -38,7 +41,7 @@ public class Detail implements EntryPoint{
 		
 		
 		//请求相关评论
-		//getComment(blogId);
+		getComment(blogId);
 		
 		//点击关注事件
 		String authorIdString = Operate.getAttr("nickName","data-authorid");
@@ -53,6 +56,7 @@ public class Detail implements EntryPoint{
 					JSONObject focusJsonObject = new JSONObject();
 					focusJsonObject.put("focusId",new JSONString(authorIdString));
 					//发送添加关注请求
+					
 				}
 			}
 		});

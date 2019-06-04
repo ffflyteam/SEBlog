@@ -13,7 +13,6 @@ public class Comment implements Serializable{
 	private Date commentDateTime;
 	private String content;
 	private List<Comment> allComments;
-
 	public Comment() {
 	}
 	
@@ -55,7 +54,7 @@ public class Comment implements Serializable{
 		StringBuilder sb = new StringBuilder();
 		sb.append("CommentId:").append(commentId);
 		sb.append(",ObjectId:").append(objectId);
-		sb.append(",User:").append(user.toString());
+		//sb.append(",User:").append(user.toString());
 		sb.append(",CommentDateTime:").append(commentDateTime);
 		sb.append(",Content:").append(content);
 		return sb.toString();

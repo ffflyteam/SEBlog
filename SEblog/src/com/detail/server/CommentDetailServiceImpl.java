@@ -11,7 +11,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class CommentDetailServiceImpl extends RemoteServiceServlet implements CommentDetailService{
 
 	@Override
-	public List<Comment> getCommentDetail(int objectId) {
+	public List<Comment> getCommentDetail(int objectId) throws IllegalArgumentException {
 		List<Comment> allComments = BlogDetailDAO.instance.getAllCommentById(objectId);
 		return allComments;
 	}

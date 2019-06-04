@@ -15,5 +15,4 @@ public class DetailServiceImpl extends RemoteServiceServlet implements DetailSer
 		Blog blog = BlogDetailDAO.instance.getBlogWithIncreaseReadNum(blogId);
 		return blog;
 	}
-
 }
