@@ -46,8 +46,8 @@ public class Index implements EntryPoint{
 		});
 		
 		//注册侧边导航栏的点击事件
-		Element sideNavElement = DOM.getElementById("s-nav");
-		NodeList<Element> list = sideNavElement.getElementsByTagName("a");
+		final Element sideNavElement = DOM.getElementById("s-nav");
+		final NodeList<Element> list = sideNavElement.getElementsByTagName("a");
 		Window.alert(list.toString());
 		for (int i = 0; i < list.getLength(); i++) {
 			DOM.sinkEvents(list.getItem(i), Event.ONCLICK);
@@ -63,7 +63,7 @@ public class Index implements EntryPoint{
 						Element aTargetElement = DOM.eventGetCurrentTarget(event);
 						aTargetElement.addClassName("selected");
 						String type = aTargetElement.getParentElement().getAttribute("type");
-						int typeNum = Integer.valueOf(type);
+						final int typeNum = Integer.valueOf(type);
 						Window.alert("类型"+typeNum);
 						JSONObject json = new JSONObject();
 						json.put("type", new JSONString(type));

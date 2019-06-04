@@ -20,10 +20,10 @@ public class Login implements EntryPoint {
 
 		
 		//注册和登录页面切换事件
-		Element loginContainer = DOM.getElementById("login-container");
-		Element registerContainer = DOM.getElementById("register-container");
-		Element selectLogin = DOM.getElementById("select-login");
-		Element selectRegister = DOM.getElementById("select-register");
+		final Element loginContainer = DOM.getElementById("login-container");
+		final Element registerContainer = DOM.getElementById("register-container");
+		final Element selectLogin = DOM.getElementById("select-login");
+		final Element selectRegister = DOM.getElementById("select-register");
 		
 		DOM.sinkEvents(selectLogin, Event.ONCLICK);
 		DOM.setEventListener(selectLogin, new EventListener() {

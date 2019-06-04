@@ -2,7 +2,6 @@ package com.detail.client;
 
 import java.util.List;
 
-import com.detail.client.Blog;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -14,8 +13,6 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import java_cup.internal_error;
-
 public class Detail implements EntryPoint{
 
 	private final DetailServiceAsync Detail = GWT.create(DetailService.class);
@@ -26,7 +23,7 @@ public class Detail implements EntryPoint{
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
 		int accountId = 1;
-		String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
+		final String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
 		int blogId = Integer.valueOf(blogIdStr);
 		Window.alert(blogIdStr);
 		
@@ -44,7 +41,7 @@ public class Detail implements EntryPoint{
 		getComment(blogId);
 		
 		//点击关注事件
-		String authorIdString = Operate.getAttr("nickName","data-authorid");
+		final String authorIdString = Operate.getAttr("nickName","data-authorid");
 		Element focus = DOM.getElementById("focus");
 		DOM.sinkEvents(focus, Event.ONCLICK);
 		DOM.setEventListener(focus, new EventListener() {
