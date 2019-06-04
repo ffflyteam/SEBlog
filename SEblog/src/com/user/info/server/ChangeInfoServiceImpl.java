@@ -15,7 +15,7 @@ public class ChangeInfoServiceImpl extends RemoteServiceServlet implements Chang
 	public boolean changeInfo(String info) {
 		try {
 			JSONObject jsonObject = new JSONObject(info);
-			int account = jsonObject.getInt("accountId");
+			int account = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 			String password = jsonObject.getString("password");
 			String name = jsonObject.getString("nickName");
 			short sex = (short) jsonObject.getInt("sex");

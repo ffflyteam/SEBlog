@@ -13,7 +13,8 @@ import com.user.blog.client.UserBlogService;
 public class UserBlogServiceImpl extends RemoteServiceServlet implements UserBlogService{
 
 	@Override
-	public List<Blog> getAllBlog(int accountId, int type) {
+	public List<Blog> getAllBlog(int type) {
+		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		if(type == 0) {
 			return UserDAO.instance.getAllBlog(accountId);
 		} else if (type == 1) {

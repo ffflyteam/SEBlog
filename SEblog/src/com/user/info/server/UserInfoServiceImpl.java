@@ -11,7 +11,8 @@ import com.user.info.client.UserInfoService;
 public class UserInfoServiceImpl extends RemoteServiceServlet implements UserInfoService{
 
 	@Override
-	public User getUserInfo(int accountId) {
+	public User getUserInfo() {
+		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		User user = UserDAO.instance.getUserInfo(accountId);
 		return user;
 	}

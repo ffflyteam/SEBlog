@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDAO {
-	//ÓÃ»§ÐÅÏ¢
+	//ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 	private static final String INSERT_USER_INFO = "INSERT INTO `user_info` VALUES(?,?,?,?,?,?,0)";
 	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
 	private static final String SELECT_USER_STAT_BY_ID = "SELECT `Stat` FROM `user_info` WHERE UserId = ?";
 	private static final String SELECT_USER_INFO_BY_ID_AND_PASSWORD = "SELECT * FROM `user_info` WHERE UserId = ? AND Password = ?";
 	private static final String UPDATE_USER_INFO = "UPDATE `user_info` SET PassWord = ?,UserName = ?,Sex = ?,BirthDay = ?,Address = ? WHERE UserId = ?";
-	//ÓÃ»§ÊÕ²Ø»ò×ªÔØ²©¿Í
+	//ï¿½Ã»ï¿½ï¿½Õ²Ø»ï¿½×ªï¿½Ø²ï¿½ï¿½ï¿½
 	private static final String SELECT_USER_AND_BLOG_RELATION = "SELECT `Type` FROM `user_blog_relation` WHERE UserId = ? AND BlogId = ?";
 	private static final String SELECT_ALL_COLLECT_BLOGS = "SELECT `BlogId` FROM `user_blog_relation` WHERE UserId = ? AND (`Type` = ? OR `Type` = 3) ORDER BY CollectTime DESC";
 	private static final String SELECT_ALL_TRANSFER_BLOGS = "SELECT `BlogId` FROM `user_blog_relation` WHERE UserId = ? AND (`Type` = ? OR `Type` = 3) ORDER BY TransferTime DESC";
@@ -26,24 +26,24 @@ public class UserDAO {
 	private static final String INSERT_USER_AND_BLOG_RELATION_FOR_TRANSFER = "INSERT INTO `user_blog_relation` VALUES(?,?,?,null,?)";
 	private static final String UPDATE_RELATION_WITH_BLOG_FOR_COLLECT = "UPDATE `user_blog_relation` SET `Type` = ?,CollectTime = ? WHERE UserId = ? AND BlogId = ?";
 	private static final String UPDATE_RELATION_WITH_BLOG_FOR_TRANSFER = "UPDATE `user_blog_relation` SET `Type` = ?,TransferTime = ? WHERE UserId = ? AND BlogId = ?";
-	//ÓÃ»§×Ô¼ºµÄ²©¿Í
+	//ï¿½Ã»ï¿½ï¿½Ô¼ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
 	private static final String INSERT_BLOG_INFO = "INSERT INTO `blog_info` VALUES(0,?,?,?,?,0,0,0,?)";
 	private static final String DELETE_BLOG = "DELETE FROM `blog_info` WHERE BlogId = ? AND UserId = ?";
 	private static final String CHANGE_BLOG_TYPE = "UPDATE `blog_info` SET `Type` = ? WHERE `BlogId` = ?";
 	private static final String DELETE_USER_BLOG_RELATION = "DELETE FROM user_blog_relation WHERE BlogId = ?";
 	private static final String SELECT_ALL_BLOG = "SELECT `BlogId` FROM blog_info WHERE UserId = ? ORDER BY PublishDateTime DESC";
-	//²©¿ÍÆÀÂÛ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private static final String INSERT_COMMENT_INFO = "INSERT INTO `comments` VALUES(0,?,?,?,?,0)";
 	private static final String DELETE_COMMENT_BY_ID_USERID = "DELETE FROM `comments` WHERE CommentId = ? AND UserId = ?";
 	private static final String DELETE_COMMENT = "DELETE FROM `comments` WHERE CommentId = ?";
 	private static final String DELETE_ALL_COMMENTS_BY_OBJECTID = "DELETE FROM `comments` WHERE ObjectId = ?";
-	//ÆÀÂÛµãÔÞ»òÈ¡ÏûÔÞ
+	//ï¿½ï¿½ï¿½Ûµï¿½ï¿½Þ»ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 	private static final String CLICK_LIKE = "INSERT INTO `user_comment_like` VALUES(?,?)";
 	private static final String CANCLE_LIKE = "DELETE FROM `user_comment_like` WHERE CommentId = ? AND UserId = ?";
 	private static final String INCREASE_LIKE_NUM = "UPDATE `comments` SET LikeNum = LikeNum + 1 WHERE CommentId = ?";
 	private static final String DECREASE_LIKE_NUM = "UPDATE `comments` SET LikeNum = LikeNum - 1 WHERE CommentId = ?";
 	private static final String DELECT_COMMENT_LIKE = "DELETE FROM user_comment_like WHERE CommentId = ?";
-	//ÓÃ»§¹ØÏµ
+	//ï¿½Ã»ï¿½ï¿½ï¿½Ïµ
 	private static final String INSERT_USER_RELATION = "INSERT INTO `user_relation` VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE Type = ?";
 	private static final String SELECT_USER_RELATIONS = "SELECT * FROM `user_relation` WHERE UserId = ? AND Type <> 0 ORDER BY CreateTime DESC";
 	private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
@@ -52,13 +52,13 @@ public class UserDAO {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
 	public static final UserDAO instance = new UserDAO();
 	
-	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//¿É¸Ä³ÉRedis
+	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//ï¿½É¸Ä³ï¿½Redis
 	private static final int userCacheSize = 64;
 	
 	private UserDAO() {
 	}
 	
-	//»ñÈ¡ÓÃ»§×Ô¼ºÐÅÏ¢
+	//ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Ï¢
 	public User getUserInfo(int userId) {
 		if(!userSecondDao.containsKey(userId)) {
 			ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
@@ -90,7 +90,7 @@ public class UserDAO {
 		}
 	}
 	
-	//ÓÃ»§×¢²á
+	//ï¿½Ã»ï¿½×¢ï¿½ï¿½
 	public int register(int accountId, String password, String userName, short sex, Date birthDay, String address) throws SQLException {
 		if(isUserRegistered(accountId)) {
 			return ResultConst.ACCOUNT_HAS_BEEN_REGISTERED.getId();
@@ -100,7 +100,7 @@ public class UserDAO {
 		return !CommonHelper.instance.isSqlExecuteSucc(res) ? ResultConst.REGISTER_ERROR.getId() : ResultConst.SUCCESS.getId();
 	}
 	
-	//ÓÃ»§µÇÂ¼
+	//ï¿½Ã»ï¿½ï¿½ï¿½Â¼
 	public int login(int accountId, String password) {
 		if(!isUserRegistered(accountId)) {
 			return ResultConst.ACCOUNT_NOT_EXIST.getId();
@@ -114,7 +114,7 @@ public class UserDAO {
 		return ResultConst.SUCCESS.getId();
 	}
 	
-	//ÐÞ¸Ä×ÊÁÏ
+	//ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	public boolean setUserInfo(int accountId, String password, String userName, short sex, String birthDayStr, String address) {
 		Date birthDay;
 		try {
@@ -148,38 +148,38 @@ public class UserDAO {
 		return false;
 	}
 	
-	//´´½¨²©¿Í
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int makeBlog(int accountId, String title, String content, int type) {
 		Object[] params = new Object[] {new Date(),accountId, title, content, type};
 		int res = DBConnection.instance.executeQuery(INSERT_BLOG_INFO, params);
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
 	
-	//É¾³ý²©¿Í
+	//É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int deleteBlog(int blogId, int accountId) {
 		Object[] params = new Object[] {blogId};
 		try {
 			List<Comment> allComments = BlogDAO.instance.getAllCommentById(blogId);
-			for(Comment comment : allComments) {			//É¾³ýÆÀÂÛµÄÆÀÂÛ£¬¼°µãÔÞÊý
+			for(Comment comment : allComments) {			//É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½Û£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				deleteComment(comment.getCommentId());
 			}
 		} catch (Throwable t) {
 			return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
 		}
-		int rs = DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //É¾³ý²©¿ÍµÄÆÀÂÛ
+		int rs = DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //É¾ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½
 		if(!CommonHelper.instance.isSqlExecuteSucc(rs)) {
 			return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
 		}
-		rs = DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //É¾³ýÓÃ»§ºÍ²©¿ÍµÄ¹ØÏµ
+		rs = DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //É¾ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Í²ï¿½ï¿½ÍµÄ¹ï¿½Ïµ
 		if(!CommonHelper.instance.isSqlExecuteSucc(rs)) {
 			return ResultConst.CACLE_RELATION_BLOG_ERROR.getId();
 		}
-		rs = DBConnection.instance.executeQuery(DELETE_BLOG, new Object[] {blogId, accountId});  //É¾³ý²©¿Í
+		rs = DBConnection.instance.executeQuery(DELETE_BLOG, new Object[] {blogId, accountId});  //É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		BlogDAO.instance.removeBlogByIdFromSecondDAO(blogId);
 		return CommonHelper.instance.getSqlExecuteResultConst(rs);
 	}
 	
-	//»ñÈ¡×Ô¼ºµÄËùÓÐ²©¿Í
+	//ï¿½ï¿½È¡ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½
 	public List<Blog> getAllBlog(int accountId) {
 		ArrayList<Blog> allBlogList = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_ALL_BLOG, new Object[] {accountId});
@@ -202,7 +202,7 @@ public class UserDAO {
 		return allBlogList;
 	}
 	
-	//ÐÞ¸Ä²©¿Í·ÖÀà
+	//ï¿½Þ¸Ä²ï¿½ï¿½Í·ï¿½ï¿½ï¿½
 	public boolean changeBlogType(int blogId, int type) {
 		Blog blog = BlogDAO.instance.getBlogById(blogId);
 		if(blog != null) {
@@ -212,7 +212,7 @@ public class UserDAO {
 		return CommonHelper.instance.isSqlExecuteSucc(result);
 	}
 	
-	//»ñÈ¡ÊÕ²ØµÄËùÓÐ²©¿Í
+	//ï¿½ï¿½È¡ï¿½Õ²Øµï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½
 	public List<Blog> getAllCollectBlog(int accountId) {
 		ArrayList<Blog> allCollectBlogList = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_ALL_COLLECT_BLOGS, new Object[] {accountId, RelationWithBlog.COLLECT.getId()});
@@ -235,7 +235,7 @@ public class UserDAO {
 		return allCollectBlogList;
 	}
 	
-	//»ñÈ¡×ªÔØµÄËùÓÐ²©¿Í
+	//ï¿½ï¿½È¡×ªï¿½Øµï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½
 	public List<Blog> getAllTransferBlog(int accountId) {
 		ArrayList<Blog> allTransferBlogList = new ArrayList<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_ALL_TRANSFER_BLOGS, new Object[] {accountId, RelationWithBlog.TRANSFER.getId()});
@@ -261,7 +261,7 @@ public class UserDAO {
 		return allTransferBlogList;
 	}
 	
-	//ÆÀÂÛ
+	//ï¿½ï¿½ï¿½ï¿½
 	public int makeComment(int objectId, int userId, String content) {
 		String dateStr = sdf.format(new Date());
 		int res = DBConnection.instance.executeQuery(INSERT_COMMENT_INFO, new Object[] {userId, objectId, dateStr, content});
@@ -272,7 +272,7 @@ public class UserDAO {
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
 	
-	//É¾³ýÆÀÂÛ£¬Ö»ÄÜÉ¾³ý×Ô¼º²©¿ÍÏÂµÄÆÀÂÛ£¬»ò±ðÈË²©¿ÍÏÂ×Ô¼ºµÄÆÀÂÛ
+	//É¾ï¿½ï¿½ï¿½ï¿½ï¿½Û£ï¿½Ö»ï¿½ï¿½É¾ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½Û£ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int deleteComment(int commentId, int accountId, int objectId) {
 		Blog blog = BlogDAO.instance.getBlogById(objectId);
 		if(blog == null) {
@@ -303,7 +303,7 @@ public class UserDAO {
 		List<Comment> allComments = BlogDAO.instance.getAllCommentById(commentId);
 		if(!allComments.isEmpty()) {
 			for(Comment comment : allComments) {
-				deleteComment(comment.getCommentId());//µÝ¹é
+				deleteComment(comment.getCommentId());//ï¿½Ý¹ï¿½
 			}
 		}
 		//BlogDAO.instance.removeCommentByIdFromSecondDAO(commentId);
@@ -313,7 +313,7 @@ public class UserDAO {
 		return CommonHelper.instance.isSqlExecuteSucc(result);
 	}
 	
-	//ÊÕ²Ø»ò×ªÔØ²©¿Í,ÊÕ²Øtype=1£¬×ªÔØtype=2,ÏêÇé¼ûRelationWithBlog
+	//ï¿½Õ²Ø»ï¿½×ªï¿½Ø²ï¿½ï¿½ï¿½,ï¿½Õ²ï¿½type=1ï¿½ï¿½×ªï¿½ï¿½type=2,ï¿½ï¿½ï¿½ï¿½ï¿½RelationWithBlog
 	public int collectOrTransferBlog(int blogId, int accountId, int type) {
 		if(type != RelationWithBlog.COLLECT.getId() && type != RelationWithBlog.TRANSFER.getId()) {
 			return ResultConst.PARAMS_ERROR.getId();
@@ -328,7 +328,7 @@ public class UserDAO {
 			String sql;
 			if(rs.next()) {//|| (rs.getInt("Type") != 1 && rs.getInt("Type") != 2)
 				int typeId = rs.getInt("Type");
-				if(typeId == type || typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId()) {  //3Îª¼´×ªÔØÓÖÊÕ²Ø±êÖ¾
+				if(typeId == type || typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId()) {  //3Îªï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Õ²Ø±ï¿½Ö¾
 					return ResultConst.HAS_COLLECT_OR_TRANSFER_BLOG.getId();
 				}
 				if(type == RelationWithBlog.COLLECT.getId() && BlogDAO.instance.hitCache(blogId)) {
@@ -364,7 +364,7 @@ public class UserDAO {
 		}
 	}
 	
-	//È¡ÏûÊÕ²Ø»ò×ªÔØ
+	//È¡ï¿½ï¿½ï¿½Õ²Ø»ï¿½×ªï¿½ï¿½
 	public int cancleCollectOrTransfer(int blogId, int accountId, int type) {
 		if(type != RelationWithBlog.COLLECT.getId() && type != RelationWithBlog.TRANSFER.getId()) {
 			return ResultConst.PARAMS_ERROR.getId();
@@ -405,7 +405,7 @@ public class UserDAO {
 		}
 	}
 	
-	//¸øÆÀÂÛµãÔÞ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½
 	public int clickLike(int accountId, int commentId) {
 		int res = DBConnection.instance.executeQuery(CLICK_LIKE, new Object[] {commentId,accountId});
 		if(CommonHelper.instance.isSqlExecuteSucc(res)) {
@@ -415,7 +415,7 @@ public class UserDAO {
 		return ResultConst.CLICK_LIKE_ERROR.getId();
 	}
 	
-	//È¡ÏûÖ®Ç°µãµÄÔÞ
+	//È¡ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int cancleLike(int accountId, int commentId) {
 		int result = DBConnection.instance.executeQuery(CANCLE_LIKE, new Object[] {commentId,accountId});
 		if(CommonHelper.instance.isSqlExecuteSucc(result)) {
@@ -425,17 +425,17 @@ public class UserDAO {
 		return ResultConst.CANCLE_LIKE_ERROR.getId();
 	}
 	
-	//ÓëËûÈËµÄ¹ØÏµ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ËµÄ¹ï¿½Ïµ
 	public int happenRelation(int accountId, int otherId, int type) {
 		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId,otherId,type,type, new Date()});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
-	//È¡ÏûÓëËûÈËµÄ¹ØÏµ
+	//È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ËµÄ¹ï¿½Ïµ
 	public int cancleRelation(int accountId, int otherId, int type) {
 		int res = DBConnection.instance.executeQuery(CHANGE_USER_RELATION, new Object[] {accountId,otherId,type});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
-	//»ñÈ¡ËùÓÐÓÐ¹ØÏµµÄÓÃ»§
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½Ïµï¿½ï¿½ï¿½Ã»ï¿½
 	public Map<User, Integer> getAllRelationWithOthers(int accountId) {
 		Map<User, Integer> resMap = new LinkedHashMap<>();
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_RELATIONS, new Object[] {accountId});

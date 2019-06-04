@@ -10,8 +10,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet implements MakeRelationWithOtherService{
 
 	@Override
-	public int makeRelation(int accountId, int otherId, int type, int flag) {
+	public int makeRelation(int otherId, int type, int flag) {
 		int res;
+		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		if(flag == 0) {
 			res = UserDAO.instance.happenRelation(accountId, otherId, type);
 		} else {

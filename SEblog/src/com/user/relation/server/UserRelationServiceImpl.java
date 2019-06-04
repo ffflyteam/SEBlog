@@ -1,6 +1,5 @@
 package com.user.relation.server;
 
-import java.util.List;
 import java.util.Map;
 
 import com.DAO.User;
@@ -14,7 +13,8 @@ import com.user.relation.client.UserRelationService;
 public class UserRelationServiceImpl extends RemoteServiceServlet implements UserRelationService{
 
 	@Override
-	public Map<User, Integer> getAllRelatedUser(int accountId) {
+	public Map<User, Integer> getAllRelatedUser() {
+		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		Map<User, Integer> allRelatedUsers = UserDAO.instance.getAllRelationWithOthers(accountId);
 		return allRelatedUsers;
 	}

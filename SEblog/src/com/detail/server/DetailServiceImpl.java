@@ -1,7 +1,7 @@
 package com.detail.server;
 
 import com.detail.client.Blog;
-import com.detail.shared.BlogDAO;
+import com.detail.shared.BlogDetailDAO;
 import com.detail.client.DetailService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -12,7 +12,7 @@ public class DetailServiceImpl extends RemoteServiceServlet implements DetailSer
 
 	@Override
 	public Blog getDetail(int blogId) {
-		Blog blog = BlogDAO.instance.getBlogWithIncreaseReadNum(blogId);
+		Blog blog = BlogDetailDAO.instance.getBlogWithIncreaseReadNum(blogId);
 		return blog;
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.detail.client.Comment;
 import com.detail.client.CommentDetailService;
-import com.detail.shared.BlogDAO;
+import com.detail.shared.BlogDetailDAO;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -12,7 +12,7 @@ public class CommentDetailServiceImpl extends RemoteServiceServlet implements Co
 
 	@Override
 	public List<Comment> getCommentDetail(int objectId) {
-		List<Comment> allComments = BlogDAO.instance.getAllCommentById(objectId);
+		List<Comment> allComments = BlogDetailDAO.instance.getAllCommentById(objectId);
 		return allComments;
 	}
 
