@@ -11,6 +11,10 @@ import com.user.info.client.ChangeInfoService;
 @RemoteServiceRelativePath("user_info_change")
 public class ChangeInfoServiceImpl extends RemoteServiceServlet implements ChangeInfoService{
 
+	/*
+	 * 用户改变自己信息
+	 * param(Json格式的String，password，nickName，sex，birthDay，address)
+	 */
 	@Override
 	public boolean changeInfo(String info) {
 		try {

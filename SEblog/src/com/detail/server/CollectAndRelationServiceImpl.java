@@ -11,12 +11,13 @@ public class CollectAndRelationServiceImpl extends RemoteServiceServlet implemen
 	
 	/*
 	 * 
-	 * ÊÇ·ñ¹Ø×¢²©Ö÷£¬ÊÇ·ñÊÕ²Ø²©¿Í£¬Á½¸ö±êÖ¾Î»
+	 * æ”¶è—åšå®¢çš„è½¬æ€å’Œä¸è¯¥åšä¸»çš„å…³ç³»
 	 * 
 	 */
 	@Override
-	public boolean[] getStatus(int accountId, int blogId, int otherId) {
+	public boolean[] getStatus(int blogId, int otherId) {
 		boolean[] status = new boolean[2];
+		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		status[0] = UserDAO.instance.isCollected(accountId, blogId);
 		status[1] = UserDAO.instance.isRelated(accountId, otherId);
 		return status;

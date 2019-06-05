@@ -12,6 +12,10 @@ import com.user.blog.client.UserBlogService;
 @RemoteServiceRelativePath("user_blog")
 public class UserBlogServiceImpl extends RemoteServiceServlet implements UserBlogService{
 
+	/*
+	 * 拿指定类型的博客
+	 * param(博客类型，见BlogType)
+	 */
 	@Override
 	public List<Blog> getAllBlog(int type) {
 		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
