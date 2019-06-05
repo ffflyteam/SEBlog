@@ -1,7 +1,7 @@
 package com.detail.server;
 
-import com.DAO.UserDAO;
 import com.detail.client.TransferOrCollectBlogService;
+import com.detail.shared.UserDetailDAO;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -13,9 +13,9 @@ public class TransferOrCollectBlogServiceImpl extends RemoteServiceServlet imple
 	public int transferOrCollectBlog(int accountId, int blogId, int type, int flag) {
 		int res;
 		if(flag == 0) {
-			res = UserDAO.instance.collectOrTransferBlog(blogId, accountId, type);
+			res = UserDetailDAO.instance.collectOrTransferBlog(blogId, accountId, type);
 		} else {
-			res = UserDAO.instance.cancleCollectOrTransfer(blogId, accountId, type);
+			res = UserDetailDAO.instance.cancleCollectOrTransfer(blogId, accountId, type);
 		}
 		return res;
 	}

@@ -1,7 +1,7 @@
 package com.detail.server;
 
-import com.DAO.UserDAO;
 import com.detail.client.MakeCommentService;
+import com.detail.shared.UserDetailDAO;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -11,7 +11,7 @@ public class MakeCommentServiceImpl extends RemoteServiceServlet implements Make
 
 	@Override
 	public int makeComment(int objectId, int userId, String content) {
-		int rs = UserDAO.instance.makeComment(objectId, userId, content);
+		int rs = UserDetailDAO.instance.makeComment(objectId, userId, content);
 		return rs;
 	}
 

@@ -76,10 +76,6 @@ nav.navbar-container a {
 	color: black;
 }
 
-#us {
-	display: none;
-}
-
 /*侧边信息栏*/
 .info-container {
 	position: fixed;

@@ -1,7 +1,7 @@
 package com.detail.server;
 
-import com.DAO.UserDAO;
 import com.detail.client.CollectAndRelationService;
+import com.detail.shared.UserDetailDAO;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -11,14 +11,14 @@ public class CollectAndRelationServiceImpl extends RemoteServiceServlet implemen
 	
 	/*
 	 * 
-	 * ÊÇ·ñ¹Ø×¢²©Ö÷£¬ÊÇ·ñÊÕ²Ø²©¿Í£¬Á½¸ö±êÖ¾Î»
+	 * ï¿½Ç·ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Õ²Ø²ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
 	 * 
 	 */
 	@Override
 	public boolean[] getStatus(int accountId, int blogId, int otherId) {
 		boolean[] status = new boolean[2];
-		status[0] = UserDAO.instance.isCollected(accountId, blogId);
-		status[1] = UserDAO.instance.isRelated(accountId, otherId);
+		status[0] = UserDetailDAO.instance.isCollected(accountId, blogId);
+		status[1] = UserDetailDAO.instance.isRelated(accountId, otherId);
 		return status;
 	}
 
