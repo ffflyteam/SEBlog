@@ -2,10 +2,7 @@ package com.detail.shared;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,7 +48,7 @@ public class UserDetailDAO {
 	private static final String INSERT_USER_RELATION = "INSERT INTO `user_relation` VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE Type = ?";
 	//private static final String SELECT_USER_RELATIONS = "SELECT * FROM `user_relation` WHERE UserId = ? AND Type <> 0 ORDER BY CreateTime DESC";
 	private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
-	//private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
+	private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
 	public static final UserDetailDAO instance = new UserDetailDAO();
@@ -460,7 +457,7 @@ public class UserDetailDAO {
 		return resMap;
 	}*/
 	
-	/*public boolean isRelated(int accountId, int otherId) {
+	public boolean isRelated(int accountId, int otherId) {
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_RELATION, new Object[] {accountId, otherId});
 		try {
 			return rs.next();
@@ -468,7 +465,7 @@ public class UserDetailDAO {
 			e.printStackTrace();
 			return false;
 		}
-	}*/
+	}
 	
 	/*public boolean isUserRegistered(int accountId) {
 		if(userSecondDao.containsKey(accountId)) {

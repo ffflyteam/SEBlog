@@ -1,12 +1,11 @@
 package com.detail.server;
 
-import com.DAO.UserDAO;
 import com.detail.client.MakeRelationWithOtherService;
+import com.detail.shared.UserDetailDAO;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
-@RemoteServiceRelativePath("make_relation")
 public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet implements MakeRelationWithOtherService{
 
 	/*
@@ -18,9 +17,9 @@ public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet imple
 		int res;
 		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		if(flag == 0) {
-			res = UserDAO.instance.happenRelation(accountId, otherId, type);
+			res = UserDetailDAO.instance.happenRelation(accountId, otherId, type);
 		} else {
-			res = UserDAO.instance.cancleRelation(accountId, otherId, type);
+			res = UserDetailDAO.instance.cancleRelation(accountId, otherId, type);
 		}
 		return res;
 	}

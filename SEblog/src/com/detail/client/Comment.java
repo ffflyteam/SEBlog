@@ -12,18 +12,20 @@ public class Comment implements Serializable{
 	private User user;
 	private Date commentDateTime;
 	private String content;
-	private List<Comment> allComments;
+	//private List<Comment> allComments;
+	private int commentNum;
 	public Comment() {
 	}
 	
-	public Comment(int commentId, int objectId, User user, Date commentDateTime, String content, List<Comment> allComments) {
+	public Comment(int commentId, int objectId, User user, Date commentDateTime, String content, int commentNum ) {//List<Comment> allComments
 		super();
 		this.commentId = commentId;
 		this.objectId = objectId;
 		this.user = user;
 		this.commentDateTime = commentDateTime;
 		this.content = content;
-		this.allComments = allComments;
+		//this.allComments = allComments;
+		this.commentNum = commentNum;
 	}
 
 	public int getCommentId() {
@@ -46,9 +48,13 @@ public class Comment implements Serializable{
 		return content;
 	}
 	
-	public List<Comment> getAllComments() {
-		return allComments;
+	public int getCommentNum() {
+		return commentNum;
 	}
+	
+	/*
+	 * public List<Comment> getAllComments() { return allComments; }
+	 */
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -57,6 +63,7 @@ public class Comment implements Serializable{
 		//sb.append(",User:").append(user.toString());
 		sb.append(",CommentDateTime:").append(commentDateTime);
 		sb.append(",Content:").append(content);
+		sb.append(",CommentNums:").append(commentNum);
 		return sb.toString();
 	}
 

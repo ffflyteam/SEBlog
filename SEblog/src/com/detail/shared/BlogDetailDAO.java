@@ -4,11 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.detail.client.Blog;
@@ -24,8 +20,12 @@ public class BlogDetailDAO {
 			+ " WHERE UserId = ? ORDER BY PublishDateTime DESC";*/
 	//private static final String SELECT_ALL_HOT_BLOG = "SELECT `Type`,GROUP_CONCAT(BlogId ORDER BY ReadNum DESC) AS AllBlogs FROM `blog_info` GROUP BY `Type` LIMIT 50";
 	private static final String SELECT_BLOG_BY_ID = "SELECT * FROM `blog_info` WHERE BlogId = ?";
-	private static final String SELECT_ALL_COMMENTS = "SELECT * FROM `comments` WHERE ObjectId = ? ORDER BY LikeNum DESC";
-	private static final String SELECT_COMMENT_BY_ID = "SELECT * FROM `comments` WHERE CommentId = ?";
+	private static final String SELECT_ALL_COMMENTS = "SELECT CommentId,UserId,A.ObjectId,CommentDateTime,Content,LikeNum,CommentNum FROM "
+			+ "(SELECT CommentId,UserId,ObjectId,CommentDateTime,Content,LikeNum FROM `comments`) AS A "
+			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentNum FROM comments GROUP BY ObjectId) AS B ON B.ObjectId = A.CommentId WHERE A.ObjectId = ? ORDER BY LikeNum DESC";//"SELECT * FROM `comments` WHERE ObjectId = ? ORDER BY LikeNum DESC";
+	private static final String SELECT_COMMENT_BY_ID = "SELECT CommentId,UserId,A.ObjectId,CommentDateTime,Content,LikeNum,CommentNum FROM "
+			+ "(SELECT CommentId,UserId,ObjectId,CommentDateTime,Content,LikeNum FROM `comments`) AS A "
+			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentNum FROM comments GROUP BY ObjectId) AS B ON B.ObjectId = A.CommentId WHERE CommentId = ?";
 	private static final String INCREASE_READ_NUM = "UPDATE `blog_info` SET ReadNum = ReadNum + 1 WHERE BlogId = ?";
 	public static final BlogDetailDAO instance = new BlogDetailDAO();
 	
@@ -203,9 +203,9 @@ public class BlogDetailDAO {
 		try {
 			while(rs.next()) {
 				try {
-					List<Comment> allComment = getAllCommentById(rs.getInt("CommentId"));
+					//List<Comment> allComment = getAllCommentById(rs.getInt("CommentId"));
 					User user = UserDetailDAO.instance.getUserInfo(rs.getInt("UserId"));
-					Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), allComment);
+					Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"));
 					allComments.add(comment);
 				} catch (Throwable t) {
 					t.printStackTrace();
@@ -224,9 +224,9 @@ public class BlogDetailDAO {
 		}*/
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_COMMENT_BY_ID, new Object[] {commentId});
 		try {
-			List<Comment> allComments = getAllCommentById(commentId);
+			//List<Comment> allComments = getAllCommentById(commentId);
 			User user = UserDetailDAO.instance.getUserInfo(rs.getInt("UserId"));
-			Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), allComments);
+			Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"));
 			return comment;
 		} catch (Throwable t) {
 			t.printStackTrace();

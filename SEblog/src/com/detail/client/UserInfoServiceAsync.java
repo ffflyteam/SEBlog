@@ -1,6 +1,5 @@
 package com.detail.client;
 
-import com.DAO.User;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UserInfoServiceAsync {
