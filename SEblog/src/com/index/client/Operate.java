@@ -10,7 +10,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.Window;
 import com.index.shared.BlogType;
 
 public class Operate {
@@ -114,13 +113,11 @@ public class Operate {
 	};
 
 	public static void addArticle(Map<Integer, List<Blog>> data,int type){
-		Window.alert(data.toString());
 		String hString = DOM.getElementById("blog-list").getInnerHTML();
 		if(type==0) {
 			List<Blog> blogList = getRecommend(data);
 			hString = "";
 			for(int i = 0; i < blogList.size();i++) {
-				Window.alert(blogList.get(i).toString());
 				hString += addArticleHelper(blogList.get(i));
 			}
 		}else {

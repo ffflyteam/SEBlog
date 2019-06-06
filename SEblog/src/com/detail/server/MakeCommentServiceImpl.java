@@ -16,9 +16,7 @@ public class MakeCommentServiceImpl extends RemoteServiceServlet implements Make
 	@Override
 	public int makeComment(int objectId, String content) {
 		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
-		int rs = UserDAO.instance.makeComment(objectId, accountId, content);
-	public int makeComment(int objectId, int userId, String content) {
-		int rs = UserDetailDAO.instance.makeComment(objectId, userId, content);
+		int rs = UserDetailDAO.instance.makeComment(objectId, accountId, content);
 		return rs;
 	}
 

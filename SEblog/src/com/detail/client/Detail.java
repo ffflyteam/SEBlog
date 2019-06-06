@@ -2,6 +2,7 @@ package com.detail.client;
 
 import java.util.List;
 
+import com.detail.shared.ResultConst;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -26,7 +27,6 @@ public class Detail implements EntryPoint{
 	@Override
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
-		int accountId = 1;
 		final String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
 		int blogId = Integer.valueOf(blogIdStr);
 		Window.alert(blogIdStr);
@@ -39,13 +39,12 @@ public class Detail implements EntryPoint{
 		getContent(blogId);
 		
 		//获取是否已经关注该作者,是否收藏该博客
-		
+//		getFocusOrCollect();
 		
 		//请求相关评论
 		getComment(blogId);
 		
 		//点击关注事件
-		final String authorIdString = Operate.getAttr("nickName","data-authorid");
 		//String authorIdString = Operate.getAttr("nickName","data-authorid");
 		Element focus = DOM.getElementById("focus");
 		DOM.sinkEvents(focus, Event.ONCLICK);
@@ -55,15 +54,18 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event) == Event.ONCLICK) {
-					//if()
-					int flag = focus.getInnerHTML()=="关注"?1:0;
+					if(user.getAccountId() == Author.getAccountId()) {
+						Operate.setAlert("您不能关注自己哦", false);
+						return;
+					}
+					int flag = focus.getInnerHTML()=="关注"?0:1;
 					//发送添加关注请求
-					makeRelation.makeRelation(Author.getAccountId(), 0, flag, new AsyncCallback<Integer>() {
+					makeRelation.makeRelation(Author.getAccountId(), 1, flag, new AsyncCallback<Integer>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
 							// TODO Auto-generated method stub
-							String alerString = flag == 1? "关注失败，再试一次！":"取消关注失败，再试一次！";
+							String alerString = flag == 0? "关注失败，再试一次！":"取消关注失败，再试一次！";
 							Operate.setAlert(alerString, false);
 						}
 
@@ -71,7 +73,7 @@ public class Detail implements EntryPoint{
 						public void onSuccess(Integer result) {
 							// TODO Auto-generated method stub
 							Window.alert("关注结果"+result);
-							focus.setInnerHTML(flag==1? "已经关注":"关注");
+							focus.setInnerHTML(flag==0? "已关注":"关注");
 							Operate.setAlert("操作成功！", true);
 						}
 					});
@@ -93,7 +95,7 @@ public class Detail implements EntryPoint{
 						return;
 					}
 					//发送请求传送数据
-					makeComment.makeComment(blog.getBlogId(), accountId, comString, new AsyncCallback<Integer>() {
+					makeComment.makeComment(blog.getBlogId(), comString, new AsyncCallback<Integer>() {
 						
 						@Override
 						public void onSuccess(Integer result) {
@@ -126,7 +128,7 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
-					TAC.transferOrCollectBlog(user.getAccountId(), blog.getBlogId(), type, flag, new AsyncCallback<Integer>() {
+					TAC.transferOrCollectBlog(blog.getBlogId(), 2, 0, new AsyncCallback<Integer>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							// TODO Auto-generated method stub
@@ -136,11 +138,9 @@ public class Detail implements EntryPoint{
 						@Override
 						public void onSuccess(Integer result) {
 							// TODO Auto-generated method stub
-							
+							Operate.setAlert(ResultConst.getRsById(result).getDescribe(), false);
 						}
 					});
-					
-					
 				}
 			}
 		});
@@ -154,12 +154,31 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
-					//发送收藏请求
+					int type = collectElement.getInnerHTML()=="收藏"?0:1;
+					TAC.transferOrCollectBlog(blog.getBlogId(), 1, type, new AsyncCallback<Integer>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							Operate.setAlert("网络原因收藏失败，请重试！", false);
+						}
+
+						@Override
+						public void onSuccess(Integer result) {
+							// TODO Auto-generated method stub
+							boolean a = result==0?true:false;
+							if(a) {
+								DOM.getElementById("collect").setInnerHTML(type==0?"已收藏":"收藏");
+							}
+							Operate.setAlert(ResultConst.getRsById(result).getDescribe(), a);
+						}
+					});
 				}
 			}
 		});
 	}
 	
+
+
 	public void getUserinfo() {
 		getUserInfo.getUserInfo(new AsyncCallback<User>() {
 			
@@ -210,7 +229,29 @@ public class Detail implements EntryPoint{
 				Author = result.getUser();
 				blog = result;
 				Operate.loadBlog(result);
+				getFocusOrCollect();
 			}
 		});
+	}
+	
+	public void getFocusOrCollect() {
+		collAR.getStatus(blog.getBlogId(), Author.getAccountId(), new AsyncCallback<boolean[]>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Operate.setAlert("获取相关信息失败，请刷新重试", false);
+			}
+
+			@Override
+			public void onSuccess(boolean[] result) {
+				// TODO Auto-generated method stub
+				Element collElement = DOM.getElementById("collect");
+				Element focusElement = DOM.getElementById("focus");
+				collElement.setInnerHTML(result[0]==true?"已收藏":"收藏");
+				focusElement.setInnerHTML(result[1]==true?"关注":"已关注");
+			}
+		});
+		
 	}
 }

@@ -7,29 +7,38 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.index.shared.BlogType;
-
-import java_cup.internal_error;
 
 public class Index implements EntryPoint{
 
 	private final IndexServiceAsync index = GWT.create(IndexService.class);
-
+	private final UserInfoServiceAsync userinfo = GWT.create(UserInfoService.class);
+	public User user;
 	public void onModuleLoad() {
 		
 		//请求登录信息，用来判断导航栏显示内容
-		
+		userinfo.getUserInfo(new AsyncCallback<User>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Operate.setAlert("获取用户信息失败，请刷新页面重试", false);
+				Window.open("./login.html", "_self", null);
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				// TODO Auto-generated method stub
+				user = result;
+				DOM.getElementById("name").setInnerHTML(result.getUserName());
+			}
+		});
 		
 		//请求获得推荐博客内容
-		JSONObject json = new JSONObject();
-		json.put("type", new JSONString("2"));
 		index.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 
 			@Override
@@ -48,7 +57,6 @@ public class Index implements EntryPoint{
 		//注册侧边导航栏的点击事件
 		final Element sideNavElement = DOM.getElementById("s-nav");
 		final NodeList<Element> list = sideNavElement.getElementsByTagName("a");
-		Window.alert(list.toString());
 		for (int i = 0; i < list.getLength(); i++) {
 			DOM.sinkEvents(list.getItem(i), Event.ONCLICK);
 			DOM.setEventListener(list.getItem(i),new EventListener() {
@@ -64,9 +72,7 @@ public class Index implements EntryPoint{
 						aTargetElement.addClassName("selected");
 						String type = aTargetElement.getParentElement().getAttribute("type");
 						final int typeNum = Integer.valueOf(type);
-						Window.alert("类型"+typeNum);
-						JSONObject json = new JSONObject();
-						json.put("type", new JSONString(type));
+						
 						index.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 
 							@Override

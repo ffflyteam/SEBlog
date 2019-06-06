@@ -135,7 +135,6 @@ public class Login implements EntryPoint {
 					if(sex == "2") {
 						sex = "0";
 					}
-					Window.alert(sex);
 					if(username==null || nickName==null) {
 						Operate.setAlert("账号或用户名不能为空",false);
 						return;

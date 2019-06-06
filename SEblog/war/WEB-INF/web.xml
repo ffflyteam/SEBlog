@@ -56,7 +56,14 @@
   </servlet-mapping>
   
   <!-- 首页请求登录状态 -->
-
+  <servlet>
+  	<servlet-name>indexUserinfoServlet</servlet-name>
+  	<servlet-class>com.index.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>indexUserinfoServlet</servlet-name>
+  	<url-pattern>/index/getUserInfo</url-pattern>
+  </servlet-mapping>
 
   <!-- 文章详情页面请求文章内容 -->
   <servlet>
@@ -67,6 +74,7 @@
   	<servlet-name>detailServlet</servlet-name>
   	<url-pattern>/detail/detail</url-pattern>
   </servlet-mapping>
+  
   <!-- 获取文章评论相关信息 -->
   <servlet>
   	<servlet-name>commentDetailServlet</servlet-name>
@@ -76,6 +84,38 @@
   	<servlet-name>commentDetailServlet</servlet-name>
   	<url-pattern>/detail/comment</url-pattern>
   </servlet-mapping>
+  
+  
+  <!-- 获取关注和收藏状态 -->
+   <servlet>
+  	<servlet-name>collOrRelationServlet</servlet-name>
+  	<servlet-class>com.detail.server.CollectAndRelationServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>collOrRelationServlet</servlet-name>
+  	<url-pattern>/detail/relation</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 关注他人 -->
+  <servlet>
+  	<servlet-name>makeRelationServlet</servlet-name>
+  	<servlet-class>com.detail.server.MakeRelationWithOtherServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>makeRelationServlet</servlet-name>
+  	<url-pattern>/detail/focus</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 转发或收藏 -->
+  <servlet>
+  	<servlet-name>transferOrCollectServlet</servlet-name>
+  	<servlet-class>com.detail.server.TransferOrCollectBlogServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>transferOrCollectServlet</servlet-name>
+  	<url-pattern>/detail/transferOrCollect</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

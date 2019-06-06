@@ -4,25 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ResultConst {
-	SUCCESS(0, "ִ�гɹ�"),			
-	ACCOUNT_HAS_BEEN_REGISTERED(1, "�ʺ��ѱ�ע��"), //�ʺ��ѱ�ע��
-	TOW_PASSWORD_IS_DIFFERENT(2, "������������벻һ��"),  //������������벻һ��
-	REGISTER_ERROR(3, "ע���쳣"),			//ע���쳣
-	ACCOUNT_NOT_EXIST(4, "�ʺŲ�����"),  //�ʺŲ�����
-	PASSWORD_ERROR(5, "�����������"),   //�����������
-	CAN_NOT_DELETE_COMMENT(6, "�޷�ɾ������"),  //�޷�ɾ������
-	COMMENT_NOT_EXIST(7, "���۲�����"),   //���۲�����
-	PARAMS_ERROR(8, "��������"),  //��������
-	BLOG_NOT_EXIST(9, "���Ͳ�����"),		//���Ͳ�����
-	EXECUTE_SQL_ERROR(10, "SQLִ�д���"),		//SQLִ�д���
-	HAS_COLLECT_OR_TRANSFER_BLOG(11, "�ò����Ѿ��ղػ�ת�ع�"), //�ò����Ѿ��ղػ�ת�ع�
-	HAS_NO_RELATION_WITH_BLOG(12, "δ�ղػ�ת�ع��ò���"),   //δ�ղػ�ת�ع��ò���
-	ACCOUNT_HAS_BEEN_FROZEN(13, "�ʺ��Ѿ�������"),    //�ʺ��Ѿ�������
-	MANAGER_ACCOUNT_NOT_EXIST(14, "����Ա�ʺŲ�����"),  //����Ա�ʺŲ�����
-	CLICK_LIKE_ERROR(15, "�����쳣"),  //�����쳣
-	CANCLE_LIKE_ERROR(16, "ȡ�����쳣"),  //ȡ�����쳣
-	CACLE_RELATION_BLOG_ERROR(17, "ȡ���ղػ�ת������"),
-	LOGIN_ERROR(18, "��½�쳣"),
+	SUCCESS(0, "执行成功"),   
+	 ACCOUNT_HAS_BEEN_REGISTERED(1, "帐号已被注册"), //帐号已被注册
+	 TOW_PASSWORD_IS_DIFFERENT(2, "两次输入的密码不一致"),  //两次输入的密码不一致
+	 REGISTER_ERROR(3, "注册异常"),   //注册异常
+	 ACCOUNT_NOT_EXIST(4, "帐号不存在"),  //帐号不存在
+	 PASSWORD_ERROR(5, "密码输入错误"),   //密码输入错误
+	 CAN_NOT_DELETE_COMMENT(6, "无法删除评论"),  //无法删除评论
+	 COMMENT_NOT_EXIST(7, "评论不存在"),   //评论不存在
+	 PARAMS_ERROR(8, "参数错误"),  //参数错误
+	 BLOG_NOT_EXIST(9, "博客不存在"),  //博客不存在
+	 EXECUTE_SQL_ERROR(10, "SQL执行错误"),  //SQL执行错误
+	 HAS_COLLECT_OR_TRANSFER_BLOG(11, "该博客已经收藏或转载过"), //该博客已经收藏或转载过
+	 HAS_NO_RELATION_WITH_BLOG(12, "未收藏或转载过该博客"),   //未收藏或转载过该博客
+	 ACCOUNT_HAS_BEEN_FROZEN(13, "帐号已经被冻结"),    //帐号已经被冻结
+	 MANAGER_ACCOUNT_NOT_EXIST(14, "管理员帐号不存在"),  //管理员帐号不存在
+	 CLICK_LIKE_ERROR(15, "点赞异常"),  //点赞异常
+	 CANCLE_LIKE_ERROR(16, "取消赞异常"),  //取消赞异常
+	 CACLE_RELATION_BLOG_ERROR(17, "取消收藏或转发错误"),
+	 LOGIN_ERROR(18, "登陆异常"),
 	;
 	
 	private int id;
