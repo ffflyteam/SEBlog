@@ -7,7 +7,6 @@ import org.apache.xalan.templates.ElemTemplate;
 
 import com.detail.client.Blog;
 import com.detail.shared.BlogType;
-import com.gargoylesoftware.htmlunit.javascript.host.event.TimeEvent;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;

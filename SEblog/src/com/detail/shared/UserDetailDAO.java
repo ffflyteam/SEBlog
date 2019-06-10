@@ -3,13 +3,17 @@ package com.detail.shared;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.DAO.DBConnection;
 import com.detail.client.Blog;
 import com.detail.client.Comment;
+import com.detail.client.Message;
 import com.detail.client.User;
 
 public class UserDetailDAO {
@@ -49,6 +53,11 @@ public class UserDetailDAO {
 	//private static final String SELECT_USER_RELATIONS = "SELECT * FROM `user_relation` WHERE UserId = ? AND Type <> 0 ORDER BY CreateTime DESC";
 	private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
 	private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
+	//消息
+	private static final String INSERT_MESSAGE = "INSERT INTO `message` VALUES(0,?,?,?,0,?)";
+	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
+	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
+	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE SET ReadFlag = 1 WHERE MessageId = ?";
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
 	public static final UserDetailDAO instance = new UserDetailDAO();
@@ -59,22 +68,58 @@ public class UserDetailDAO {
 	private UserDetailDAO() {
 	}
 	
+	//用户消息
+	public int makeMessage(int receiverId, int messageType, int senderId) {
+		int rs =  DBConnection.instance.executeQuery(INSERT_MESSAGE, new Object[] {receiverId, messageType, senderId, new Date()});
+		return rs;
+	}
+	
+	public int deleteMessage(int messageId) {
+		int rs = DBConnection.instance.executeQuery(DELETE_MESSAGE, new Object[] {messageId});
+		return rs;
+	}
+	
+	public int setReadFlag(int messageId) {
+		int rs = DBConnection.instance.executeQuery(UPDATE_MESSAGE_READ_FLAG, new Object[] {messageId});
+		return rs;
+	}
+	
+	public List<Message> getAllMessage(int accountId) {
+		List<Message> resultList = new ArrayList<>();
+		ResultSet rs = DBConnection.instance.executeCommand(GET_MESSAGES, new Object[] {accountId});
+		if(rs == null) {
+			return Collections.emptyList();
+		}
+		try {
+			while(rs.next()) {
+				User receiver = getUserInfo(rs.getInt("ReceiverId"));
+				User sender = getUserInfo(rs.getInt("SenderId"));
+				Message message = new Message(rs.getInt("MessageId"), receiver, rs.getInt("MessageType"), sender, rs.getInt("ReadFlag"), rs.getDate("CreateTime"));
+				resultList.add(message);
+			}
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return Collections.emptyList();
+		}
+		return resultList;
+	}
+	
 	//获取用户自己信息
 	public User getUserInfo(int userId) {
-		if(!userSecondDao.containsKey(userId)) {
+		//if(!userSecondDao.containsKey(userId)) {
 			ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
 			try {
 				if(rs.next()) {
 					try {
 						User user = new User(rs.getInt("UserId"), rs.getString("PassWord"), rs.getString("UserName"), 
 								rs.getShort("Sex"), rs.getDate("BirthDay"), rs.getString("Address"), rs.getInt("Stat"));
-						if(userSecondDao.size() < userCacheSize) {
+						/*if(userSecondDao.size() < userCacheSize) {
 							userSecondDao.putIfAbsent(userId, user);
 						} else {
 							int accountId4Remove = userSecondDao.entrySet().iterator().next().getKey();
 							userSecondDao.remove(accountId4Remove);
 							userSecondDao.putIfAbsent(userId, user);
-						}
+						}*/
 						return user;
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -86,9 +131,9 @@ public class UserDetailDAO {
 				return null;
 			}
 			return null;
-		} else {
+		/*} else {
 			return userSecondDao.get(userId);
-		}
+		}*/
 	}
 	
 	//用户注册
@@ -380,12 +425,12 @@ public class UserDetailDAO {
 				return ResultConst.HAS_NO_RELATION_WITH_BLOG.getId();
 			}
 			int typeId = rs.getInt("Type");
+			if(typeId == RelationWithBlog.NO_RELATION.getId()) {
+				return ResultConst.HAS_NO_RELATION_WITH_BLOG.getId();
+			}
 			int flag;
 			int res;
 			String sql = type == RelationWithBlog.COLLECT.getId() ? UPDATE_RELATION_WITH_BLOG_FOR_COLLECT : UPDATE_RELATION_WITH_BLOG_FOR_TRANSFER;
-			if(typeId != type) {
-				return ResultConst.HAS_NO_RELATION_WITH_BLOG.getId();
-			}
 			if(typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId()) {
 				flag = type ^ typeId;
 				res = DBConnection.instance.executeQuery(sql, new Object[] {flag, null, accountId, blogId});
@@ -428,7 +473,7 @@ public class UserDetailDAO {
 	
 	//与他人的关系
 	public int happenRelation(int accountId, int otherId, int type) {
-		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId,otherId,type,type, new Date()});
+		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId,otherId,type, new Date(), type});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
 	//取消与他人的关系

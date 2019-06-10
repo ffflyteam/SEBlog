@@ -173,7 +173,7 @@ public class BlogDetailDAO {
 		return res;
 	}
 	
-	/*public boolean isBlog(int objectId) {
+	public boolean isBlog(int objectId) {
 		if(blogSecondDAO.contains(objectId)) {
 			return true;
 		}
@@ -187,7 +187,7 @@ public class BlogDetailDAO {
 			e.printStackTrace();
 			return false;
 		}
-	}*/
+	}
 	
 	/*public void removeBlogByIdFromSecondDAO(int blogId) {
 		blogSecondDAO.remove(blogId);

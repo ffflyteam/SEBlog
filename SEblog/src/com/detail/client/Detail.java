@@ -28,7 +28,7 @@ public class Detail implements EntryPoint{
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
 		final String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
-		int blogId = Integer.valueOf(blogIdStr);
+		final int blogId = Integer.valueOf(blogIdStr);
 		Window.alert(blogIdStr);
 		
 		
@@ -46,7 +46,7 @@ public class Detail implements EntryPoint{
 		
 		//点击关注事件
 		//String authorIdString = Operate.getAttr("nickName","data-authorid");
-		Element focus = DOM.getElementById("focus");
+		final Element focus = DOM.getElementById("focus");
 		DOM.sinkEvents(focus, Event.ONCLICK);
 		DOM.setEventListener(focus, new EventListener() {
 			
@@ -58,7 +58,7 @@ public class Detail implements EntryPoint{
 						Operate.setAlert("您不能关注自己哦", false);
 						return;
 					}
-					int flag = focus.getInnerHTML()=="关注"?0:1;
+					final int flag = focus.getInnerHTML()=="关注"?0:1;
 					//发送添加关注请求
 					makeRelation.makeRelation(Author.getAccountId(), 1, flag, new AsyncCallback<Integer>() {
 
@@ -146,7 +146,7 @@ public class Detail implements EntryPoint{
 		});
 		
 		//收藏事件
-		Element collectElement = DOM.getElementById("collect");
+		final Element collectElement = DOM.getElementById("collect");
 		DOM.sinkEvents(collectElement, Event.ONCLICK);
 		DOM.setEventListener(collectElement, new EventListener() {
 			
@@ -154,7 +154,7 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
-					int type = collectElement.getInnerHTML()=="收藏"?0:1;
+					final int type = collectElement.getInnerHTML()=="收藏"?0:1;
 					TAC.transferOrCollectBlog(blog.getBlogId(), 1, type, new AsyncCallback<Integer>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -185,7 +185,7 @@ public class Detail implements EntryPoint{
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				Operate.setAlert("获取登录信息失败，请刷新页面", false);
+				Operate.setAlert("获取登录信息失败，请刷新页面" + caught.toString(), false);
 			}
 
 			@Override
@@ -240,7 +240,7 @@ public class Detail implements EntryPoint{
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				Operate.setAlert("获取相关信息失败，请刷新重试", false);
+				Operate.setAlert("获取相关信息失败，请刷新重试" + caught.toString(), false);
 			}
 
 			@Override
@@ -248,8 +248,8 @@ public class Detail implements EntryPoint{
 				// TODO Auto-generated method stub
 				Element collElement = DOM.getElementById("collect");
 				Element focusElement = DOM.getElementById("focus");
-				collElement.setInnerHTML(result[0]==true?"已收藏":"收藏");
-				focusElement.setInnerHTML(result[1]==true?"关注":"已关注");
+				collElement.setInnerHTML(result[0] ? "已收藏" : "收藏");
+				focusElement.setInnerHTML(result[1] ?"关注" : "已关注");
 			}
 		});
 		

@@ -48,7 +48,11 @@ public class UserDAO {
 	private static final String SELECT_USER_RELATIONS = "SELECT * FROM `user_relation` WHERE UserId = ? AND Type <> 0 ORDER BY CreateTime DESC";
 	private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
 	private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
-	
+	//消息
+	private static final String INSERT_MESSAGE = "INSERT INTO `message` VALUES(0,?,?,?,0,?)";
+	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
+	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
+	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE SET ReadFlag = 1 WHERE MessageId = ?";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
 	public static final UserDAO instance = new UserDAO();
 	
@@ -56,6 +60,42 @@ public class UserDAO {
 	private static final int userCacheSize = 64;
 	
 	private UserDAO() {
+	}
+	
+	//用户消息
+	public int makeMessage(int receiverId, int messageType, int senderId) {
+		int rs =  DBConnection.instance.executeQuery(INSERT_MESSAGE, new Object[] {receiverId, messageType, senderId, new Date()});
+		return rs;
+	}
+	
+	public int deleteMessage(int messageId) {
+		int rs = DBConnection.instance.executeQuery(DELETE_MESSAGE, new Object[] {messageId});
+		return rs;
+	}
+	
+	public int setReadFlag(int messageId) {
+		int rs = DBConnection.instance.executeQuery(UPDATE_MESSAGE_READ_FLAG, new Object[] {messageId});
+		return rs;
+	}
+	
+	public List<Message> getAllMessage(int accountId) {
+		List<Message> resultList = new ArrayList<>();
+		ResultSet rs = DBConnection.instance.executeCommand(GET_MESSAGES, new Object[] {accountId});
+		if(rs == null) {
+			return Collections.emptyList();
+		}
+		try {
+			while(rs.next()) {
+				User receiver = getUserInfo(rs.getInt("ReceiverId"));
+				User sender = getUserInfo(rs.getInt("SenderId"));
+				Message message = new Message(rs.getInt("MessageId"), receiver, rs.getInt("MessageType"), sender, rs.getInt("ReadFlag"), rs.getDate("CreateTime"));
+				resultList.add(message);
+			}
+		} catch (Throwable t) {
+			t.printStackTrace();
+			return Collections.emptyList();
+		}
+		return resultList;
 	}
 	
 	//��ȡ�û��Լ���Ϣ
