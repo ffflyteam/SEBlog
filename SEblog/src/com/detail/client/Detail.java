@@ -154,9 +154,9 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
-					final int type = collectElement.getInnerHTML()=="收藏"?0:1;
+					final int type = collectElement.getInnerHTML().equals("收藏") ? 0 : 1;
 					TAC.transferOrCollectBlog(blog.getBlogId(), 1, type, new AsyncCallback<Integer>() {
-					int flag = collectElement.getInnerHTML()=="收藏"?0:1;
+					int flag = collectElement.getInnerHTML().equals("收藏") ? 0 : 1;
 					Window.alert("flag"+flag);
 					TAC.transferOrCollectBlog(blog.getBlogId(), 1, flag, new AsyncCallback<Integer>() {
 						@Override

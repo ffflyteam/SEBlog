@@ -16,7 +16,7 @@ public class UserMessageDAO {
 	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
 	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
 	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
-	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE SET ReadFlag = 1 WHERE MessageId = ?";
+	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE `message` SET ReadFlag = 1 WHERE MessageId = ?";
 	public static final UserMessageDAO instance = new UserMessageDAO();
 	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//可改成Redis
 	private static final int userCacheSize = 64;

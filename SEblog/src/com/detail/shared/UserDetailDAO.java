@@ -57,7 +57,9 @@ public class UserDetailDAO {
 	private static final String INSERT_MESSAGE = "INSERT INTO `message` VALUES(0,?,?,?,0,?)";
 	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
 	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
-	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE SET ReadFlag = 1 WHERE MessageId = ?";
+	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE `message` SET ReadFlag = 1 WHERE MessageId = ?";
+	//反馈
+	private static final String INSERT_FEEDBACK = "INSERT INYO `feedback` VALUES(0,?,?,?,0,?)";
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
 	public static final UserDetailDAO instance = new UserDetailDAO();
@@ -66,6 +68,12 @@ public class UserDetailDAO {
 	private static final int userCacheSize = 64;
 	
 	private UserDetailDAO() {
+	}
+	
+	//生成反馈
+	public int makeFeedBack(int objectId, int accountId, int feedBackType) {
+		int rs =  DBConnection.instance.executeQuery(INSERT_FEEDBACK, new Object[] {objectId, accountId, feedBackType, new Date()});
+		return rs;
 	}
 	
 	//用户消息
@@ -106,20 +114,20 @@ public class UserDetailDAO {
 	
 	//获取用户自己信息
 	public User getUserInfo(int userId) {
-		//if(!userSecondDao.containsKey(userId)) {
+		if(!userSecondDao.containsKey(userId)) {
 			ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
 			try {
 				if(rs.next()) {
 					try {
 						User user = new User(rs.getInt("UserId"), rs.getString("PassWord"), rs.getString("UserName"), 
 								rs.getShort("Sex"), rs.getDate("BirthDay"), rs.getString("Address"), rs.getInt("Stat"));
-						/*if(userSecondDao.size() < userCacheSize) {
+						if(userSecondDao.size() < userCacheSize) {
 							userSecondDao.putIfAbsent(userId, user);
 						} else {
 							int accountId4Remove = userSecondDao.entrySet().iterator().next().getKey();
 							userSecondDao.remove(accountId4Remove);
 							userSecondDao.putIfAbsent(userId, user);
-						}*/
+						}
 						return user;
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -131,9 +139,9 @@ public class UserDetailDAO {
 				return null;
 			}
 			return null;
-		/*} else {
+		} else {
 			return userSecondDao.get(userId);
-		}*/
+		}
 	}
 	
 	//用户注册
@@ -477,7 +485,6 @@ public class UserDetailDAO {
 	//与他人的关系
 	public int happenRelation(int accountId, int otherId, int type) {
 		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId,otherId,type, new Date(), type});
-		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId, otherId, type, new Date(), type});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
 	//取消与他人的关系

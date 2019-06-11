@@ -23,7 +23,12 @@ public class BlogIndexDAO {
 			+ " LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentsNum FROM comments GROUP BY ObjectId) AS D ON D.ObjectId = A.BlogId "
 			+ " WHERE UserId = ? ORDER BY PublishDateTime DESC";*/
 	private static final String SELECT_ALL_HOT_BLOG = "SELECT `Type`,GROUP_CONCAT(BlogId ORDER BY ReadNum DESC) AS AllBlogs FROM `blog_info` GROUP BY `Type` LIMIT 50";
-	private static final String SELECT_BLOG_BY_ID = "SELECT * FROM `blog_info` WHERE BlogId = ?";
+	private static final String SELECT_BLOG_BY_ID = "SELECT A.BlogId,PublishDateTime,UserId,Title,Content,CollectsNum,TransfersNum,CommentsNum,ReadNum,Type FROM "
+			+ "(SELECT BlogId,PublishDateTime,UserId,Title,Content,ReadNum,Type FROM `blog_info` WHERE BlogId = ?) AS A "
+			+ "LEFT JOIN (SELECT BlogId,COUNT(*) AS TransfersNum FROM user_blog_relation WHERE `Type` = 2 OR `Type` = 3 GROUP BY BlogId) AS B ON A.BlogId = B.BlogId "
+			+ "LEFT JOIN (SELECT BlogId,COUNT(*) AS CollectsNum FROM user_blog_relation WHERE `Type` = 1 OR `Type` =3 GROUP BY BlogId) AS C ON C.BlogId = A.BlogId "
+			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentsNum FROM comments GROUP BY ObjectId) AS D ON D.ObjectId = A.BlogId "
+			+ "ORDER BY PublishDateTime DESC";
 	private static final String SELECT_ALL_COMMENTS = "SELECT * FROM `comments` WHERE ObjectId = ? ORDER BY LikeNum DESC";
 	//private static final String SELECT_COMMENT_BY_ID = "SELECT * FROM `comments` WHERE CommentId = ?";
 	//private static final String INCREASE_READ_NUM = "UPDATE `blog_info` SET ReadNum = ReadNum + 1 WHERE BlogId = ?";
