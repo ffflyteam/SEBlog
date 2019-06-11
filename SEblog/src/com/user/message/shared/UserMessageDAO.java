@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.DAO.DBConnection;
-import com.user.message.client.Message;
-import com.user.message.client.User;
+import com.message.client.Message;
+import com.message.client.User;
 
 public class UserMessageDAO {
 	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
