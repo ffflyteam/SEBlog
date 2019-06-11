@@ -1,4 +1,4 @@
-package com.user.blog.server;
+package com.userBlog.server;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.DAO.Blog;
 import com.DAO.UserDAO;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.user.blog.client.UserBlogService;
+import com.userBlog.client.UserBlogService;
 
 @SuppressWarnings("serial")
 @RemoteServiceRelativePath("user_blog")

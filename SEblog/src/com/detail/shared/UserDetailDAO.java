@@ -383,8 +383,8 @@ public class UserDetailDAO {
 			int flag;
 			int res;
 			String sql = type == RelationWithBlog.COLLECT.getId() ? UPDATE_RELATION_WITH_BLOG_FOR_COLLECT : UPDATE_RELATION_WITH_BLOG_FOR_TRANSFER;
-			if(typeId != type) {
-				return ResultConst.HAS_NO_RELATION_WITH_BLOG.getId();
+			if(typeId == RelationWithBlog.NO_RELATION.getId()) {
+			    return ResultConst.HAS_NO_RELATION_WITH_BLOG.getId();
 			}
 			if(typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId()) {
 				flag = type ^ typeId;
@@ -428,7 +428,7 @@ public class UserDetailDAO {
 	
 	//与他人的关系
 	public int happenRelation(int accountId, int otherId, int type) {
-		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId,otherId,type,type, new Date()});
+		int res = DBConnection.instance.executeQuery(INSERT_USER_RELATION, new Object[] {accountId, otherId, type, new Date(), type});
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
 	//取消与他人的关系
