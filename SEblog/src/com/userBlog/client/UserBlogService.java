@@ -1,4 +1,4 @@
-package com.user.blog.client;
+package com.userBlog.client;
 
 import java.util.List;
 

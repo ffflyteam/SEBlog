@@ -116,6 +116,25 @@
   	<url-pattern>/detail/transferOrCollect</url-pattern>
   </servlet-mapping>
   
+    <!-- Detail拉取用户信息 -->
+  <servlet>
+  	<servlet-name>detailGetUserInfoServlet</servlet-name>
+  	<servlet-class>com.detail.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>detailGetUserInfoServlet</servlet-name>
+  	<url-pattern>/detail/getUserInfo</url-pattern>
+  </servlet-mapping>
+  
+     <!-- Detail用户评论 -->
+  <servlet>
+  	<servlet-name>MakeCommentServlet</servlet-name>
+  	<servlet-class>com.detail.server.MakeCommentServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MakeCommentServlet</servlet-name>
+  	<url-pattern>/detail/makeComment</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>

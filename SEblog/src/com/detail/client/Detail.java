@@ -156,6 +156,9 @@ public class Detail implements EntryPoint{
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
 					final int type = collectElement.getInnerHTML()=="收藏"?0:1;
 					TAC.transferOrCollectBlog(blog.getBlogId(), 1, type, new AsyncCallback<Integer>() {
+					int flag = collectElement.getInnerHTML()=="收藏"?0:1;
+					Window.alert("flag"+flag);
+					TAC.transferOrCollectBlog(blog.getBlogId(), 1, flag, new AsyncCallback<Integer>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							// TODO Auto-generated method stub
@@ -167,7 +170,7 @@ public class Detail implements EntryPoint{
 							// TODO Auto-generated method stub
 							boolean a = result==0?true:false;
 							if(a) {
-								DOM.getElementById("collect").setInnerHTML(type==0?"已收藏":"收藏");
+								DOM.getElementById("collect").setInnerHTML(flag==0?"已收藏":"收藏");
 							}
 							Operate.setAlert(ResultConst.getRsById(result).getDescribe(), a);
 						}
