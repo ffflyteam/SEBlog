@@ -1,0 +1,48 @@
+/*导航栏背景*/
+nav.navbar-container {
+  background-color: #fbfbfb;
+  color: black;
+}
+nav.navbar-container a {
+  color: black;
+}
+.headtimg {
+  display: inline-block;
+  height: 82px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 82px;
+  padding: 0 12px;
+  border-radius: 41px;
+  background-color: #e4e4e4;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.headtimg img {
+  float: left;
+  margin: 0 8px 0 -12px;
+  height: 82px;
+  width: 82px;
+  border-radius: 50%;
+}
+
+.headtimg .close {
+  cursor: pointer;
+  float: right;
+  font-size: 41px;
+  line-height: 82px;
+  padding-left: 8px;
+}
+#font_one {
+	color:#CCFFFF;
+	size: 4px;
+}
+#font_two{
+	color:orange;
+
+}
+dt{
+  padding: 3px;
+}
