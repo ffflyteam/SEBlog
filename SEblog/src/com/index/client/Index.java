@@ -32,7 +32,9 @@ public class Index implements EntryPoint{
 
 			@Override
 			public void onSuccess(User result) {
-				// TODO Auto-generated method stub
+				if(result==null) {
+					Window.open("./login.html", "_self", null);
+				}
 				user = result;
 				DOM.getElementById("name").setInnerHTML(result.getUserName());
 			}

@@ -49,10 +49,8 @@ public class Detail implements EntryPoint{
 		final Element focus = DOM.getElementById("focus");
 		DOM.sinkEvents(focus, Event.ONCLICK);
 		DOM.setEventListener(focus, new EventListener() {
-			
 			@Override
 			public void onBrowserEvent(Event event) {
-				
 				if(DOM.eventGetType(event) == Event.ONCLICK) {
 					if(user.getAccountId() == Author.getAccountId()) {
 						Operate.setAlert("您不能关注自己哦", false);
@@ -61,18 +59,14 @@ public class Detail implements EntryPoint{
 					final int flag = focus.getInnerHTML()=="关注"?0:1;
 					//发送添加关注请求
 					makeRelation.makeRelation(Author.getAccountId(), 1, flag, new AsyncCallback<Integer>() {
-
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							String alerString = flag == 0? "关注失败，再试一次！":"取消关注失败，再试一次！";
 							Operate.setAlert(alerString, false);
 						}
 
 						@Override
 						public void onSuccess(Integer result) {
-							// TODO Auto-generated method stub
-							Window.alert("关注结果"+result);
 							focus.setInnerHTML(flag==0? "已关注":"关注");
 							Operate.setAlert("操作成功！", true);
 						}
@@ -87,7 +81,6 @@ public class Detail implements EntryPoint{
 		DOM.setEventListener(commentElement, new EventListener() {
 			@Override
 			public void onBrowserEvent(Event event) {
-				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
 					String comString = Operate.getValue("comment-text");
 					if(comString == null) {
@@ -96,10 +89,8 @@ public class Detail implements EntryPoint{
 					}
 					//发送请求传送数据
 					makeComment.makeComment(blog.getBlogId(), comString, new AsyncCallback<Integer>() {
-						
 						@Override
 						public void onSuccess(Integer result) {
-							// TODO Auto-generated method stub
 							if(result==0) {
 								Operate.setAlert("评论成功", true);
 								Operate.cleanValue("comment-text");
@@ -108,10 +99,8 @@ public class Detail implements EntryPoint{
 								Operate.setAlert("评论失败", false);
 							}
 						}
-						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							Operate.setAlert("网络原因连接不到服务器", false);
 						}
 					});
@@ -123,22 +112,24 @@ public class Detail implements EntryPoint{
 		Element fowardeElement = DOM.getElementById("forward");
 		DOM.sinkEvents(fowardeElement, Event.ONCLICK);
 		DOM.setEventListener(fowardeElement, new EventListener() {
-			
 			@Override
 			public void onBrowserEvent(Event event) {
-				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
-					TAC.transferOrCollectBlog(blog.getBlogId(), 2, 0, new AsyncCallback<Integer>() {
+					int flag = fowardeElement.getInnerHTML().equals("转发")?0:1;
+					TAC.transferOrCollectBlog(blog.getBlogId(), 2, flag, new AsyncCallback<Integer>() {
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							Operate.setAlert("网络原因转发失败，请重试！", false);
 						}
-
 						@Override
 						public void onSuccess(Integer result) {
-							// TODO Auto-generated method stub
-							Operate.setAlert(ResultConst.getRsById(result).getDescribe(), false);
+							fowardeElement.setInnerHTML(flag==0?"已转发":"转发");
+							if(result==0) {
+								Operate.setAlert("执行成功", true);
+							}else {
+								Operate.setAlert(ResultConst.getRsById(result).getDescribe(), false);
+							}
+							
 						}
 					});
 				}
@@ -237,16 +228,12 @@ public class Detail implements EntryPoint{
 	
 	public void getFocusOrCollect() {
 		collAR.getStatus(blog.getBlogId(), Author.getAccountId(), new AsyncCallback<boolean[]>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				Operate.setAlert("获取相关信息失败，请刷新重试" + caught.toString(), false);
 			}
-
 			@Override
 			public void onSuccess(boolean[] result) {
-				// TODO Auto-generated method stub
 				Element collElement = DOM.getElementById("collect");
 				Element focusElement = DOM.getElementById("focus");
 				collElement.setInnerHTML(result[0] ? "已收藏" : "收藏");

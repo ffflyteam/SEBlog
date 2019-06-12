@@ -129,6 +129,7 @@ ul.blog-list li{
   padding: 20px;
   border: 1px solid rgb(245,245,245);
   background-color: #fff;
+  position: relative;
 }
 .list-container:hover {
   background-color: rgb(250,250,250);
@@ -161,8 +162,39 @@ ul.blog-list li{
   padding: 5px;
   line-height: 35px;
 }
+.dele {
+  position: absolute;
+  right: 30px;
+  top: 80px;
+}
 
-
+/*博客切换菜单样式*/
+div#blogSwitch {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  width: 60%;
+  margin: 0 auto;
+}
+div#blogSwitch span {
+  font-size: 18px;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  margin: 0 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+div#blogSwitch span:hover {
+  background-color: rgb(84,110,122);
+  color: #fff;
+  cursor: pointer;
+}
+.selected-span {
+  background-color: rgb(84,110,122);
+  color: #fff;
+  cursor: pointer;
+}
 
 /*设置弹框提示的样式*/
 #error {

@@ -50,6 +50,7 @@ public class Operate {
 			DOM.getElementById("mask").setAttribute("style", "display:block");
 			DOM.getElementById("error").setAttribute("style", "display:block");
 			DOM.getElementById("msg").setInnerHTML(str);
+			DOM.getElementById("img").setAttribute("src", "../images/" + (flag==true?"happy":"alert") + ".gif");
 			return;
 		}
 		//设置阴影层
@@ -76,6 +77,7 @@ public class Operate {
 		}
 		imgElement.setAttribute("width","100%");
 		imgElement.setAttribute("height", "100%");
+		imgElement.setId("img");
 		photoContainerElement.appendChild(imgElement);
 		
 		Element h5 = DOM.createElement("h5");

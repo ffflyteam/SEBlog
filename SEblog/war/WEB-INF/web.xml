@@ -167,6 +167,37 @@
   	<servlet-name>userGetUserBlogServlet</servlet-name>
   	<url-pattern>/user/UserBlog</url-pattern>
   </servlet-mapping>
+  
+  	<!-- 修改信息 -->
+  <servlet>
+  	<servlet-name>userChangeInfoServlet</servlet-name>
+  	<servlet-class>com.user.server.ChangeInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userChangeInfoServlet</servlet-name>
+  	<url-pattern>/user/changeInfo</url-pattern>
+  </servlet-mapping>
+  
+ 	<!-- 取消关注  -->
+  <servlet>
+  	<servlet-name>userCancelFocusServlet</servlet-name>
+  	<servlet-class>com.user.server.MakeRelationWithOtherServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userCancelFocusServlet</servlet-name>
+  	<url-pattern>/user/focus</url-pattern>
+  </servlet-mapping>
+  	
+  	<!-- 删除我的博客 -->
+  <servlet>
+  	<servlet-name>userDeleteBlogServlet</servlet-name>
+  	<servlet-class>com.user.server.DeleteSelfBlogServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userDeleteBlogServlet</servlet-name>
+  	<url-pattern>/user/deleteblog</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SEblog.html</welcome-file>

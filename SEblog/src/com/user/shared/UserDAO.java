@@ -58,7 +58,7 @@ public class UserDAO {
 	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
 	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
 	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE SET ReadFlag = 1 WHERE MessageId = ?";
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	public static final UserDAO instance = new UserDAO();
 	
 	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//�ɸĳ�Redis

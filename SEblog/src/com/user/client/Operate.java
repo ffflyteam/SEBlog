@@ -13,7 +13,16 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.user.shared.BlogType;
 
+import java_cup.internal_error;
+
 public class Operate {
+	
+	//验证密码长度
+	public static boolean isValidPassword(String pwd) {
+		if(pwd==null)
+			return false;
+		return pwd.length() >= 6 && pwd.length() <= 10;
+	}
 	
 	//获取input标签的值
 	public static native String getValue(String id)
@@ -24,6 +33,12 @@ public class Operate {
 	 	else
 	 		return null;
 	 }-*/;
+	
+	//设置input标签的值
+	public static native void setValue(String id,String content)
+	/*-{
+		$doc.getElementById(id).value = content;
+	}-*/;
 	
 	//清空input标签的value
 	public static native void cleanValue(String id) 
@@ -57,7 +72,8 @@ public class Operate {
 			DOM.getElementById("mask").setAttribute("style", "display:block");
 			DOM.getElementById("error").setAttribute("style", "display:block");
 			DOM.getElementById("msg").setInnerHTML(str);
-			return;
+			DOM.getElementById("img").setAttribute("src", "../images/" + (flag==true?"happy":"alert") + ".gif");
+			return;	
 		}
 		//设置阴影层
 		Element maskElement = DOM.createElement("div");
@@ -83,6 +99,7 @@ public class Operate {
 		}
 		imgElement.setAttribute("width","100%");
 		imgElement.setAttribute("height", "100%");
+		imgElement.setId("img");
 		photoContainerElement.appendChild(imgElement);
 		
 		Element h5 = DOM.createElement("h5");
@@ -125,12 +142,12 @@ public class Operate {
 			List<Blog> blogList = getRecommend(data);
 			hString = "";
 			for(int i = 0; i < blogList.size();i++) {
-				hString += addArticleHelper(blogList.get(i));
+				hString += addArticleHelper(blogList.get(i),0);
 			}
 		}else {
 			hString = "";
 			for(int i = 0; i < data.get(type).size();i++) {
-				hString += addArticleHelper(data.get(type).get(i));
+				hString += addArticleHelper(data.get(type).get(i),0);
 			}
 		}
 		
@@ -155,7 +172,10 @@ public class Operate {
 		return blogList;
 	}
 	
-	private static String addArticleHelper(Blog blog2) {
+	private static String addArticleHelper(Blog blog2,int flag) {
+		String aTag = "<div>\r\n" + 
+				"         <a class=\"dele\""+ "blogid=\""+ blog2.getBlogId() + "\"" +"href=\"#\">删除博客</a>\r\n" +       
+				"        </div> ";
 		String blog ="<li>"+ "<div class=\"list-container\"> " + 
 				"        <div class=\"userinfo\"> " + 
 				"          <div class=\"left\"> " + 
@@ -170,7 +190,7 @@ public class Operate {
 				"            <div class=\"interval\"></div> " + 
 				"            <span>"+ blog2.getReadNum() +"</span> " + 
 				"          </div> " + 
-				"           " + 
+				"           " + (flag == 1?aTag:"") +
 				"        </div> " + 
 				"        <div class=\"title\"><h4><a target=\"_blank\" href=\""+ "./blog-detail.html?id="+ blog2.getBlogId() +"\" data-id=\"" + blog2.getBlogId() +"\">"+ blog2.getTitle() +"</a></h4></div> " + 
 				"        <div class=\"summary\" id=\"summary\">"+ blog2.getContent().substring(0, 40) +"</div> " + 
@@ -192,16 +212,18 @@ public class Operate {
 					"<li>\r\n" + 
 					"   <div><img src=\"../images/user_default.jpg\" alt=\"\"></div>\r\n" + 
 					"   <div><a href=\"#\">"+ userList.get(i).getUserName() +"</a></div>\r\n" + 
-					"   <div class=\"right\"><a href=\"#\">取消关注</a></div>\r\n" + 
+					"   <div class=\"right\"><a class=\"cancel\" href=\"#\""+
+					"userId=\"" + userList.get(i).getAccountId() + "\"" +
+					">取消关注</a></div>\r\n" + 
 					"</li>";
 		}
 		DOM.getElementById("focus-list").setInnerHTML(content);
 	}
 
-	public static void addMyBlog(List<Blog> data,String id) {
+	public static void addMyBlog(List<Blog> data,String id,int flag) {
 		String content = "";
 		for (int i = 0; i < data.size(); i++) {
-			content += addArticleHelper(data.get(i));
+			content += addArticleHelper(data.get(i),flag);
 		}
 		DOM.getElementById(id).setInnerHTML(content);
 	}

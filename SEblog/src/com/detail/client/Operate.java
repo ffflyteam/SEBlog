@@ -1,11 +1,7 @@
 package com.detail.client;
 
-import java.io.Reader;
 import java.util.List;
 
-import org.apache.xalan.templates.ElemTemplate;
-
-import com.detail.client.Blog;
 import com.detail.shared.BlogType;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
@@ -58,6 +54,7 @@ public class Operate {
 			DOM.getElementById("mask").setAttribute("style", "display:block");
 			DOM.getElementById("error").setAttribute("style", "display:block");
 			DOM.getElementById("msg").setInnerHTML(str);
+			DOM.getElementById("img").setAttribute("src", "../images/" + (flag==true?"happy":"alert") + ".gif");
 			return;
 		}
 		//设置阴影层
@@ -84,6 +81,7 @@ public class Operate {
 		}
 		imgElement.setAttribute("width","100%");
 		imgElement.setAttribute("height", "100%");
+		imgElement.setId("img");
 		photoContainerElement.appendChild(imgElement);
 		
 		Element h5 = DOM.createElement("h5");

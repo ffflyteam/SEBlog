@@ -2,13 +2,11 @@ package com.user.server;
 
 import org.json.JSONObject;
 
-import com.DAO.UserDAO;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.user.client.ChangeInfoService;
+import com.user.shared.UserDAO;
 
 @SuppressWarnings("serial")
-@RemoteServiceRelativePath("user_info_change")
 public class ChangeInfoServiceImpl extends RemoteServiceServlet implements ChangeInfoService{
 
 	/*
@@ -16,7 +14,7 @@ public class ChangeInfoServiceImpl extends RemoteServiceServlet implements Chang
 	 * param(Json格式的String，password，nickName，sex，birthDay，address)
 	 */
 	@Override
-	public boolean changeInfo(String info) {
+	public boolean changeInfo(String info) throws IllegalArgumentException {
 		try {
 			JSONObject jsonObject = new JSONObject(info);
 			int account = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
