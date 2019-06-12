@@ -85,7 +85,7 @@ public class Blog implements Serializable{
 		StringBuilder sb = new StringBuilder();
 		sb.append("BlogId:").append(blogId);
 		sb.append(",PublishDateTime:").append(publishDateTime);
-		//sb.append(",UserId:").append(user.getUserName());
+		sb.append(",UserId:").append(user.getUserName());
 		sb.append(",Title:").append(title);
 		sb.append(",Content:").append(content);
 		sb.append(",CommentsNum:").append(commentsNum);
