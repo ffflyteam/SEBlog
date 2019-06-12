@@ -1,4 +1,4 @@
-package com.user.message.shared;
+package com.message.shared;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

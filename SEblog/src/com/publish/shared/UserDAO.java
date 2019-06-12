@@ -1,4 +1,4 @@
-package com.user.blog.shared;
+package com.publish.shared;
 
 import java.util.Date;
 

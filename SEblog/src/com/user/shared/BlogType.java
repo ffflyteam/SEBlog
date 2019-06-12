@@ -1,4 +1,4 @@
-package com.DAO;
+package com.user.shared;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +14,7 @@ public enum BlogType {
 	TI_YU(6,"体育"),
 	RI_CHANG(7,"日常"),
 	;
+	
 	private int id;
 	private String desc;
 	

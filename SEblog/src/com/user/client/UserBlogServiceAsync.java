@@ -2,7 +2,6 @@ package com.user.client;
 
 import java.util.List;
 
-import com.DAO.Blog;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UserBlogServiceAsync {

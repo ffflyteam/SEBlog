@@ -136,6 +136,37 @@
   	<url-pattern>/detail/makeComment</url-pattern>
   </servlet-mapping>
   
+  
+  <!-- 个人中心页面 -->
+  	<!-- 获取用户信息 -->
+  <servlet>
+  	<servlet-name>userGetUserInfoServlet</servlet-name>
+  	<servlet-class>com.user.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userGetUserInfoServlet</servlet-name>
+  	<url-pattern>/user/userInfo</url-pattern>
+  </servlet-mapping>
+  	
+  	<!-- 获取用户的关注对象 -->
+  <servlet>
+  	<servlet-name>userGetUserRelaServlet</servlet-name>
+  	<servlet-class>com.user.server.UserRelationServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userGetUserRelaServlet</servlet-name>
+  	<url-pattern>/user/UserRelation</url-pattern>
+  </servlet-mapping>
+  
+  	<!-- 获取用户的博客 -->
+  <servlet>
+  	<servlet-name>userGetUserBlogServlet</servlet-name>
+  	<servlet-class>com.user.server.UserBlogServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userGetUserBlogServlet</servlet-name>
+  	<url-pattern>/user/UserBlog</url-pattern>
+  </servlet-mapping>
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SEblog.html</welcome-file>

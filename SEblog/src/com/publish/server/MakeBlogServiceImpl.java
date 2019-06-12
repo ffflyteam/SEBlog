@@ -1,8 +1,8 @@
-package com.user.blog.server;
+package com.publish.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.user.blog.client.MakeBlogService;
-import com.user.blog.shared.UserDAO;
+import com.publish.client.MakeBlogService;
+import com.publish.shared.UserDAO;
 
 @SuppressWarnings("serial")
 public class MakeBlogServiceImpl extends RemoteServiceServlet implements MakeBlogService{

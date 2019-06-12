@@ -2,7 +2,7 @@ package com.message.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.message.client.SetReadFlagService;
-import com.user.message.shared.UserMessageDAO;
+import com.message.shared.UserMessageDAO;
 
 @SuppressWarnings("serial")
 public class SetReadFlagServiceImpl extends RemoteServiceServlet implements SetReadFlagService{

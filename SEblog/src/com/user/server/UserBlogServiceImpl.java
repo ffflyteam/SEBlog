@@ -2,14 +2,12 @@ package com.user.server;
 
 import java.util.List;
 
-import com.DAO.Blog;
-import com.DAO.UserDAO;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.user.client.Blog;
 import com.user.client.UserBlogService;
+import com.user.shared.UserDAO;
 
 @SuppressWarnings("serial")
-@RemoteServiceRelativePath("user_blog")
 public class UserBlogServiceImpl extends RemoteServiceServlet implements UserBlogService{
 
 	/*

@@ -2,14 +2,12 @@ package com.user.server;
 
 import java.util.Map;
 
-import com.DAO.User;
-import com.DAO.UserDAO;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.user.client.User;
 import com.user.client.UserRelationService;
+import com.user.shared.UserDAO;
 
 @SuppressWarnings("serial")
-@RemoteServiceRelativePath("user_relation")
 public class UserRelationServiceImpl extends RemoteServiceServlet implements UserRelationService{
 
 	@Override

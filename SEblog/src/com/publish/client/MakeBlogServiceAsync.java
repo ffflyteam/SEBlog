@@ -1,4 +1,4 @@
-package com.user.blog.client;
+package com.publish.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

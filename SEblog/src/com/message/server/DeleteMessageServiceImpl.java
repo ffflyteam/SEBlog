@@ -2,7 +2,7 @@ package com.message.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.message.client.DeleteMessageService;
-import com.user.message.shared.UserMessageDAO;
+import com.message.shared.UserMessageDAO;
 
 @SuppressWarnings("serial")
 public class DeleteMessageServiceImpl extends RemoteServiceServlet implements DeleteMessageService{

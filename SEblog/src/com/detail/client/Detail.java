@@ -52,7 +52,7 @@ public class Detail implements EntryPoint{
 			
 			@Override
 			public void onBrowserEvent(Event event) {
-				// TODO Auto-generated method stub
+				
 				if(DOM.eventGetType(event) == Event.ONCLICK) {
 					if(user.getAccountId() == Author.getAccountId()) {
 						Operate.setAlert("您不能关注自己哦", false);
@@ -154,8 +154,6 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
-					final int type = collectElement.getInnerHTML().equals("收藏") ? 0 : 1;
-					TAC.transferOrCollectBlog(blog.getBlogId(), 1, type, new AsyncCallback<Integer>() {
 					int flag = collectElement.getInnerHTML().equals("收藏") ? 0 : 1;
 					Window.alert("flag"+flag);
 					TAC.transferOrCollectBlog(blog.getBlogId(), 1, flag, new AsyncCallback<Integer>() {
