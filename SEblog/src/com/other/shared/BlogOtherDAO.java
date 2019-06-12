@@ -1,12 +1,12 @@
-package com.other.index.shared;
+package com.other.shared;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.other.index.client.Blog;
-import com.other.index.client.User;
+import com.other.client.Blog;
+import com.other.client.User;
 
 public class BlogOtherDAO {
 	private static final String SELECT_USER_BLOGS_INFO = "SELECT A.BlogId,PublishDateTime,UserId,Title,Content,CollectsNum,TransfersNum,CommentsNum,ReadNum,Type FROM "

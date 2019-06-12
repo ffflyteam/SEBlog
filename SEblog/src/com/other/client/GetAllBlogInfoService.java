@@ -1,4 +1,4 @@
-package com.other.index.client;
+package com.other.client;
 
 import java.util.List;
 

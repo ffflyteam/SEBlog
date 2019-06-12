@@ -1,4 +1,4 @@
-package com.DAO;
+package com.other.shared;
 
 import java.util.HashMap;
 import java.util.Map;

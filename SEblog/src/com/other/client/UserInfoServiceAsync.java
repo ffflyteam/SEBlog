@@ -1,7 +1,7 @@
-package com.other.index.client;
+package com.other.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UserInfoServiceAsync {
-	void getUserInfo(int otherId, AsyncCallback<User> callback);
+	void getUserInfo(AsyncCallback<User> callback);
 }

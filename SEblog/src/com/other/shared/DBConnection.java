@@ -1,4 +1,4 @@
-package com.other.index.shared;
+package com.other.shared;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.other.index.server;
+package com.other.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.user.client.LogoutService;

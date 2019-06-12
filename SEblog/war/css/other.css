@@ -1,0 +1,120 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body#body {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(240,240,240);
+}
+div.mycontainer,
+div.mycontainer1 {
+  margin: 30px auto;
+  width: 50%;
+  border: 1px solid #ccc;
+  position: relative;
+	background-color: #fff;
+}
+/*导航栏背景*/
+nav.navbar-container {
+  background-color: #fbfbfb;
+  color: black;
+}
+nav.navbar-container a {
+  color: black;
+}
+
+/*用户基本信息*/
+div.mycontainer {
+	display: flex;
+	flex-direction: row;
+}
+div.imgContainer {
+	width: 100px;
+	height: 160px;
+	margin: auto 20px;
+}
+div.imgContainer img {
+	width: 100px;
+	height: 100px;
+	margin: 30px 0;
+	border-radius: 50%;
+}
+div.infoContainer {
+	width: 30%;
+	/*border: 1px solid #ccc;*/
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	margin-left: 20px;
+}
+div.infoContainer h5 {
+	color: orange;
+	margin-top: 30px;
+}
+
+div.focusContainer {
+	position: absolute;
+	right: 50px;
+	top: 50%;
+	margin-top: -14px;
+}
+div.focusContainer a {
+	padding: 10px 20px;
+	border: 1px solid orange;
+	color: orange;
+	font-size: 16px;
+	border-radius: 10px;
+}
+div.focusContainer a:hover {
+	color: #fff;
+	background-color: orange;
+}
+
+/*切换博客类型菜单*/
+div.mune {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	text-align: center;
+	height: 60px;
+	border-bottom: 1px solid #ccc;
+}
+div.mune span {
+	width: 33.3%;
+	text-align: center;
+	line-height: 60px;
+	color: orange;
+	font-size: 18px;
+}
+div.mune span:hover {
+	cursor: pointer;
+	border-top: 3px solid orange;
+}
+.selected-span {
+	border-top: 3px solid orange;
+}
+
+/*博客列表*/
+div.blog-list-container {
+	margin-left: 40px;
+}
+div.blog-list-container h5 {
+	margin: 30px auto 20px;
+}
+div.blog-list-container p {
+	font-size: 14px;
+    color: #858585;
+    line-height: 24px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+div.BlogInfoContainer {
+	margin: 10px auto;
+}
+div.BlogInfoContainer span {
+	margin-right: 30px;
+	
+}

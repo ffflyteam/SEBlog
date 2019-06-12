@@ -1,11 +1,11 @@
-package com.other.index.shared;
+package com.other.shared;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.other.index.client.User;
+import com.other.client.User;
 
 public class UserOtherDAO {
 	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
