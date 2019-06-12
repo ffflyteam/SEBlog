@@ -10,7 +10,11 @@ public class UserInfoServiceImpl extends RemoteServiceServlet implements UserInf
 
 	@Override
 	public User getUserInfo() {
-		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
+		Object id;
+		if((id = this.getThreadLocalRequest().getSession().getAttribute("accountId")) == null) {
+			return null;
+		}
+		int accountId = Integer.parseInt((String) id);
 		User user = UserIndexDAO.instance.getUserInfo(accountId);
 		return user;
 	}

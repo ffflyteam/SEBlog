@@ -9,7 +9,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class UserInfoServiceImpl extends RemoteServiceServlet implements UserInfoService{
 
 	public User getUserInfo() {
-		int	accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
+		Object id;
+		if((id = this.getThreadLocalRequest().getSession().getAttribute("accountId")) == null) {
+			return null;
+		}
+		int accountId = Integer.parseInt((String) id);
 		User user = UserDetailDAO.instance.getUserInfo(accountId);
 		return user;
 	}
