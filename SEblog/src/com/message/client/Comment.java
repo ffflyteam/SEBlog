@@ -1,4 +1,4 @@
-package com.other.client;
+package com.message.client;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,10 +1,10 @@
-package com.detail.server;
+package com.other.server;
 
-import com.detail.client.MakeRelationWithOtherService;
-import com.detail.shared.MessageType;
-import com.detail.shared.ResultConst;
-import com.detail.shared.UserDetailDAO;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.other.client.MakeRelationWithOtherService;
+import com.other.shared.MessageType;
+import com.other.shared.ResultConst;
+import com.other.shared.UserDAO;
 
 @SuppressWarnings("serial")
 public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet implements MakeRelationWithOtherService{
@@ -13,17 +13,16 @@ public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet imple
 	 * 关注他人
 	 * param(被关在人Id,类型(默认1，标志位：0为发生关系，1为取消关系)
 	 */
-	@Override
 	public int makeRelation(int otherId, int type, int flag) {
 		int res;
 		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		if(flag == 0) {
-			res = UserDetailDAO.instance.happenRelation(accountId, otherId, type);
+			res = UserDAO.instance.happenRelation(accountId, otherId, type);
 			if(res == ResultConst.SUCCESS.getId()) {		//生成消息
-				UserDetailDAO.instance.makeMessage(otherId, MessageType.HAPPEN_RELATION.getId(), accountId);
+				UserDAO.instance.makeMessage(otherId, MessageType.HAPPEN_RELATION.getId(), accountId);
 			}
 		} else {
-			res = UserDetailDAO.instance.cancleRelation(accountId, otherId, type);
+			res = UserDAO.instance.cancleRelation(accountId, otherId, type);
 		}
 		return res;
 	}

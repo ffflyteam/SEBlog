@@ -1,18 +1,25 @@
-package com.index.client;
+package com.message.client;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.index.shared.BlogType;
+import com.other.shared.MessageType;
+
+import java_cup.internal_error;
+
 
 public class Operate {
+	
+	//验证密码长度
+	public static boolean isValidPassword(String pwd) {
+		if(pwd==null)
+			return false;
+		return pwd.length() >= 6 && pwd.length() <= 10;
+	}
 	
 	//获取input标签的值
 	public static native String getValue(String id)
@@ -24,11 +31,23 @@ public class Operate {
 	 		return null;
 	 }-*/;
 	
+	//设置input标签的值
+	public static native void setValue(String id,String content)
+	/*-{
+		$doc.getElementById(id).value = content;
+	}-*/;
+	
 	//清空input标签的value
 	public static native void cleanValue(String id) 
 	/*-{
 		$doc.getElementById(id).value = "";
 	}-*/;
+	
+	//根据类名获取元素
+	public static native NodeList<Element> getElementsByClassName(String classname)
+	/*-{
+	 	return $doc.getElementsByClassName(classname);
+	 }-*/;
 	
 	//新增弹框，前提是在页面body标签添加id，值为"body",并将弹框的相关css代码拷贝
 	//弹框的html结构如下
@@ -51,7 +70,7 @@ public class Operate {
 			DOM.getElementById("error").setAttribute("style", "display:block");
 			DOM.getElementById("msg").setInnerHTML(str);
 			DOM.getElementById("img").setAttribute("src", "../images/" + (flag==true?"happy":"alert") + ".gif");
-			return;
+			return;	
 		}
 		//设置阴影层
 		Element maskElement = DOM.createElement("div");
@@ -114,69 +133,36 @@ public class Operate {
 		});
 	};
 
-	public static void addArticle(Map<Integer, List<Blog>> data,int type){
-		String hString = DOM.getElementById("blog-list").getInnerHTML();
-		if(type==0) {
-			List<Blog> blogList = getRecommend(data);
-			hString = "";
-			for(int i = 0; i < blogList.size();i++) {
-				hString += addArticleHelper(blogList.get(i));
-			}
-		}else {
-			hString = "";
-			for(int i = 0; i < data.get(type).size();i++) {
-				hString += addArticleHelper(data.get(type).get(i));
-			}
-		}
-		
-		DOM.getElementById("blog-list").setInnerHTML(hString);
-	}
-	
-	//选取每个类型的前几个代码
-	public static List<Blog> getRecommend(Map<Integer, List<Blog>> data) {
-		ArrayList<Blog> blogList = new ArrayList<>();
-		for(Entry<Integer, List<Blog>> entry : data.entrySet()) {
-			List<Blog> blogs = entry.getValue();
-			for(int i=0; i<2 && i<blogs.size(); i++) {
-				blogList.add(blogs.get(i));
-			}
-		}
-		blogList.sort(new Comparator<Blog>() {
-			@Override
-			public int compare(Blog o1, Blog o2) {
-				return o2.getReadNum() - o1.getReadNum();
-				}
-			});
-		return blogList;
-	}
+
 	
 	public static native String getContent(String content)
 	/*-{
 		var reg=/<\/?.+?\/?>/g;
 		return content.replace(reg,"");
 	}-*/;
+
+	public static void addMessage(List<Message> unreadList, String string) {
+		for (int i = 0; i < unreadList.size(); i++) {
+			
+		}
+	}
 	
-	private static String addArticleHelper(Blog blog2) {
-		String blog ="<li>"+ "<div class=\"list-container\"> " + 
-				"        <div class=\"userinfo\"> " + 
-				"          <div class=\"left\"> " + 
-				"            <img src=\""+ "../images/user_default.jpg" + "\" alt=\"\"> " + 
-				"            <a href=\"./other.html?otherid=" + blog2.getUser().getAccountId() + "\" class=\"name\">"+ blog2.getUser().getUserName() +"</a> " + 
-				"            <div class=\"interval\"></div> " + 
-				"            <span class=\"type\">"+ BlogType.getBlogTypeById(blog2.getType()).getDesc() +"</span> " + 
-				"          </div> " + 
-				"           " + 
-				"          <div class=\"right\"> " + 
-				"            <span>"+ blog2.getPublishDateTime() +"</span> " + 
-				"            <div class=\"interval\"></div> " + 
-				"            <span>"+ blog2.getReadNum() +"</span> " + 
-				"          </div> " + 
-				"           " + 
-				"        </div> " + 
-				"        <div class=\"title\"><h4><a target=\"_blank\" href=\""+ "./blog-detail.html?id="+ blog2.getBlogId() +"\" data-id=\"" + blog2.getBlogId() +"\">"+ blog2.getTitle() +"</a></h4></div> " + 
-				"        <div class=\"summary\" id=\"summary\">"+ getContent(blog2.getContent().substring(0, 40)) +"</div> " + 
-				"      </div>"+
-					"</li>";
-		return blog;
+	public String addMessageHelper(Message mes,int flag) {
+		User sendUser = mes.getSender();
+		String content = "<li>\r\n" + 
+				"					<div class=\"messageContainer\">\r\n" + 
+				"						<div class=\"infoContainer\">\r\n" + 
+				"							<div class=\"user\"><a href=\"./other.html?otherid=" + sendUser.getAccountId() +
+				"\">" + sendUser.getUserName() +"</a><span>"+ MessageType.getMessageTypeById(mes.getMessageType()).getDeclaringClass() +"</span></div>\r\n" + 
+				"							<div class=\"title\"><h6><a href=\"#\">第一个博客标题</a></h6></div>\r\n" + 
+				"						</div>\r\n" + 
+				"						<div class=\"OperateContainer\">\r\n" + 
+				"							<a href=\"#\">已读</a>\r\n" + 
+				"							<a href=\"#\">删除</a>\r\n" + 
+				"							<span>1990-10-10 12:00:00</span>\r\n" + 
+				"						</div>\r\n" + 
+				"					</div>\r\n" + 
+				"				</li>";
+		return content;
 	}
 }

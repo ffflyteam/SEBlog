@@ -13,7 +13,7 @@ import com.index.shared.BlogIndexDAO;
 public class IndexServiceImpl extends RemoteServiceServlet implements IndexService{
 
 	@Override
-	public Map<Integer, List<Blog>> index() {
+	public Map<Integer, List<Blog>> index() throws IllegalArgumentException {
 		try {
 			return BlogIndexDAO.instance.getAllHotBlogs(); 
 		} catch (Throwable t) {

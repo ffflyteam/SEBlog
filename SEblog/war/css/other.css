@@ -96,6 +96,9 @@ div.mune span:hover {
 }
 
 /*博客列表*/
+div.blogContainer ul li {
+	border-bottom: 2px solid #ccc;
+}
 div.blog-list-container {
 	margin-left: 40px;
 }

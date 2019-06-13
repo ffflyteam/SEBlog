@@ -18,18 +18,51 @@ nav.navbar-container a {
 
 div.mycontainer {
 	width: 50%;
-	margin: 0 auto;
+	margin: 60px 34%;
 	background-color: #fff;
 }
 
+/*侧边导航栏*/
+ul.ulContainer {
+	position: fixed;
+	background-color: #fff;
+	width: 270px;
+	top: 123px;
+	left: 20%;
+	height: 120px;
+}
+ul.ulContainer li {
+	text-align: center;
+	color: orange;
+	height: 60px;
+	line-height: 60px;
+	font-size: 18px;
+	border: 1px solid orange;
+}
+ul.ulContainer li:hover {
+	background-color: orange;
+	color: #fff;
+	cursor: pointer;
+}
+.selected-li {
+	background-color: orange;
+	color: #fff!important;
+	cursor: pointer;
+}
+
 /*未读消息列表*/
-div.unreadContainer {
+div.mycontainer ul li {
+	border: 1px solid #ccc;
+}
+div.messageContainer {
 	display: flex;
 	flex-direction: row;
 	padding: 20px;
 	position: relative;
 }
-
+div.user img {
+	width: 50px;
+}
 div.infoContainer {
 	display: flex;
 	flex-direction: column;
@@ -51,5 +84,5 @@ div.OperateContainer {
 	text-align: right;
 }
 div.OperateContainer a {
-	margin-bottom: 30px;
+	margin-bottom: 5px;
 }

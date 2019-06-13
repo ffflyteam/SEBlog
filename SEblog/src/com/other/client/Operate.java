@@ -8,10 +8,13 @@ import java.util.Map.Entry;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.other.shared.BlogType;
+
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 
 public class Operate {
@@ -135,23 +138,23 @@ public class Operate {
 		});
 	};
 
-	public static void addArticle(Map<Integer, List<Blog>> data,int type){
-		String hString = DOM.getElementById("blog-list").getInnerHTML();
-		if(type==0) {
-			List<Blog> blogList = getRecommend(data);
-			hString = "";
-			for(int i = 0; i < blogList.size();i++) {
-				hString += addArticleHelper(blogList.get(i),0);
-			}
-		}else {
-			hString = "";
-			for(int i = 0; i < data.get(type).size();i++) {
-				hString += addArticleHelper(data.get(type).get(i),0);
-			}
-		}
-		
-		DOM.getElementById("blog-list").setInnerHTML(hString);
-	}
+//	public static void addArticle(Map<Integer, List<Blog>> data,int type){
+//		String hString = DOM.getElementById("blog-list").getInnerHTML();
+//		if(type==0) {
+//			List<Blog> blogList = getRecommend(data);
+//			hString = "";
+//			for(int i = 0; i < blogList.size();i++) {
+//				hString += addArticleHelper(blogList.get(i));
+//			}
+//		}else {
+//			hString = "";
+//			for(int i = 0; i < data.get(type).size();i++) {
+//				hString += addArticleHelper(data.get(type).get(i));
+//			}
+//		}
+//		
+//		DOM.getElementById("blog-list").setInnerHTML(hString);
+//	}
 	
 	//选取每个类型的前几个代码
 	public static List<Blog> getRecommend(Map<Integer, List<Blog>> data) {
@@ -171,58 +174,29 @@ public class Operate {
 		return blogList;
 	}
 	
-	private static String addArticleHelper(Blog blog2,int flag) {
-		String aTag = "<div>\r\n" + 
-				"         <a class=\"dele\""+ "blogid=\""+ blog2.getBlogId() + "\"" +"href=\"#\">删除博客</a>\r\n" +       
-				"        </div> ";
-		String blog ="<li>"+ "<div class=\"list-container\"> " + 
-				"        <div class=\"userinfo\"> " + 
-				"          <div class=\"left\"> " + 
-				"            <img src=\""+ "../images/user_default.jpg" + "\" alt=\"\"> " + 
-				"            <span class=\"name\">"+ blog2.getUser().getUserName() +"</span> " + 
-				"            <div class=\"interval\"></div> " + 
-				"            <span class=\"type\">"+ BlogType.getBlogTypeById(blog2.getType()).getDesc() +"</span> " + 
-				"          </div> " + 
-				"           " + 
-				"          <div class=\"right\"> " + 
-				"            <span>"+ blog2.getPublishDateTime() +"</span> " + 
-				"            <div class=\"interval\"></div> " + 
-				"            <span>"+ blog2.getReadNum() +"</span> " + 
-				"          </div> " + 
-				"           " + (flag == 1?aTag:"") +
-				"        </div> " + 
-				"        <div class=\"title\"><h4><a target=\"_blank\" href=\""+ "./blog-detail.html?id="+ blog2.getBlogId() +"\" data-id=\"" + blog2.getBlogId() +"\">"+ blog2.getTitle() +"</a></h4></div> " + 
-				"        <div class=\"summary\" id=\"summary\">"+ blog2.getContent().substring(0, 40) +"</div> " + 
-				"      </div>"+
-					"</li>";
+	public static native String getContent(String content)
+	/*-{
+		var reg=/<\/?.+?\/?>/g;
+		return content.replace(reg,"");
+	}-*/;
+	
+	private static String addArticleHelper(Blog blog2) {
+		String blog = "<li>\r\n" + 
+				"					<div class=\"blog-list-container\">\r\n" + 
+				"						<h5><a href=\"./blog-detail.html?id=" + blog2.getBlogId() + "\">" + blog2.getTitle() +"</a></h5>\r\n" + 
+				"						<p>" + getContent(blog2.getContent().substring(0, 40)) +"</p>\r\n" + 
+				"						<div class=\"BlogInfoContainer\"><span>"+blog2.getPublishDateTime()+"</span><span>阅读数："
+				+ blog2.getReadNum()+
+				"</span><span>"+ BlogType.getBlogTypeById(blog2.getType()).getDesc() +"</span></div>\r\n" + 
+				"					</div>\r\n" + 
+				"				</li>";
 		return blog;
 	}
 
-	
-	//添加关注人
-	public static void addRelationList(Map<User, Integer> data) {
-		List<User> userList = new ArrayList<>(data.keySet().size());
-		for(User user: data.keySet()) {
-			userList.add(user);
-		}
-		String content = "";
-		for(int i =0;i < data.size();i++) {
-			content = content +
-					"<li>\r\n" + 
-					"   <div><img src=\"../images/user_default.jpg\" alt=\"\"></div>\r\n" + 
-					"   <div><a href=\"#\">"+ userList.get(i).getUserName() +"</a></div>\r\n" + 
-					"   <div class=\"right\"><a class=\"cancel\" href=\"#\""+
-					"userId=\"" + userList.get(i).getAccountId() + "\"" +
-					">取消关注</a></div>\r\n" + 
-					"</li>";
-		}
-		DOM.getElementById("focus-list").setInnerHTML(content);
-	}
-
-	public static void addMyBlog(List<Blog> data,String id,int flag) {
+	public static void addMyBlog(List<Blog> data,String id) {
 		String content = "";
 		for (int i = 0; i < data.size(); i++) {
-			content += addArticleHelper(data.get(i),flag);
+			content += addArticleHelper(data.get(i));
 		}
 		DOM.getElementById(id).setInnerHTML(content);
 	}

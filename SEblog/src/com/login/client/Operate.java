@@ -1,13 +1,9 @@
 package com.login.client;
 
-import org.apache.xalan.templates.ElemTemplate;
-
-import com.gargoylesoftware.htmlunit.javascript.host.html.Image;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.Window;
 
 public class Operate {
 	

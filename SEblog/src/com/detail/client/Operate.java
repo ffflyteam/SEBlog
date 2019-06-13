@@ -138,8 +138,8 @@ public class Operate {
 		tranElement.setInnerHTML(blog.getTransfersNum()+"");
 		Element collElement = DOM.getElementById("coll");
 		collElement.setInnerHTML(blog.getCollectsNum()+"");
-		Element userNamElement = DOM.getElementById("nickName");
-		userNamElement.setInnerHTML(user.getUserName());
+		Element userNameElement = DOM.getElementById("nickName");
+		userNameElement.setInnerHTML("<a href=\"./other.html?otherid="+ user.getAccountId() +"\">"+user.getUserName()+"</a>");
 		Element sexElement = DOM.getElementById("sex");
 		sexElement.setInnerHTML(user.getSex()==1?"男":"女");
 		Element birthElement = DOM.getElementById("birt");

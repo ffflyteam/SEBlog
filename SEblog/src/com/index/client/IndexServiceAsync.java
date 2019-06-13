@@ -6,5 +6,5 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface IndexServiceAsync {
-	void index(AsyncCallback<Map<Integer, List<Blog>>> asyncCallback);
+	void index(AsyncCallback<Map<Integer, List<Blog>>> asyncCallback) throws IllegalArgumentException;
 }

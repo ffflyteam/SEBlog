@@ -15,7 +15,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class Index implements EntryPoint{
 
-	private final IndexServiceAsync index = GWT.create(IndexService.class);
+	private final IndexServiceAsync article = GWT.create(IndexService.class);
 	private final UserInfoServiceAsync userinfo = GWT.create(UserInfoService.class);
 	public User user;
 	public void onModuleLoad() {
@@ -38,28 +38,26 @@ public class Index implements EntryPoint{
 				user = result;
 				DOM.getElementById("name").setInnerHTML(result.getUserName());
 				
-				Window.alert("sss");
-				//请求获得推荐博客内容
-				index.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						Operate.setAlert("请刷新页面获取热门博客", false);
-						Window.alert("aaa");
-					}
-
-					@Override
-					public void onSuccess(Map<Integer, List<Blog>> result) {
-						// TODO Auto-generated method stub
-						Window.alert(result.toString());
-						Operate.addArticle(result,0);
-					}
-				});
-				Window.alert("sss2");
+				
 			}
 		});
-		
+		Window.alert("sss");
+		//请求获得推荐博客内容
+		article.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				Operate.setAlert("请刷新页面获取热门博客", false);
+				Window.alert("aaa");
+			}
+
+			@Override
+			public void onSuccess(Map<Integer, List<Blog>> result) {
+				Window.alert(result.toString());
+				Operate.addArticle(result,0);
+			}
+			
+		});
+
 		//注册侧边导航栏的点击事件
 		final Element sideNavElement = DOM.getElementById("s-nav");
 		final NodeList<Element> list = sideNavElement.getElementsByTagName("a");
@@ -78,8 +76,8 @@ public class Index implements EntryPoint{
 						aTargetElement.addClassName("selected");
 						String type = aTargetElement.getParentElement().getAttribute("type");
 						final int typeNum = Integer.valueOf(type);
-						
-						index.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
+						Window.alert(type);
+						article.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {

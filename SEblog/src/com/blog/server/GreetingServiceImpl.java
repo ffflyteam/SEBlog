@@ -1,7 +1,6 @@
 package com.blog.server;
 
 import com.blog.client.GreetingService;
-import com.blog.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

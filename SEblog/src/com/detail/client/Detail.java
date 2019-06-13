@@ -26,10 +26,9 @@ public class Detail implements EntryPoint{
 	public User user;
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
+		
 		final String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
 		final int blogId = Integer.valueOf(blogIdStr);
-		Window.alert(blogIdStr);
 		
 		
 		//请求登录状态及个人信息
@@ -140,23 +139,18 @@ public class Detail implements EntryPoint{
 		final Element collectElement = DOM.getElementById("collect");
 		DOM.sinkEvents(collectElement, Event.ONCLICK);
 		DOM.setEventListener(collectElement, new EventListener() {
-			
 			@Override
 			public void onBrowserEvent(Event event) {
-				// TODO Auto-generated method stub
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
 					int flag = collectElement.getInnerHTML().equals("收藏") ? 0 : 1;
-					Window.alert("flag"+flag);
 					TAC.transferOrCollectBlog(blog.getBlogId(), 1, flag, new AsyncCallback<Integer>() {
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							Operate.setAlert("网络原因收藏失败，请重试！", false);
 						}
 
 						@Override
 						public void onSuccess(Integer result) {
-							// TODO Auto-generated method stub
 							boolean a = result==0?true:false;
 							if(a) {
 								DOM.getElementById("collect").setInnerHTML(flag==0?"已收藏":"收藏");
@@ -173,16 +167,13 @@ public class Detail implements EntryPoint{
 
 	public void getUserinfo() {
 		getUserInfo.getUserInfo(new AsyncCallback<User>() {
-			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				Operate.setAlert("获取登录信息失败，请刷新页面" + caught.toString(), false);
 			}
 
 			@Override
 			public void onSuccess(User result) {
-				// TODO Auto-generated method stub
 				user = result;
 				DOM.getElementById("us").setInnerHTML(result.getUserName());
 			}
@@ -207,17 +198,13 @@ public class Detail implements EntryPoint{
 	
 	public void getContent(int blogId) {
 		Detail.getDetail(blogId, new AsyncCallback<Blog>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				Operate.setAlert("请求博客信息失败，请重试！", false);
 			}
 
 			@Override
 			public void onSuccess(Blog result) {
-				// TODO Auto-generated method stub
-				Window.alert(result.toString());
 				Author = result.getUser();
 				blog = result;
 				Operate.loadBlog(result);

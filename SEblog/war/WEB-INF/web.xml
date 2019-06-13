@@ -198,6 +198,58 @@
   	<url-pattern>/user/deleteblog</url-pattern>
   </servlet-mapping>
   
+  <!-- 他人主页 -->
+  	<!-- 请求用户信息 -->
+  <servlet>
+  	<servlet-name>getUserInfoServlet</servlet-name>
+  	<servlet-class>com.other.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>getUserInfoServlet</servlet-name>
+  	<url-pattern>/other/userInfo</url-pattern>
+  </servlet-mapping>
+  
+  	<!-- 请求其他用户信息 --> 
+  <servlet>
+  	<servlet-name>getOtherUserInfoServlet</servlet-name>
+  	<servlet-class>com.other.server.OtherUserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>getOtherUserInfoServlet</servlet-name>
+  	<url-pattern>/other/getOtherInfo</url-pattern>
+  </servlet-mapping>
+  	<!-- 请求他人的博客信息 -->
+  <servlet>
+  	<servlet-name>getOtherBlogServlet</servlet-name>
+  	<servlet-class>com.other.server.GetAllBlogInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>getOtherBlogServlet</servlet-name>
+  	<url-pattern>/other/getOtherAllBlog</url-pattern>
+  </servlet-mapping>
+  	<!-- 他人主页关注他人 -->
+  <servlet>
+  	<servlet-name>focusOtherBlogServlet</servlet-name>
+  	<servlet-class>com.other.server.MakeRelationWithOtherServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>focusOtherBlogServlet</servlet-name>
+  	<url-pattern>/other/focus</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- 消息页面 -->
+  		<!-- 请求用户信息 -->
+  <servlet>
+  	<servlet-name>messageGetUserInfoServlet</servlet-name>
+  	<servlet-class>com.message.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>messageGetUserInfoServlet</servlet-name>
+  	<url-pattern>/message/userInfo</url-pattern>
+  </servlet-mapping>
+  
+    		
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SEblog.html</welcome-file>

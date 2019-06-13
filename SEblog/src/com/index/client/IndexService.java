@@ -8,5 +8,5 @@ import java.util.List;
 
 @RemoteServiceRelativePath("article")
 public interface IndexService extends RemoteService {
-	Map<Integer, List<Blog>> index();
+	Map<Integer, List<Blog>> index() throws IllegalArgumentException;
 }
