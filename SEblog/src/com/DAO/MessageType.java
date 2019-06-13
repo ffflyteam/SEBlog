@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum MessageType {
 	HAPPEN_RELATION(0,"有人关注你哟！"),//被他人关注
-	GET_COMMENT(1,"有人在你博客/评论下写了评论"),//自己博客或评论被评论
+	GET_COMMENT(1,"评论你了"),//自己博客或评论被评论
 	;
 	
 	private int id;

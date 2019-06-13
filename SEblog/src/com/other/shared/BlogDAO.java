@@ -7,9 +7,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.detail.client.Blog;
-import com.detail.client.Comment;
-import com.detail.client.User;
+import com.other.client.Blog;
+import com.other.client.Comment;
+import com.other.client.User;
+
 
 public class BlogDAO {
 	/*private static final String SELECT_USER_BLOGS_INFO = "SELECT A.BlogId,PublishDateTime,UserId,Title,Content,CollectsNum,TransfersNum,CommentsNum,ReadNum,Type FROM "

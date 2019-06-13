@@ -1,0 +1,55 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body#body {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(240,240,240);
+}
+/*导航栏背景*/
+nav.navbar-container {
+  background-color: #fbfbfb;
+  color: black;
+}
+nav.navbar-container a {
+  color: black;
+}
+
+div.mycontainer {
+	width: 50%;
+	margin: 0 auto;
+	background-color: #fff;
+}
+
+/*未读消息列表*/
+div.unreadContainer {
+	display: flex;
+	flex-direction: row;
+	padding: 20px;
+	position: relative;
+}
+
+div.infoContainer {
+	display: flex;
+	flex-direction: column;
+	margin-left: 40px;
+}
+div.infoContainer div.user a {
+	color: orange;
+	font-size: 18px;
+	margin-right: 40px;
+}
+div.title {
+	margin-top: 20px;
+}
+div.OperateContainer {
+	position: absolute;
+	right: 20px;
+	display: flex;
+	flex-direction: column;
+	text-align: right;
+}
+div.OperateContainer a {
+	margin-bottom: 30px;
+}

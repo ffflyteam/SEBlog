@@ -80,6 +80,14 @@ public class UserIndexDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return null;
+			} finally {
+				if(rs != null) {
+					try {
+						rs.close();
+					} catch (Throwable t) {
+						t.printStackTrace();
+					}
+				}
 			}
 			return null;
 		} else {

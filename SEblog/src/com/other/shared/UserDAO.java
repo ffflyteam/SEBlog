@@ -144,20 +144,15 @@ public class UserDAO {
 		int res = DBConnection.instance.executeQuery(INSERT_USER_INFO, params);
 		return !CommonHelper.instance.isSqlExecuteSucc(res) ? ResultConst.REGISTER_ERROR.getId() : ResultConst.SUCCESS.getId();
 	}
-	
-	//�û���¼
-	public int login(int accountId, String password) {
-		if(!isUserRegistered(accountId)) {
-			return ResultConst.ACCOUNT_NOT_EXIST.getId();
-		}
-		if(!isPasswordCorrect(accountId, password)) {
-			return ResultConst.PASSWORD_ERROR.getId();
-		}
-		if(!userStatIsNormal(accountId)) {
-			return ResultConst.ACCOUNT_HAS_BEEN_FROZEN.getId();
-		}
-		return ResultConst.SUCCESS.getId();
-	}
+	/*
+	 * //�û���¼ public int login(int accountId, String password) {
+	 * if(!isUserRegistered(accountId)) { return
+	 * ResultConst.ACCOUNT_NOT_EXIST.getId(); } if(!isPasswordCorrect(accountId,
+	 * password)) { return ResultConst.PASSWORD_ERROR.getId(); }
+	 * if(!userStatIsNormal(accountId)) { return
+	 * ResultConst.ACCOUNT_HAS_BEEN_FROZEN.getId(); } return
+	 * ResultConst.SUCCESS.getId(); }
+	 */
 	
 	//�޸�����
 	public boolean setUserInfo(int accountId, String password, String userName, short sex, String birthDayStr, String address) {
@@ -200,29 +195,23 @@ public class UserDAO {
 		return CommonHelper.instance.getSqlExecuteResultConst(res);
 	}
 	
-	//ɾ������
-	public int deleteBlog(int blogId, int accountId) {
-		Object[] params = new Object[] {blogId};
-		try {
-			List<Comment> allComments = BlogDAO.instance.getAllCommentById(blogId);
-			for(Comment comment : allComments) {			//ɾ�����۵����ۣ���������
-				deleteComment(comment.getCommentId());
-			}
-		} catch (Throwable t) {
-			return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
-		}
-		int rs = DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);  //ɾ�����͵�����
-		if(!CommonHelper.instance.isSqlExecuteSucc(rs)) {
-			return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
-		}
-		rs = DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);  //ɾ���û��Ͳ��͵Ĺ�ϵ
-		if(!CommonHelper.instance.isSqlExecuteSucc(rs)) {
-			return ResultConst.CACLE_RELATION_BLOG_ERROR.getId();
-		}
-		rs = DBConnection.instance.executeQuery(DELETE_BLOG, new Object[] {blogId, accountId});  //ɾ������
-		BlogDAO.instance.removeBlogByIdFromSecondDAO(blogId);
-		return CommonHelper.instance.getSqlExecuteResultConst(rs);
-	}
+	/*
+	 * //ɾ������ public int deleteBlog(int blogId, int accountId) { Object[] params
+	 * = new Object[] {blogId}; try { List<Comment> allComments =
+	 * BlogDAO.instance.getAllCommentById(blogId); for(Comment comment :
+	 * allComments) { //ɾ�����۵����ۣ��������� deleteComment(comment.getCommentId());
+	 * } } catch (Throwable t) { return ResultConst.CAN_NOT_DELETE_COMMENT.getId();
+	 * } int rs =
+	 * DBConnection.instance.executeQuery(DELETE_ALL_COMMENTS_BY_OBJECTID, params);
+	 * //ɾ�����͵����� if(!CommonHelper.instance.isSqlExecuteSucc(rs)) { return
+	 * ResultConst.CAN_NOT_DELETE_COMMENT.getId(); } rs =
+	 * DBConnection.instance.executeQuery(DELETE_USER_BLOG_RELATION, params);
+	 * //ɾ���û��Ͳ��͵Ĺ�ϵ if(!CommonHelper.instance.isSqlExecuteSucc(rs)) { return
+	 * ResultConst.CACLE_RELATION_BLOG_ERROR.getId(); } rs =
+	 * DBConnection.instance.executeQuery(DELETE_BLOG, new Object[] {blogId,
+	 * accountId}); //ɾ������ BlogDAO.instance.removeBlogByIdFromSecondDAO(blogId);
+	 * return CommonHelper.instance.getSqlExecuteResultConst(rs); }
+	 */
 	
 	//��ȡ�Լ������в���
 	public List<Blog> getAllBlog(int accountId) {
@@ -549,18 +538,12 @@ public class UserDAO {
 		}
 	}
 	
-	public boolean userStatIsNormal(int accountId) {
-		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_STAT_BY_ID, new Object[] {accountId});
-		try {
-			if(rs.next()) {
-				int stat = rs.getInt("Stat");
-				return stat == UserStat.NORMAL.getId();
-			}
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+	/*
+	 * public boolean userStatIsNormal(int accountId) { ResultSet rs =
+	 * DBConnection.instance.executeCommand(SELECT_USER_STAT_BY_ID, new Object[]
+	 * {accountId}); try { if(rs.next()) { int stat = rs.getInt("Stat"); return stat
+	 * == UserStat.NORMAL.getId(); } return false; } catch (Exception e) {
+	 * e.printStackTrace(); return false; } }
+	 */
 	
 }

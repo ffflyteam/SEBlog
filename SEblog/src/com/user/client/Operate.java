@@ -13,8 +13,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.user.shared.BlogType;
 
-import java_cup.internal_error;
-
 public class Operate {
 	
 	//验证密码长度
