@@ -10,10 +10,7 @@ import javax.sql.DataSource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DBConnection {
-		private static final String URL="jdbc:mysql://localhost:3306/user?userSSL=false&serverTimezone=UTC";
 		private static final String DRIVE_NAME="com.mysql.cj.jdbc.Driver";
-		private static final String NAME = "root";
-		private static final String PASSWORD = "123456";
 		public static final DBConnection instance = new DBConnection();
 		private static DataSource ds;
 		static {

@@ -2,7 +2,6 @@ package com.detail.client;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 public class Comment implements Serializable{
 	private static final long serialVersionUID = 1L;

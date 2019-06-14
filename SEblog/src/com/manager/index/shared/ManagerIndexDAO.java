@@ -1,18 +1,20 @@
 package com.manager.index.shared;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.manager.index.client.Comment;
 import com.manager.index.client.FeedBack;
+import com.manager.index.client.User;
 
 public class ManagerIndexDAO {
 	private static final String SELECT_FEEDBACK = "SELECT * FROM `feedback` ORDER BY CreateTime DESC";
 	private static final String UPDATE_FEEDBACK_READFLAG = "UPDATE `feedback` SET ReadFlag = 1 WHERE FeedBackId = ?";
 	private static final String DELETE_FEEDBACK = "DELETE FROM `feedback` WHERE FeedBackId = ?";
-	
+	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
 	private static final String DELETE_BLOG = "DELETE FROM `blog_info` WHERE BlogId = ?";
 	private static final String DELETE_COMMENT = "DELETE FROM `comments` WHERE CommentId = ?";
 	private static final String DELETE_ALL_COMMENTS_BY_OBJECTID = "DELETE FROM `comments` WHERE ObjectId = ?";
@@ -23,10 +25,30 @@ public class ManagerIndexDAO {
 	
 	public static final ManagerIndexDAO instance = new ManagerIndexDAO();
 	
+	public User getUserInfo(int userId) {
+		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
+		try {
+			if(rs.next()) {
+				try {
+					User user = new User(rs.getInt("UserId"), rs.getString("PassWord"), rs.getString("UserName"), 
+							rs.getShort("Sex"), rs.getDate("BirthDay"), rs.getString("Address"), rs.getInt("Stat"));
+					return user;
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
 	public int deleteBlog(int blogId) {
 		try {
 			Object[] params = new Object[] {blogId};
-			List<Comment> allComments = BlogDAO.instance.getAllCommentById(blogId);
+			List<Comment> allComments = ManagerBlogDAO.instance.getAllCommentById(blogId);
 			for(Comment comment : allComments) {			
 				deleteComment(comment.getCommentId());
 			}
@@ -41,7 +63,7 @@ public class ManagerIndexDAO {
 	
 	public int deleteComment(int commentId) {
 		try {
-			List<Comment> allComments = BlogDAO.instance.getAllCommentById(commentId);
+			List<Comment> allComments = ManagerBlogDAO.instance.getAllCommentById(commentId);
 			if(!allComments.isEmpty()) {
 				for(Comment comment : allComments) {
 					deleteComment(comment.getCommentId());

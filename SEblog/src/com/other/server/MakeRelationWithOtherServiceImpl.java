@@ -4,7 +4,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.other.client.MakeRelationWithOtherService;
 import com.other.shared.MessageType;
 import com.other.shared.ResultConst;
-import com.other.shared.UserDAO;
+import com.other.shared.UserOtherDAO;
 
 @SuppressWarnings("serial")
 public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet implements MakeRelationWithOtherService{
@@ -17,12 +17,12 @@ public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet imple
 		int res;
 		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		if(flag == 0) {
-			res = UserDAO.instance.happenRelation(accountId, otherId, type);
+			res = UserOtherDAO.instance.happenRelation(accountId, otherId, type);
 			if(res == ResultConst.SUCCESS.getId()) {		//生成消息
-				UserDAO.instance.makeMessage(otherId, MessageType.HAPPEN_RELATION.getId(), accountId);
+				UserOtherDAO.instance.makeMessage(otherId, MessageType.HAPPEN_RELATION.getId(), accountId, -1);
 			}
 		} else {
-			res = UserDAO.instance.cancleRelation(accountId, otherId, type);
+			res = UserOtherDAO.instance.cancleRelation(accountId, otherId, type);
 		}
 		return res;
 	}

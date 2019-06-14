@@ -49,10 +49,17 @@ ul.ulContainer li:hover {
 	color: #fff!important;
 	cursor: pointer;
 }
+#readlist {
+	display: none;
+}
+div.read {
+	overflow: hidden;
+}
 
 /*未读消息列表*/
 div.mycontainer ul li {
 	border: 1px solid #ccc;
+	height: 120px;
 }
 div.messageContainer {
 	display: flex;
@@ -62,6 +69,7 @@ div.messageContainer {
 }
 div.user img {
 	width: 50px;
+	height: 50px;
 }
 div.infoContainer {
 	display: flex;
@@ -85,4 +93,64 @@ div.OperateContainer {
 }
 div.OperateContainer a {
 	margin-bottom: 5px;
+}
+
+/*设置弹框提示的样式*/
+#error {
+	display: none;
+	border: 1px solid black;
+	position: absolute;
+	margin: -158px 0 0 -124px;
+	top: 50%;
+	left: 50%;
+	background-color: #fff;
+	width: 300px;
+	border-radius: 10%;
+	overflow: hidden;
+	opacity: 1;
+	z-index: 98;
+}
+#photo {
+	text-align: center;
+	width: 192px;
+	height: 192px;
+	margin: 10px auto 0;
+}
+#information {
+	background-color: rgb(107,184,252);
+	overflow: hidden;
+}
+#information div {
+	text-align: center;
+	margin: 20px 0 10px;
+}
+#information div h5 {
+	color: #fff;
+	font-size: 16px;
+}
+#information div a#ok {
+	width: 30%;
+	padding: 5px 20px;
+	margin: 0 auto;
+	display: inline-block;
+	border: 1px solid #fff;
+	border-radius: 15px;
+	color: #fff;
+}
+#information h4 {
+	text-align: center;
+	font-size: 18px;
+	height: 20px;
+	line-height: 20px;
+}
+.mask {
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	opacity: 0.5;
+	z-index: 97;
 }

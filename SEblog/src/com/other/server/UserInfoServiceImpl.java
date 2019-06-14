@@ -3,7 +3,7 @@ package com.other.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.other.client.User;
 import com.other.client.UserInfoService;
-import com.other.shared.UserDAO;
+import com.other.shared.UserOtherDAO;
 
 @SuppressWarnings("serial")
 public class UserInfoServiceImpl extends RemoteServiceServlet implements UserInfoService {
@@ -15,7 +15,7 @@ public class UserInfoServiceImpl extends RemoteServiceServlet implements UserInf
 			return null;
 		}
 		int accountId = Integer.parseInt((String) id);
-		User user = UserDAO.instance.getUserInfo(accountId);
+		User user = UserOtherDAO.instance.getUserInfo(accountId);
 		return user;
 	}
 

@@ -1,6 +1,7 @@
 package com.other.client;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -69,14 +70,14 @@ public class Other implements EntryPoint {
 	}
 
 	public void getAllBlog() {
-		getAllBlog.getAllBlog(otherId, new AsyncCallback<List<Blog>>() {
+		getAllBlog.getAllBlog(otherId, new AsyncCallback<Map<Integer,List<Blog>>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				Operate.setAlert("刷新获取该作者的博客", false);
 			}
 
 			@Override
-			public void onSuccess(List<Blog> result) {
+			public void onSuccess(Map<Integer,List<Blog>> result) {
 				Operate.addMyBlog(result, "blog-list");
 			}
 		});

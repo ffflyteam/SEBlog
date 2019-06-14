@@ -7,9 +7,9 @@ import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.other.shared.MessageType;
+import com.google.gwt.user.client.Window;
+import com.message.shared.MessageType;
 
-import java_cup.internal_error;
 
 
 public class Operate {
@@ -141,28 +141,48 @@ public class Operate {
 		return content.replace(reg,"");
 	}-*/;
 
-	public static void addMessage(List<Message> unreadList, String string) {
-		for (int i = 0; i < unreadList.size(); i++) {
-			
+	public static void addMessage(List<Message> List) {
+		String contentRead = "";
+		String contentUnread = "";
+		for (int i = 0; i < List.size(); i++) {
+			if(List.get(i).getReadFlag() == 0) {
+				contentUnread += addMessageHelper(List.get(i), List.get(i).getMessageType(), 0);
+			}else {
+				contentRead += addMessageHelper(List.get(i), List.get(i).getMessageType(), 1);
+			}
 		}
+		DOM.getElementById("unreadlist").setInnerHTML(contentUnread);
+		DOM.getElementById("readlist").setInnerHTML(contentRead);
 	}
 	
-	public String addMessageHelper(Message mes,int flag) {
+	public static String addMessageHelper(Message mes,int flag,int read) {
+		String title = flag== 0?"":
+			("<div class=\"title\"><h6><a href=\"./blog-detail.html?id="
+				+ mes.getBlogId() + "\">"+ mes.getBlogTitle() +"</a></h6></div>\r\n");
+		String readbutton = read==0?"<a id=\""+ mes.getMessageId() +"\" class=\"readFlag\" href=\"#\">已读</a>\r\n":"";
 		User sendUser = mes.getSender();
+		
+		
 		String content = "<li>\r\n" + 
 				"					<div class=\"messageContainer\">\r\n" + 
 				"						<div class=\"infoContainer\">\r\n" + 
 				"							<div class=\"user\"><a href=\"./other.html?otherid=" + sendUser.getAccountId() +
-				"\">" + sendUser.getUserName() +"</a><span>"+ MessageType.getMessageTypeById(mes.getMessageType()).getDeclaringClass() +"</span></div>\r\n" + 
-				"							<div class=\"title\"><h6><a href=\"#\">第一个博客标题</a></h6></div>\r\n" + 
+				"\">" + sendUser.getUserName() +"</a><span>"+ MessageType.getMessageTypeById(mes.getMessageType()).getMessage() +"</span></div>\r\n" + 
+				title  + 
 				"						</div>\r\n" + 
 				"						<div class=\"OperateContainer\">\r\n" + 
-				"							<a href=\"#\">已读</a>\r\n" + 
-				"							<a href=\"#\">删除</a>\r\n" + 
-				"							<span>1990-10-10 12:00:00</span>\r\n" + 
+				readbutton + 
+				"							<a id=\"" + mes.getMessageId() + "\" class=\"dele\" href=\"#\">删除</a>\r\n" + 
+				"							<span>"+ mes.getCreateTime().toString() +"</span>\r\n" + 
 				"						</div>\r\n" + 
 				"					</div>\r\n" + 
 				"				</li>";
 		return content;
 	}
+	
+	public static native NodeList<Element> getChildren(String id)
+	/*-{
+		console.log($doc.getElementById(id).children);
+	  	return $doc.getElementById(id).children;
+	}-*/;
 }

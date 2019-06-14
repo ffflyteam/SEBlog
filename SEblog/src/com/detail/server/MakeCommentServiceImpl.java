@@ -4,7 +4,6 @@ import com.detail.client.Blog;
 import com.detail.client.Comment;
 import com.detail.client.MakeCommentService;
 import com.detail.shared.BlogDetailDAO;
-import com.detail.shared.CommonHelper;
 import com.detail.shared.MessageType;
 import com.detail.shared.ResultConst;
 import com.detail.shared.UserDetailDAO;
@@ -26,11 +25,14 @@ public class MakeCommentServiceImpl extends RemoteServiceServlet implements Make
 			if(BlogDetailDAO.instance.isBlog(objectId)) {
 				Blog blog = BlogDetailDAO.instance.getBlogById(objectId);
 				receiverId = blog.getUser().getAccountId();
-				UserDetailDAO.instance.makeMessage(receiverId, MessageType.MAKE_COMMENT.getId(), accountId);
+				UserDetailDAO.instance.makeMessage(receiverId, MessageType.MAKE_COMMENT.getId(), accountId, objectId);
 			} else {
 				Comment comment = BlogDetailDAO.instance.getCommentById(objectId);
 				receiverId = comment.getUser().getAccountId();
-				UserDetailDAO.instance.makeMessage(receiverId, MessageType.MAKE_COMMENT.getId(), accountId);
+				while(!BlogDetailDAO.instance.isBlog(comment.getObjectId())) {  //直到拿到Blog
+					comment = BlogDetailDAO.instance.getCommentById(comment.getObjectId());
+				}
+				UserDetailDAO.instance.makeMessage(receiverId, MessageType.MAKE_COMMENT.getId(), accountId, comment.getObjectId());
 			}
 		}
 		return rs;

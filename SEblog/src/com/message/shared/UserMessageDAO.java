@@ -4,22 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.DAO.DBConnection;
 import com.message.client.Message;
 import com.message.client.User;
 
 public class UserMessageDAO {
 	private static final String SELECT_USER_INFO_BY_ID = "SELECT * FROM `user_info` WHERE UserId = ?";
 	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
-	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
+	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE ReceiverId = ? ORDER BY CreateTime DESC";
 	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE `message` SET ReadFlag = 1 WHERE MessageId = ?";
 	public static final UserMessageDAO instance = new UserMessageDAO();
-	private static final Map<Integer, User> userSecondDao = new LinkedHashMap<>();//可改成Redis
-	private static final int userCacheSize = 64;
 	
 	private UserMessageDAO() {
 	}
@@ -34,7 +29,12 @@ public class UserMessageDAO {
 			while(rs.next()) {
 				User receiver = getUserInfo(rs.getInt("ReceiverId"));
 				User sender = getUserInfo(rs.getInt("SenderId"));
-				Message message = new Message(rs.getInt("MessageId"), receiver, rs.getInt("MessageType"), sender, rs.getInt("ReadFlag"), rs.getDate("CreateTime"));
+				int blogId = rs.getInt("BlogId");
+				String blogTitle = "";
+				if(blogId > 0) {
+					blogTitle = BlogMessageDAO.instance.getBlogById(blogId).getTitle();
+				}
+				Message message = new Message(rs.getInt("MessageId"), receiver, rs.getInt("MessageType"), sender, blogId, blogTitle, rs.getInt("ReadFlag"), rs.getDate("CreateTime"));
 				resultList.add(message);
 			}
 		} catch (Throwable t) {
@@ -56,33 +56,22 @@ public class UserMessageDAO {
 	
 	//获取用户自己信息
 		public User getUserInfo(int userId) {
-			if(!userSecondDao.containsKey(userId)) {
-				ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
-				try {
-					if(rs.next()) {
-						try {
-							User user = new User(rs.getInt("UserId"), rs.getString("PassWord"), rs.getString("UserName"), 
-									rs.getShort("Sex"), rs.getDate("BirthDay"), rs.getString("Address"), rs.getInt("Stat"));
-							if(userSecondDao.size() < userCacheSize) {
-								userSecondDao.putIfAbsent(userId, user);
-							} else {
-								int accountId4Remove = userSecondDao.entrySet().iterator().next().getKey();
-								userSecondDao.remove(accountId4Remove);
-								userSecondDao.putIfAbsent(userId, user);
-							}
-							return user;
-						} catch (SQLException e) {
-							e.printStackTrace();
-							return null;
-						}
+			ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_INFO_BY_ID, new Object[] {userId});
+			try {
+				if(rs.next()) {
+					try {
+						User user = new User(rs.getInt("UserId"), rs.getString("PassWord"), rs.getString("UserName"), 
+								rs.getShort("Sex"), rs.getDate("BirthDay"), rs.getString("Address"), rs.getInt("Stat"));
+						return user;
+					} catch (SQLException e) {
+						e.printStackTrace();
+						return null;
 					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-					return null;
 				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 				return null;
-			} else {
-				return userSecondDao.get(userId);
 			}
+			return null;
 		}
 }

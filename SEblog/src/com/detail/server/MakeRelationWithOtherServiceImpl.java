@@ -19,8 +19,8 @@ public class MakeRelationWithOtherServiceImpl extends RemoteServiceServlet imple
 		int accountId = Integer.parseInt((String) this.getThreadLocalRequest().getSession().getAttribute("accountId"));
 		if(flag == 0) {
 			res = UserDetailDAO.instance.happenRelation(accountId, otherId, type);
-			if(res == ResultConst.SUCCESS.getId()) {		//生成消息
-				UserDetailDAO.instance.makeMessage(otherId, MessageType.HAPPEN_RELATION.getId(), accountId);
+			if(res == ResultConst.SUCCESS.getId()) {		//生成消息,此时blogId置为-1
+				UserDetailDAO.instance.makeMessage(otherId, MessageType.HAPPEN_RELATION.getId(), accountId, -1);
 			}
 		} else {
 			res = UserDetailDAO.instance.cancleRelation(accountId, otherId, type);

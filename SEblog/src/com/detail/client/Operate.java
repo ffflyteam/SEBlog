@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.detail.shared.BlogType;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
@@ -27,6 +28,11 @@ public class Operate {
 		$doc.getElementById(id).value = "";
 	}-*/;
 	
+	//根据类名获取元素
+		public static native NodeList<Element> getElementsByClassName(String classname)
+		/*-{
+		 	return $doc.getElementsByClassName(classname);
+		 }-*/;
 	public static native String getAttr(String id,String attr)
 	/*-{
 		console.log($doc.getElementById(id));
@@ -160,64 +166,62 @@ public class Operate {
 	}
 	
 	
-	//加载评论
-	public static void loadComment(List<Comment> comment){
-		Window.alert(comment.toString());
-		for(int i = 0; i < comment.size();i++) {
-			commentToArticle(comment.get(i));
+	//加载评论flag0为评论文章，1为评论的评论
+	public static void loadComment(List<Comment> comment,String id,int flag){
+		String content = "";
+		if(flag==0) {
+			for(int i = 0; i < comment.size();i++) {
+				content += commentToArticle(comment.get(i));
+			}
+		}else {
+			content += DOM.getElementById(id).getInnerHTML();
+			for(int i = 0; i < comment.size();i++) {
+				content += commentToComment(comment.get(i));
+			}
 		}
+		
+		DOM.getElementById(id).setInnerHTML(content);
 	}
 	//创建对博客的评论
-	public static void commentToArticle(Comment comment) {
-		Element ulElement = DOM.createElement("ul");
-		ulElement.addClassName("comment-list");
-		Element li1 = DOM.createElement("li");
-		li1.addClassName("comment-line-container");
-		li1.setAttribute("commentId", comment.getCommentId()+"");
-		Element li2 = DOM.createElement("li");
-		li2.addClassName("replay-container");
-		ulElement.appendChild(li1);
-		ulElement.appendChild(li2);
-		DOM.getElementById("comment-container").appendChild(ulElement);
-		
-		Element aElement = DOM.createElement("a");
-		li1.appendChild(aElement);
-		Element imgElement = DOM.createElement("img");
-		aElement.appendChild(imgElement);
-		imgElement.setAttribute("src", "../images/user_default.jpg");
-		Element commenterElement = DOM.createElement("span");
-		
-		commenterElement.setInnerHTML("评论人");
-		
-		aElement.appendChild(commenterElement);
-		
-		Element commentInfoContainerElement = DOM.createElement("div");
-		li1.appendChild(commentInfoContainerElement);
-		commentInfoContainerElement.addClassName("commentInfo-container");
-		Element commentContentElement = DOM.createElement("span");
-		commentContentElement.setInnerHTML(comment.getContent());
-		Element timeElement = DOM.createElement("span");
-		timeElement.setInnerHTML(comment.getCommentDateTime().toString());
-		commentInfoContainerElement.appendChild(commentContentElement);
-		commentInfoContainerElement.appendChild(timeElement);
-		
-		Element opElement = DOM.createElement("div");
-		opElement.addClassName("like right");
-		li1.appendChild(opElement);
-		Element span1 = DOM.createElement("span");
-		Element span2 = DOM.createElement("span");
-		Element span3 = DOM.createElement("span");
-		opElement.appendChild(span1);
-		opElement.appendChild(span2);
-		opElement.appendChild(span3);
-		Element a1 = DOM.createElement("a");
-		Element a2 = DOM.createElement("a");
-		Element a3 = DOM.createElement("a");
-		a1.setAttribute("href", "#modal2");
-		a2.setAttribute("href", "#modal3");
-		span1.appendChild(a1);
-		span2.appendChild(a2);
-		span3.appendChild(a3);
-		
+	public static String commentToArticle(Comment comment) {
+		String content = 
+				"<ul id=\""+ comment.getCommentId() +"\" class=\"comment-list\">\r\n" + 
+				"			<li class=\"comment-line-container\">\r\n" + 
+				"				<a href=\"./other.html?otherid="+ comment.getUser().getAccountId() + "\"><img src=\"../images/user_default.jpg\" alt=\"\"><span>"+ comment.getUser().getUserName() +"</span></a>\r\n" + 
+				"				<div class=\"commentInfo-container\">\r\n" + 
+				"					<span id=\"commentContent\">"+ comment.getContent() +"</span>\r\n" + 
+				"					<span id=\"commentTime\">"+ comment.getCommentDateTime() +"</span>\r\n" + 
+				"				</div>\r\n" + 
+				"				<div class=\"like right\">\r\n" + 
+				"					<span><a class=\"jubao\" href=\"#modal2\">举报</a></span>\r\n" + 
+				"					<span><a class=\"huifu\" href=\"#modal3\">回复</a></span>\r\n" +
+				"					<span><a class=\"seehuifu\" href=\"#\">查看回复(" + comment.getCommentNum() + ")</a></span>"+
+				"				</div>\r\n" + 
+				"			</li>"+
+				"		</ul>";
+		return content;
+	}
+	public static String commentToComment(Comment comment) {
+		String content = 
+				"<li class=\"replay-container\">\r\n" + 
+				"	<ul class=\"comment-list\" id=\"" + comment.getCommentId() + 
+				"		\">\r\n<li class=\"comment-line-container\">\r\n" + 
+				"			<div>\r\n" + 
+				"				<a href=\"./otherid.html?otherid="+ comment.getUser().getAccountId() +"\"><img src=\"../images/user_default.jpg\" alt=\"\"><span id=\"commentName\">"+ comment.getUser().getUserName() +"</span></a>\r\n" + 
+				"				<span>回复</span>\r\n" + 
+				"			</div>\r\n" + 
+				"			<div class=\"commentInfo-container\">\r\n" + 
+				"				<span id=\"commentContent\">"+ comment.getContent() +"</span>\r\n" + 
+				"				<span id=\"commentTime\">"+ comment.getCommentDateTime() +"</span>\r\n" + 
+				"			</div>\r\n" + 
+				"			<div class=\"like right\">\r\n" + 
+				"				<span><a class=\"jubao\" href=\"#\">举报</a></span>\r\n" + 
+				"				<span><a class=\"huifu\" href=\"#\">回复</a></span>\r\n" + 
+				"				<span><a class=\"seehuifu\" href=\"#\">查看回复("+ comment.getCommentNum() + ")</a></span>"+
+				"			</div>\r\n" + 
+				"		</li>" + 
+				"	</ul>\r\n" + 
+				"</li>";
+		return content;
 	}
 }

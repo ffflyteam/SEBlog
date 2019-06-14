@@ -3,8 +3,6 @@ package com.detail.shared;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.Map;
 import com.DAO.DBConnection;
 import com.detail.client.Blog;
 import com.detail.client.Comment;
-import com.detail.client.Message;
 import com.detail.client.User;
 
 public class UserDetailDAO {
@@ -54,9 +51,8 @@ public class UserDetailDAO {
 	private static final String CHANGE_USER_RELATION = "UPDATE `user_relation` SET `Type` = 0 WHERE UserId = ? AND OtherId = ? AND Type = ?";
 	private static final String SELECT_USER_RELATION = "SELECT * FROM `user_relation` WHERE UserId = ? AND OtherId = ?";
 	//消息
-	private static final String INSERT_MESSAGE = "INSERT INTO `message` VALUES(0,?,?,?,0,?)";
+	private static final String INSERT_MESSAGE = "INSERT INTO `message` VALUES(0,?,?,?,?,0,?)";
 	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
-	private static final String GET_MESSAGES = "SELECT * FROM `message` WHERE UserId = ? ORDER BY CreateTime DESC";
 	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE `message` SET ReadFlag = 1 WHERE MessageId = ?";
 	//反馈
 	private static final String INSERT_FEEDBACK = "INSERT INYO `feedback` VALUES(0,?,?,?,0,?)";
@@ -77,8 +73,8 @@ public class UserDetailDAO {
 	}
 	
 	//用户消息
-	public int makeMessage(int receiverId, int messageType, int senderId) {
-		int rs =  DBConnection.instance.executeQuery(INSERT_MESSAGE, new Object[] {receiverId, messageType, senderId, new Date()});
+	public int makeMessage(int receiverId, int messageType, int senderId, int objectId) {
+		int rs =  DBConnection.instance.executeQuery(INSERT_MESSAGE, new Object[] {receiverId, messageType, senderId, objectId, new Date()});
 		return rs;
 	}
 	
@@ -92,25 +88,18 @@ public class UserDetailDAO {
 		return rs;
 	}
 	
-	public List<Message> getAllMessage(int accountId) {
-		List<Message> resultList = new ArrayList<>();
-		ResultSet rs = DBConnection.instance.executeCommand(GET_MESSAGES, new Object[] {accountId});
-		if(rs == null) {
-			return Collections.emptyList();
-		}
-		try {
-			while(rs.next()) {
-				User receiver = getUserInfo(rs.getInt("ReceiverId"));
-				User sender = getUserInfo(rs.getInt("SenderId"));
-				Message message = new Message(rs.getInt("MessageId"), receiver, rs.getInt("MessageType"), sender, rs.getInt("ReadFlag"), rs.getDate("CreateTime"));
-				resultList.add(message);
-			}
-		} catch (Throwable t) {
-			t.printStackTrace();
-			return Collections.emptyList();
-		}
-		return resultList;
-	}
+	/*
+	 * public List<Message> getAllMessage(int accountId) { List<Message> resultList
+	 * = new ArrayList<>(); ResultSet rs =
+	 * DBConnection.instance.executeCommand(GET_MESSAGES, new Object[] {accountId});
+	 * if(rs == null) { return Collections.emptyList(); } try { while(rs.next()) {
+	 * User receiver = getUserInfo(rs.getInt("ReceiverId")); User sender =
+	 * getUserInfo(rs.getInt("SenderId")); Message message = new
+	 * Message(rs.getInt("MessageId"), receiver, rs.getInt("MessageType"), sender,
+	 * rs.getInt("ReadFlag"), rs.getDate("CreateTime")); resultList.add(message); }
+	 * } catch (Throwable t) { t.printStackTrace(); return Collections.emptyList();
+	 * } return resultList; }
+	 */
 	
 	//获取用户自己信息
 	public User getUserInfo(int userId) {
@@ -410,6 +399,20 @@ public class UserDetailDAO {
 			if(rs.next()) {
 				int typeId = rs.getInt("Type");
 				return typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId() || typeId == RelationWithBlog.COLLECT.getId();
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean isTransfered(int accountId, int blogId) {
+		ResultSet rs = DBConnection.instance.executeCommand(SELECT_USER_AND_BLOG_RELATION, new Object[] {accountId, blogId});
+		try {
+			if(rs.next()) {
+				int typeId = rs.getInt("Type");
+				return typeId == RelationWithBlog.BOTH_COLLECT_AND_TRANSFER.getId() || typeId == RelationWithBlog.TRANSFER.getId();
 			}
 			return false;
 		} catch (SQLException e) {

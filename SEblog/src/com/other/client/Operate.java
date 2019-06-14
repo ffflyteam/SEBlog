@@ -193,10 +193,10 @@ public class Operate {
 		return blog;
 	}
 
-	public static void addMyBlog(List<Blog> data,String id) {
+	public static void addMyBlog(Map<Integer,List<Blog>> data,String id) {
 		String content = "";
 		for (int i = 0; i < data.size(); i++) {
-			content += addArticleHelper(data.get(i));
+			//content += addArticleHelper(data.get(i));
 		}
 		DOM.getElementById(id).setInnerHTML(content);
 	}

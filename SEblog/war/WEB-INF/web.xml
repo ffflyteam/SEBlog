@@ -248,8 +248,44 @@
   	<servlet-name>messageGetUserInfoServlet</servlet-name>
   	<url-pattern>/message/userInfo</url-pattern>
   </servlet-mapping>
+  		<!-- 请求消息注册 -->
+  <servlet>
+  	<servlet-name>messageGetAllMessageServlet</servlet-name>
+  	<servlet-class>com.message.server.GetAllMessageServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>messageGetAllMessageServlet</servlet-name>
+  	<url-pattern>/message/getAllMessage</url-pattern>
+  </servlet-mapping>
+  		<!-- 注销登录 -->
+  <servlet>
+  	<servlet-name>messageLogoutServlet</servlet-name>
+  	<servlet-class>com.message.server.GetAllMessageServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>messageLogoutServlet</servlet-name>
+  	<url-pattern>/message/logout</url-pattern>
+  </servlet-mapping>
+  		<!-- 标记已读 -->
+  <servlet>
+  	<servlet-name>messageSetReadServlet</servlet-name>
+  	<servlet-class>com.message.server.SetReadFlagServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>messageSetReadServlet</servlet-name>
+  	<url-pattern>/message/setReadFlag</url-pattern>
+  </servlet-mapping>
+   		<!-- 删除消息 -->
+  <servlet>
+  	<servlet-name>messageDeleteServlet</servlet-name>
+  	<servlet-class>com.message.server.DeleteMessageServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>messageDeleteServlet</servlet-name>
+  	<url-pattern>/message/deleteMessage</url-pattern>
+  </servlet-mapping>
   
-    		
+        		
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SEblog.html</welcome-file>

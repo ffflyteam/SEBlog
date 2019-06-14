@@ -1,11 +1,15 @@
 package com.detail.client;
 
+
 import java.util.List;
+
+import javax.validation.constraints.Pattern.Flag;
 
 import com.detail.shared.ResultConst;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
@@ -24,7 +28,11 @@ public class Detail implements EntryPoint{
 	public User Author;
 	public Blog blog;
 	public User user;
-	@Override
+	
+	public int jubaoId;
+	public int huifuId;
+	public int seehuifuId;
+
 	public void onModuleLoad() {
 		
 		final String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
@@ -191,7 +199,9 @@ public class Detail implements EntryPoint{
 			@Override
 			public void onSuccess(List<Comment> result) {
 				// TODO Auto-generated method stub
-				Operate.loadComment(result);
+				Window.alert(result.toString());
+				Operate.loadComment(result, "comment-container", 0);
+				setCommentOperate();
 			}
 		});
 	}
@@ -227,6 +237,70 @@ public class Detail implements EntryPoint{
 				focusElement.setInnerHTML(result[1] ?"关注" : "已关注");
 			}
 		});
+	}
+	
+	//设置回复评论、举报、查看回复点击事件
+	public void setCommentOperate() {
+		NodeList<Element> jubao = Operate.getElementsByClassName("jubao");
+		NodeList<Element> huifu = Operate.getElementsByClassName("huifu");
+		NodeList<Element> seehuifu = Operate.getElementsByClassName("seehuifu");
 		
+		
+		for (int i = 0; i < jubao.getLength(); i++) {
+			DOM.sinkEvents(jubao.getItem(i), Event.ONCLICK);
+			DOM.setEventListener(jubao.getItem(i), new EventListener() {
+				@Override
+				public void onBrowserEvent(Event event) {
+					if(DOM.eventGetType(event) == Event.ONCLICK) {
+						String id = event.getCurrentTarget().getParentElement().getParentElement()
+						.getParentElement().getParentElement().getId();
+						jubaoId = Integer.valueOf(id);
+					}
+				}
+			});
+		}
+		for (int i = 0; i < huifu.getLength(); i++) {
+			DOM.sinkEvents(huifu.getItem(i), Event.ONCLICK);
+			DOM.setEventListener(huifu.getItem(i), new EventListener() {
+				@Override
+				public void onBrowserEvent(Event event) {
+					if(DOM.eventGetType(event) == Event.ONCLICK) {
+						String id = event.getCurrentTarget().getParentElement().getParentElement()
+						.getParentElement().getParentElement().getId();
+						huifuId = Integer.valueOf(id);
+						Window.alert("回复"+id);
+					}
+				}
+			});
+		}
+		
+		for (int i = 0; i < seehuifu.getLength(); i++) {
+			DOM.sinkEvents(seehuifu.getItem(i), Event.ONCLICK);
+			DOM.setEventListener(seehuifu.getItem(i), new EventListener() {
+				@Override
+				public void onBrowserEvent(Event event) {
+					if(DOM.eventGetType(event) == Event.ONCLICK) {
+						String id = event.getCurrentTarget().getParentElement().getParentElement()
+						.getParentElement().getParentElement().getId();
+						seehuifuId = Integer.valueOf(id);
+						Window.alert("see"+id);
+						comment.getCommentDetail(seehuifuId, new AsyncCallback<List<Comment>>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								Operate.setAlert("请重新尝试获取评论回复", false);
+							}
+							@Override
+							public void onSuccess(List<Comment> result) {
+								if(result == null) {
+									Operate.setAlert("该评论暂时没有回复", false);
+									return;
+								}
+								Operate.loadComment(result, seehuifuId+"", 1);
+							}
+						});
+					}
+				}
+			});
+		}
 	}
 }
