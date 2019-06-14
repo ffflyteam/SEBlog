@@ -15,7 +15,7 @@
         <ul class="right hide-on-med-and-down">
           <li><a href="index.html">首页</a></li>
           <li><a href="#">写博客</a></li>
-          <li><a href="#">消息</a></li>
+          <li><a href="message.html">消息</a></li>
           <li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">名字</a></li>
         </ul>
       </div>
@@ -26,11 +26,13 @@
 
   <!--下拉列表 -->
   <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="./mblog.html">个人中心</a></li>
+    <li><a href="mblog.html">个人中心</a></li>
     <li class="divider"></li>
-    <li><a href="#!">我的关注</a></li>
+    <li><a href="mblog.html?data=focus">我的关注</a></li>
     <li class="divider"></li>
-    <li><a href="#!">我的博客</a></li>
+    <li><a href="mblog.html?data=blog">我的博客</a></li>
+  <li class="divider"></li>
+    <li><a id="logout" href="#">注销登录</a></li>
   </ul>
 
 <div class="container">

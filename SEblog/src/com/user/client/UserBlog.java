@@ -27,6 +27,7 @@ public class UserBlog implements EntryPoint {
 	private final ChangeInfoServiceAsync chaninfo = GWT.create(ChangeInfoService.class);
 	private final MakeRelationWithOtherServiceAsync makeRela = GWT.create(MakeRelationWithOtherService.class);
 	private final DeleteSelfBlogServiceAsync deleblog = GWT.create(DeleteSelfBlogService.class);
+	private final LogoutServiceAsync logout = GWT.create(LogoutService.class);
 	
 	
 	public void onModuleLoad() {
@@ -45,7 +46,8 @@ public class UserBlog implements EntryPoint {
 		//根据路径展示某个部分
 		showWhichOne();
 		
-		
+		//用户注销登录
+		userLogout();
 	}
 	
 	public void getUserInfo() {
@@ -349,4 +351,30 @@ public class UserBlog implements EntryPoint {
 		}
 	}
 
+	public void userLogout() {
+		Element logoutElement = DOM.getElementById("logout");
+		DOM.sinkEvents(logoutElement, Event.ONCLICK);
+		DOM.setEventListener(logoutElement, new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if(DOM.eventGetType(event) == Event.ONCLICK) {
+					logout.logout(new AsyncCallback<Boolean>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Operate.setAlert("注销失败，请重试！", false);
+						}
+
+						@Override
+						public void onSuccess(Boolean result) {
+							if(result==true) {
+								Window.open("./login.html", "_self", null);
+							}else {
+								Operate.setAlert("注销失败，请重试！", false);
+							}
+						}
+					});
+				}
+			}
+		});
+	}
 }

@@ -3,7 +3,6 @@ package com.detail.client;
 
 import java.util.List;
 
-import javax.validation.constraints.Pattern.Flag;
 
 import com.detail.shared.ResultConst;
 import com.google.gwt.core.client.EntryPoint;
@@ -25,6 +24,8 @@ public class Detail implements EntryPoint{
 	private final MakeCommentServiceAsync makeComment = GWT.create(MakeCommentService.class);
 	private final UserInfoServiceAsync getUserInfo = GWT.create(UserInfoService.class);
 	private final TransferOrCollectBlogServiceAsync TAC = GWT.create(TransferOrCollectBlogService.class);
+	private final LogoutServiceAsync logout = GWT.create(LogoutService.class);
+	
 	public User Author;
 	public Blog blog;
 	public User user;
@@ -169,6 +170,8 @@ public class Detail implements EntryPoint{
 				}
 			}
 		});
+		
+		userLogout();
 	}
 	
 
@@ -182,8 +185,12 @@ public class Detail implements EntryPoint{
 
 			@Override
 			public void onSuccess(User result) {
+				if(result==null) {
+					Window.open("./login.html", "_self", null);
+					return;
+				}
 				user = result;
-				DOM.getElementById("us").setInnerHTML(result.getUserName());
+				DOM.getElementById("name").setInnerHTML(result.getUserName());
 			}
 		});
 	}
@@ -302,5 +309,32 @@ public class Detail implements EntryPoint{
 				}
 			});
 		}
+	}
+	
+	public void userLogout() {
+		Element logoutElement = DOM.getElementById("logout");
+		DOM.sinkEvents(logoutElement, Event.ONCLICK);
+		DOM.setEventListener(logoutElement, new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if(DOM.eventGetType(event) == Event.ONCLICK) {
+					logout.logout(new AsyncCallback<Boolean>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Operate.setAlert("注销失败，请重试！", false);
+						}
+
+						@Override
+						public void onSuccess(Boolean result) {
+							if(result==true) {
+								Window.open("./login.html", "_self", null);
+							}else {
+								Operate.setAlert("注销失败，请重试！", false);
+							}
+						}
+					});
+				}
+			}
+		});
 	}
 }

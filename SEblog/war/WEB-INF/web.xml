@@ -64,6 +64,16 @@
   	<servlet-name>indexUserinfoServlet</servlet-name>
   	<url-pattern>/index/getUserInfo</url-pattern>
   </servlet-mapping>
+  	<!-- 首页注销登录 -->
+  <servlet>
+  	<servlet-name>indexLogoutServlet</servlet-name>
+  	<servlet-class>com.index.server.LogoutServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>indexLogoutServlet</servlet-name>
+  	<url-pattern>/index/logout</url-pattern>
+  </servlet-mapping>  
+  
 
   <!-- 文章详情页面请求文章内容 -->
   <servlet>
@@ -116,7 +126,16 @@
   	<url-pattern>/detail/transferOrCollect</url-pattern>
   </servlet-mapping>
   
-    <!-- Detail拉取用户信息 -->
+      	<!-- 注销登录 -->
+  <servlet>
+  	<servlet-name>detailLogoutServlet</servlet-name>
+  	<servlet-class>com.detail.server.LogoutServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>detailLogoutServlet</servlet-name>
+  	<url-pattern>/detail/logout</url-pattern>
+  </servlet-mapping>
+  		<!-- 获取用户信息 -->
   <servlet>
   	<servlet-name>detailGetUserInfoServlet</servlet-name>
   	<servlet-class>com.detail.server.UserInfoServiceImpl</servlet-class>
@@ -138,6 +157,15 @@
   
   
   <!-- 个人中心页面 -->
+    	<!-- 注销登录 -->
+  <servlet>
+  	<servlet-name>userLogoutServlet</servlet-name>
+  	<servlet-class>com.user.server.LogoutServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userLogoutServlet</servlet-name>
+  	<url-pattern>/user/logout</url-pattern>
+  </servlet-mapping>
   	<!-- 获取用户信息 -->
   <servlet>
   	<servlet-name>userGetUserInfoServlet</servlet-name>
@@ -236,6 +264,15 @@
   	<servlet-name>focusOtherBlogServlet</servlet-name>
   	<url-pattern>/other/focus</url-pattern>
   </servlet-mapping>
+    	<!-- 注销登录 -->
+  <servlet>
+  	<servlet-name>otherLogoutServlet</servlet-name>
+  	<servlet-class>com.other.server.LogoutServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>otherLogoutServlet</servlet-name>
+  	<url-pattern>/other/logout</url-pattern>
+  </servlet-mapping>
   
   
   <!-- 消息页面 -->
@@ -260,7 +297,7 @@
   		<!-- 注销登录 -->
   <servlet>
   	<servlet-name>messageLogoutServlet</servlet-name>
-  	<servlet-class>com.message.server.GetAllMessageServiceImpl</servlet-class>
+  	<servlet-class>com.message.server.LogoutServiceImpl</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>messageLogoutServlet</servlet-name>

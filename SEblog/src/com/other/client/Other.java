@@ -1,5 +1,6 @@
 package com.other.client;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class Other implements EntryPoint {
 	private final OtherUserInfoServiceAsync getOther = GWT.create(OtherUserInfoService.class);
 	private final GetAllBlogInfoServiceAsync getAllBlog = GWT.create(GetAllBlogInfoService.class);
 	private final MakeRelationWithOtherServiceAsync makeRelation = GWT.create(MakeRelationWithOtherService.class);
+	private final LogoutServiceAsync logout = GWT.create(LogoutService.class);
 	
 	public void onModuleLoad() {
 		String otherIdStr = Window.Location.getQueryString();
@@ -34,6 +36,7 @@ public class Other implements EntryPoint {
 		getOtherUserInfo();
 		getAllBlog();
 		focusOther();
+		userLogout();
 	}
 	
 	public void getUserInfo() {
@@ -78,7 +81,14 @@ public class Other implements EntryPoint {
 
 			@Override
 			public void onSuccess(Map<Integer,List<Blog>> result) {
-				Operate.addMyBlog(result, "blog-list");
+				Window.alert(result.toString());
+				List<String> ids;
+//				ids.add(0, element);
+				List<List<Blog>> blogList = new ArrayList<>(result.keySet().size());
+				  for(List<Blog> index: result.values()) {
+					  blogList.add(index);
+				  }
+				Operate.addMyBlog(blogList.get(0), "blog-list");
 			}
 		});
 	}
@@ -104,6 +114,33 @@ public class Other implements EntryPoint {
 						public void onSuccess(Integer result) {
 							focus.setInnerHTML(flag==0? "已关注":"关注");
 							Operate.setAlert("操作成功！", true);
+						}
+					});
+				}
+			}
+		});
+	}
+	
+	public void userLogout() {
+		Element logoutElement = DOM.getElementById("logout");
+		DOM.sinkEvents(logoutElement, Event.ONCLICK);
+		DOM.setEventListener(logoutElement, new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if(DOM.eventGetType(event) == Event.ONCLICK) {
+					logout.logout(new AsyncCallback<Boolean>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Operate.setAlert("注销失败，请重试！", false);
+						}
+
+						@Override
+						public void onSuccess(Boolean result) {
+							if(result==true) {
+								Window.open("./login.html", "_self", null);
+							}else {
+								Operate.setAlert("注销失败，请重试！", false);
+							}
 						}
 					});
 				}

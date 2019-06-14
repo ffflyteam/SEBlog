@@ -44,6 +44,7 @@ public class BlogMessage implements EntryPoint {
 			public void onSuccess(User result) {
 				if(result==null) {
 					Window.open("./login.html", "_self", null);
+					return;
 				}
 				user = result;
 				DOM.getElementById("name").setInnerHTML(result.getUserName());

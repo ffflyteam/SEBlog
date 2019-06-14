@@ -7,7 +7,7 @@ import com.message.client.LogoutService;
 public class LogoutServiceImpl extends RemoteServiceServlet implements LogoutService{
 
 	@Override
-	public boolean logout() {
+	public boolean logout() throws IllegalArgumentException {
 		this.getThreadLocalRequest().getSession().removeAttribute("accountId");
 		return this.getThreadLocalRequest().getSession().getAttribute("accountId") == null;
 	}

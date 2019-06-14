@@ -17,6 +17,8 @@ public class Index implements EntryPoint{
 
 	private final IndexServiceAsync article = GWT.create(IndexService.class);
 	private final UserInfoServiceAsync userinfo = GWT.create(UserInfoService.class);
+	private final LogoutServiceAsync logout = GWT.create(LogoutService.class);
+	
 	public User user;
 	public void onModuleLoad() {
 		
@@ -41,7 +43,7 @@ public class Index implements EntryPoint{
 				
 			}
 		});
-		Window.alert("sss");
+		
 		//请求获得推荐博客内容
 		article.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 			@Override
@@ -97,8 +99,33 @@ public class Index implements EntryPoint{
 			});
 		}
 		
+		userLogout();
+	}
+	
+	public void userLogout() {
+		Element logoutElement = DOM.getElementById("logout");
+		DOM.sinkEvents(logoutElement, Event.ONCLICK);
+		DOM.setEventListener(logoutElement, new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if(DOM.eventGetType(event) == Event.ONCLICK) {
+					logout.logout(new AsyncCallback<Boolean>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Operate.setAlert("注销失败，请重试！", false);
+						}
 
-
-		
+						@Override
+						public void onSuccess(Boolean result) {
+							if(result==true) {
+								Window.open("./login.html", "_self", null);
+							}else {
+								Operate.setAlert("注销失败，请重试！", false);
+							}
+						}
+					});
+				}
+			}
+		});
 	}
 }

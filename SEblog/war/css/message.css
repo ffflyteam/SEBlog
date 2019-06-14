@@ -49,9 +49,6 @@ ul.ulContainer li:hover {
 	color: #fff!important;
 	cursor: pointer;
 }
-#readlist {
-	display: none;
-}
 div.read {
 	overflow: hidden;
 }
