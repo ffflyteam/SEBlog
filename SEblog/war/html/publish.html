@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>发表博客</title>
+        <link href="../css/publish.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/font-awesome.css">
+        <link href="../css/materialize.css" rel="stylesheet">
+    </head>
+<body id="body">
+          <!-- 导航栏 -->
+  <div class="navbar-fixed">
+    <nav class="navbar-container">
+      <div class="nav-wrapper container">
+        <a href="#!" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="./publish.html">写博客</a></li>
+          <li><a href="message.html">消息</a></li>
+          <li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">名字</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+    <!--下拉列表 -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="mblog.html">个人中心</a></li>
+    <li class="divider"></li>
+    <li><a href="mblog.html?data=focus">我的关注</a></li>
+    <li class="divider"></li>
+    <li><a href="mblog.html?data=blog">我的博客</a></li>
+  <li class="divider"></li>
+    <li><a id="logout" href="#">注销登录</a></li>
+  </ul>
+    <div id='editControls' class='span9' style=' padding:5px;'>
+            <div class='btn-group'>
+                <a class='btn' data-role='undo' href='#'><i class='icon-undo'></i></a>
+                <a class='btn' data-role='redo' href='#'><i class='icon-repeat'></i></a>
+            </div>
+            <!-- <div class='btn-group'>
+                <a class='btn' data-role='cut' href='#'><i class='icon-cut'></i></a>
+                <a class='btn' data-role='copy' href='#'><i class='icon-copy'></i></a>
+                <a class='btn' data-role='paste' href='#'><i class='icon-paste'></i></a>
+            </div> -->
+            <div class='btn-group'>
+                <a class='btn' data-role='bold' href='#'><b>B</b></a>
+                <a class='btn' data-role='italic' href='#'><em>I</em></a>
+                <a class='btn' data-role='underline' href='#'><u><b>U</b></u></a>
+                <a class='btn' data-role='strikeThrough' href='#'><strike>abc</strike></a>
+            </div>
+            <div class='btn-group'>
+                <a class='btn' data-role='justifyLeft' href='#'><i class='icon-align-left'></i></a>
+                <a class='btn' data-role='justifyCenter' href='#'><i class='icon-align-center'></i></a>
+                <a class='btn' data-role='justifyRight' href='#'><i class='icon-align-right'></i></a>
+                <a class='btn' data-role='justifyFull' href='#'><i class='icon-align-justify'></i></a>
+            </div>
+            <div class='btn-group'>
+                <a class='btn' data-role='indent' href='#'><i class='icon-indent-right'></i></a>
+                <a class='btn' data-role='outdent' href='#'><i class='icon-indent-left'></i></a>
+            </div>
+            <div class='btn-group'>
+                <a class='btn' data-role='insertUnorderedList' href='#'><i class='icon-list-ul'></i></a>
+                <a class='btn' data-role='insertOrderedList' href='#'><i class='icon-list-ol'></i></a>
+            </div>
+            <div class='btn-group'>
+                <a class='btn' data-role='h4' href='#'>h<sup>4</sup></a>
+                <a class='btn' data-role='h5' href='#'>h<sup>5</sup></a>
+                <a class='btn' data-role='p' href='#'>p</a>
+            </div>
+            <div class='btn-group'>
+                <a class='btn' data-role='subscript' href='#'><i class='icon-subscript'></i></a>
+                <a class='btn' data-role='superscript' href='#'><i class='icon-superscript'></i></a>
+            </div>
+    </div>
+
+        <div class="mycontainer">
+            <span>博客标题和类型</span>
+            <div class="row">
+                <input id="title" class="col s7" type="text" placeholder="请输入博客标题" />
+                <select class="col s2 push-s1" name="" id="choice" style="display: block;">
+                    <option selected disabled value="0">博客类型</option>
+                    <option value="1">IT</option>
+                    <option value="2">新闻</option>
+                    <option value="3">历史</option>
+                    <option value="4">文学</option>
+                    <option value="5">财经</option>
+                    <option value="6">体育</option>
+                    <option value="7">日常</option>
+                </select>
+            </div>
+            <span>博客内容</span>
+            <div class="container-fluid">
+                <div id='pad-wrapper'>
+                    <div id="editparent">
+                        <div id='editor' class='span9' style='' contenteditable>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <a id="submit" href="#">发表博客</a>
+            </div>
+        </div>
+        
+        <script src="../publish/publish.nocache.js"></script>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/publish.js"></script>
+    </body>
+</html>

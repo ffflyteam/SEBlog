@@ -12,18 +12,19 @@ public class Comment implements Serializable{
 	private Date commentDateTime;
 	private String content;
 	//private List<Comment> allComments;
+	private int likeNum;
 	private int commentNum;
 	public Comment() {
 	}
 	
-	public Comment(int commentId, int objectId, User user, Date commentDateTime, String content, int commentNum ) {//List<Comment> allComments
+	public Comment(int commentId, int objectId, User user, Date commentDateTime, String content, int likeNum, int commentNum ) {//List<Comment> allComments
 		super();
 		this.commentId = commentId;
 		this.objectId = objectId;
 		this.user = user;
 		this.commentDateTime = commentDateTime;
 		this.content = content;
-		//this.allComments = allComments;
+		this.likeNum = likeNum;
 		this.commentNum = commentNum;
 	}
 
@@ -47,6 +48,10 @@ public class Comment implements Serializable{
 		return content;
 	}
 	
+	public int getLikeNum() {
+		return likeNum;
+	}
+
 	public int getCommentNum() {
 		return commentNum;
 	}
@@ -62,6 +67,7 @@ public class Comment implements Serializable{
 		//sb.append(",User:").append(user.toString());
 		sb.append(",CommentDateTime:").append(commentDateTime);
 		sb.append(",Content:").append(content);
+		sb.append(",LikeNums:").append(likeNum);
 		sb.append(",CommentNums:").append(commentNum);
 		return sb.toString();
 	}

@@ -185,7 +185,7 @@ public class Operate {
 	//创建对博客的评论
 	public static String commentToArticle(Comment comment) {
 		String content = 
-				"<ul id=\""+ comment.getCommentId() +"\" class=\"comment-list\">\r\n" + 
+				"<ul id=\""+ comment.getCommentId() + "\" class=\"comment-list\">\r\n" + 
 				"			<li class=\"comment-line-container\">\r\n" + 
 				"				<a href=\"./other.html?otherid="+ comment.getUser().getAccountId() + "\"><img src=\"../images/user_default.jpg\" alt=\"\"><span>"+ comment.getUser().getUserName() +"</span></a>\r\n" + 
 				"				<div class=\"commentInfo-container\">\r\n" + 
@@ -205,7 +205,7 @@ public class Operate {
 		String content = 
 				"<li class=\"replay-container\">\r\n" + 
 				"	<ul class=\"comment-list\" id=\"" + comment.getCommentId() + 
-				"		\">\r\n<li class=\"comment-line-container\">\r\n" + 
+				"\">\r\n<li class=\"comment-line-container\">\r\n" + 
 				"			<div>\r\n" + 
 				"				<a href=\"./otherid.html?otherid="+ comment.getUser().getAccountId() +"\"><img src=\"../images/user_default.jpg\" alt=\"\"><span id=\"commentName\">"+ comment.getUser().getUserName() +"</span></a>\r\n" + 
 				"				<span>回复</span>\r\n" + 
@@ -215,8 +215,8 @@ public class Operate {
 				"				<span id=\"commentTime\">"+ comment.getCommentDateTime() +"</span>\r\n" + 
 				"			</div>\r\n" + 
 				"			<div class=\"like right\">\r\n" + 
-				"				<span><a class=\"jubao\" href=\"#\">举报</a></span>\r\n" + 
-				"				<span><a class=\"huifu\" href=\"#\">回复</a></span>\r\n" + 
+				"				<span><a class=\"jubao\" href=\"#modal2\">举报</a></span>\r\n" + 
+				"				<span><a class=\"huifu\" href=\"#modal3\">回复</a></span>\r\n" + 
 				"				<span><a class=\"seehuifu\" href=\"#\">查看回复("+ comment.getCommentNum() + ")</a></span>"+
 				"			</div>\r\n" + 
 				"		</li>" + 
@@ -224,4 +224,9 @@ public class Operate {
 				"</li>";
 		return content;
 	}
+	
+	public static native void clearListener(String id) 
+	/*-{
+		$doc.getElementById(id);
+	}-*/;
 }

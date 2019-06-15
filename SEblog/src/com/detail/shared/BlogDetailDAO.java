@@ -29,8 +29,8 @@ public class BlogDetailDAO {
 			+ "(SELECT CommentId,UserId,ObjectId,CommentDateTime,Content,LikeNum FROM `comments`) AS A "
 			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentNum FROM comments GROUP BY ObjectId) AS B ON B.ObjectId = A.CommentId WHERE A.ObjectId = ? ORDER BY LikeNum DESC";//"SELECT * FROM `comments` WHERE ObjectId = ? ORDER BY LikeNum DESC";
 	private static final String SELECT_COMMENT_BY_ID = "SELECT CommentId,UserId,A.ObjectId,CommentDateTime,Content,LikeNum,CommentNum FROM "
-			+ "(SELECT CommentId,UserId,ObjectId,CommentDateTime,Content,LikeNum FROM `comments`) AS A "
-			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentNum FROM comments GROUP BY ObjectId) AS B ON B.ObjectId = A.CommentId WHERE CommentId = ?";
+			+ "(SELECT CommentId,UserId,ObjectId,CommentDateTime,Content,LikeNum FROM `comments` WHERE CommentId = ?) AS A "
+			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentNum FROM comments GROUP BY ObjectId) AS B ON B.ObjectId = A.CommentId";
 	private static final String INCREASE_READ_NUM = "UPDATE `blog_info` SET ReadNum = ReadNum + 1 WHERE BlogId = ?";
 	public static final BlogDetailDAO instance = new BlogDetailDAO();
 	
@@ -210,7 +210,7 @@ public class BlogDetailDAO {
 				try {
 					//List<Comment> allComment = getAllCommentById(rs.getInt("CommentId"));
 					User user = UserDetailDAO.instance.getUserInfo(rs.getInt("UserId"));
-					Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"));
+					Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"), rs.getInt("CommentNum"));
 					allComments.add(comment);
 				} catch (Throwable t) {
 					t.printStackTrace();
@@ -229,10 +229,13 @@ public class BlogDetailDAO {
 		}*/
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_COMMENT_BY_ID, new Object[] {commentId});
 		try {
-			//List<Comment> allComments = getAllCommentById(commentId);
-			User user = UserDetailDAO.instance.getUserInfo(rs.getInt("UserId"));
-			Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"));
-			return comment;
+			if(rs.next()) {
+				User user = UserDetailDAO.instance.getUserInfo(rs.getInt("UserId"));
+				Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("LikeNum"), rs.getInt("CommentNum"));
+				return comment;
+			} else {
+				return null;
+			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 			return null;

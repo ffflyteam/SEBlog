@@ -154,6 +154,15 @@
   	<servlet-name>MakeCommentServlet</servlet-name>
   	<url-pattern>/detail/makeComment</url-pattern>
   </servlet-mapping>
+  	<!-- 对评论进行举报 -->
+  <servlet>
+  	<servlet-name>MakeFeedbackServlet</servlet-name>
+  	<servlet-class>com.detail.server.MakeFeedBackServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MakeFeedbackServlet</servlet-name>
+  	<url-pattern>/detail/makeFeedBack</url-pattern>
+  </servlet-mapping>
   
   
   <!-- 个人中心页面 -->
@@ -322,7 +331,119 @@
   	<url-pattern>/message/deleteMessage</url-pattern>
   </servlet-mapping>
   
-        		
+  <!-- 发布博客页面 -->
+  	 <!-- 注销登录 -->
+  <servlet>
+  	<servlet-name>publishLogoutServlet</servlet-name>
+  	<servlet-class>com.publish.server.LogoutServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>publishLogoutServlet</servlet-name>
+  	<url-pattern>/publish/logout</url-pattern>
+  </servlet-mapping>
+  	 <!-- 发表博客 -->
+  <servlet>
+  	<servlet-name>publishPublicServlet</servlet-name>
+  	<servlet-class>com.publish.server.MakeBlogServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>publishPublicServlet</servlet-name>
+  	<url-pattern>/publish/makeBlog</url-pattern>
+  </servlet-mapping>    
+    	<!-- 请求用户信息 -->
+  <servlet>
+  	<servlet-name>publishGetUserInfoServlet</servlet-name>
+  	<servlet-class>com.publish.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>publishGetUserInfoServlet</servlet-name>
+  	<url-pattern>/publish/userInfo</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 管理员界面 -->
+    		<!-- 请求用户信息 -->
+  <servlet>
+  	<servlet-name>managerGetUserInfoServlet</servlet-name>
+  	<servlet-class>com.manager.server.UserInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerGetUserInfoServlet</servlet-name>
+  	<url-pattern>/manager/userinfo</url-pattern>
+  </servlet-mapping>
+  		<!-- 修改用户状态 -->
+  <servlet>
+  	<servlet-name>managerChangeStatServlet</servlet-name>
+  	<servlet-class>com.manager.server.ChangeUserStatServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerChangeStatServlet</servlet-name>
+  	<url-pattern>/manager/changeUserStat</url-pattern>
+  </servlet-mapping>
+  		<!-- 删除博客 -->
+  <servlet>
+  	<servlet-name>managerDeleteBlogServlet</servlet-name>
+  	<servlet-class>com.manager.server.DeleteBlogServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerDeleteBlogServlet</servlet-name>
+  	<url-pattern>/manager/deleteBlog</url-pattern>
+  </servlet-mapping>
+  		<!-- 删除评论 -->
+  <servlet>
+  	<servlet-name>managerDeleteCommentServlet</servlet-name>
+  	<servlet-class>com.manager.server.DeleteCommentServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerDeleteCommentServlet</servlet-name>
+  	<url-pattern>/manager/deleteComment</url-pattern>
+  </servlet-mapping>
+  		<!-- 删除反馈 -->
+  <servlet>
+  	<servlet-name>managerDeleteFeedbackServlet</servlet-name>
+  	<servlet-class>com.manager.server.DeleteFeedBackServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerDeleteFeedbackServlet</servlet-name>
+  	<url-pattern>/manager/deleteFeedBack</url-pattern>
+  </servlet-mapping>
+  		<!-- 获取博客信息 -->
+  <servlet>
+  	<servlet-name>managerGetBlogInfoServlet</servlet-name>
+  	<servlet-class>com.manager.server.GetBlogInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerGetBlogInfoServlet</servlet-name>
+  	<url-pattern>/manager/getBlogInfo</url-pattern>
+  </servlet-mapping>
+  		<!-- 获取评论信息 -->
+  <servlet>
+  	<servlet-name>managerGetCommentServlet</servlet-name>
+  	<servlet-class>com.manager.server.GetCommentInfoServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerGetCommentServlet</servlet-name>
+  	<url-pattern>/manager/getCommentInfo</url-pattern>
+  </servlet-mapping>
+  		<!-- 获取用户的反馈 -->
+  <servlet>
+  	<servlet-name>managerGetFeedbackServlet</servlet-name>
+  	<servlet-class>com.manager.server.GetUserFeedBackServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managerGetFeedbackServlet</servlet-name>
+  	<url-pattern>/manager/getAllFeedBack</url-pattern>
+  </servlet-mapping>
+  		<!-- 将反馈标为已读 -->
+  <servlet>
+  	<servlet-name>managersetReadFlagServlet</servlet-name>
+  	<servlet-class>com.manager.server.GetUserFeedBackServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>managersetReadFlagServlet</servlet-name>
+  	<url-pattern>/manager/setReadFlag</url-pattern>
+  </servlet-mapping>
+  		
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SEblog.html</welcome-file>

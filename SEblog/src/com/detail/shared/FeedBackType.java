@@ -7,8 +7,7 @@ import java.util.Map;
 
 public enum FeedBackType {
 
-	POMOGRAPHIC(0, "色情淫秽"),
-	ANTI_COMMUNIST(1, "反共"),
+	POMOGRAPHIC(0, "内容违规"),
 	;
 	
 	private int id;

@@ -81,14 +81,13 @@ public class Other implements EntryPoint {
 
 			@Override
 			public void onSuccess(Map<Integer,List<Blog>> result) {
-				Window.alert(result.toString());
-				List<String> ids;
-//				ids.add(0, element);
-				List<List<Blog>> blogList = new ArrayList<>(result.keySet().size());
-				  for(List<Blog> index: result.values()) {
-					  blogList.add(index);
+				List<List<Blog>> blogList = new ArrayList<>(3);
+				  for(int i=0;i<3;i++) {
+					  blogList.add(result.get(i));
 				  }
-				Operate.addMyBlog(blogList.get(0), "blog-list");
+				Operate.addMyBlog(blogList.get(0), "blog-list1");
+				Operate.addMyBlog(blogList.get(1), "blog-list2");
+				Operate.addMyBlog(blogList.get(2), "blog-list3");
 			}
 		});
 	}

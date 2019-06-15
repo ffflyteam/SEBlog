@@ -55,7 +55,7 @@ public class UserDetailDAO {
 	private static final String DELETE_MESSAGE = "DELETE FROM `message` WHERE MessageId = ?";
 	private static final String UPDATE_MESSAGE_READ_FLAG = "UPDATE `message` SET ReadFlag = 1 WHERE MessageId = ?";
 	//反馈
-	private static final String INSERT_FEEDBACK = "INSERT INYO `feedback` VALUES(0,?,?,?,0,?)";
+	private static final String INSERT_FEEDBACK = "INSERT INTO `feedback` VALUES(0,?,?,?,0,?)";
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH-mm-ss");
 	public static final UserDetailDAO instance = new UserDetailDAO();

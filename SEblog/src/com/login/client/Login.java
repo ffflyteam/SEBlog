@@ -97,12 +97,10 @@ public class Login implements EntryPoint {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							Operate.setAlert("网络出现问题哦，请重试！", false);
 						}
 						@Override
 						public void onSuccess(int[] result) {
-							// TODO Auto-generated method stub
 							String desc;
 							if(result[0] == 0) {
 								if(result[1]==0) {

@@ -3,7 +3,6 @@ package com.detail.client;
 
 import java.util.List;
 
-
 import com.detail.shared.ResultConst;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -25,10 +24,13 @@ public class Detail implements EntryPoint{
 	private final UserInfoServiceAsync getUserInfo = GWT.create(UserInfoService.class);
 	private final TransferOrCollectBlogServiceAsync TAC = GWT.create(TransferOrCollectBlogService.class);
 	private final LogoutServiceAsync logout = GWT.create(LogoutService.class);
+	private final MakeFeedBackServiceAsync feedback = GWT.create(MakeFeedBackService.class);
 	
 	public User Author;
 	public Blog blog;
 	public User user;
+	
+	public int blogId;
 	
 	public int jubaoId;
 	public int huifuId;
@@ -37,7 +39,7 @@ public class Detail implements EntryPoint{
 	public void onModuleLoad() {
 		
 		final String blogIdStr = Window.Location.getQueryString().substring(1).split("=")[1];
-		final int blogId = Integer.valueOf(blogIdStr);
+		blogId = Integer.valueOf(blogIdStr);
 		
 		
 		//请求登录状态及个人信息
@@ -172,6 +174,10 @@ public class Detail implements EntryPoint{
 		});
 		
 		userLogout();
+		
+		replay();
+		
+		jubao();
 	}
 	
 
@@ -199,16 +205,16 @@ public class Detail implements EntryPoint{
 		comment.getCommentDetail(blogId, new AsyncCallback<List<Comment>>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				Operate.setAlert("刷新以获取评论", false);
 			}
 
 			@Override
 			public void onSuccess(List<Comment> result) {
-				// TODO Auto-generated method stub
 				Window.alert(result.toString());
 				Operate.loadComment(result, "comment-container", 0);
 				setCommentOperate();
+				jubao();
+				replay();
 			}
 		});
 	}
@@ -240,8 +246,73 @@ public class Detail implements EntryPoint{
 			public void onSuccess(boolean[] result) {
 				Element collElement = DOM.getElementById("collect");
 				Element focusElement = DOM.getElementById("focus");
+				Element forwardElement = DOM.getElementById("forward");
 				collElement.setInnerHTML(result[0] ? "已收藏" : "收藏");
-				focusElement.setInnerHTML(result[1] ?"关注" : "已关注");
+				focusElement.setInnerHTML(result[1] ?"已关注" : "关注");
+				forwardElement.setInnerHTML(result[2]?"已转发":"转发");
+			}
+		});
+	}
+	
+	public void replay() {
+		Element confirm = DOM.getElementById("replay");
+		DOM.sinkEvents(confirm, Event.ONCLICK);
+		DOM.setEventListener(confirm, new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if(DOM.eventGetType(event)==Event.ONCLICK) {
+					String content = Operate.getValue("replay-text");
+					Window.alert(content);
+					if(content.equals(null)) {
+						Operate.setAlert("评论内容不能为空", false);
+					}
+					makeComment.makeComment(huifuId, content, new AsyncCallback<Integer>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Operate.setAlert("评论失败，请重试！", false);
+						}
+
+						@Override
+						public void onSuccess(Integer result) {
+							if(result==0) {
+								Operate.setAlert("评论成功", true);
+								Operate.cleanValue("comment-text");
+								getComment(blogId);
+								Operate.cleanValue("replay-text");
+							}else {
+								Operate.setAlert("评论失败", false);
+							}
+						}
+					});
+				}
+			}
+		});
+	}
+	
+	public void jubao() {
+		Element confirmJubao = DOM.getElementById("confirmJubao");
+		DOM.sinkEvents(confirmJubao, Event.ONCLICK);
+		DOM.setEventListener(confirmJubao, new EventListener() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				if(DOM.eventGetType(event) == Event.ONCLICK) {
+					feedback.makeFeedBack(jubaoId, 0, new AsyncCallback<Integer>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							Operate.setAlert("举报失败，请重试", false);
+						}
+
+						@Override
+						public void onSuccess(Integer result) {
+							Window.alert(result+"");
+							if(result==1) {
+								Operate.setAlert("举报成功啦~我们会有管理员进行处理", true);
+							}else {
+								Operate.setAlert("举报失败，请重试", false);
+							}
+						}
+					});
+				}
 			}
 		});
 	}
@@ -280,7 +351,7 @@ public class Detail implements EntryPoint{
 				}
 			});
 		}
-		
+		//查看回复
 		for (int i = 0; i < seehuifu.getLength(); i++) {
 			DOM.sinkEvents(seehuifu.getItem(i), Event.ONCLICK);
 			DOM.setEventListener(seehuifu.getItem(i), new EventListener() {
@@ -303,6 +374,9 @@ public class Detail implements EntryPoint{
 									return;
 								}
 								Operate.loadComment(result, seehuifuId+"", 1);
+								replay();
+								jubao();
+								setCommentOperate();
 							}
 						});
 					}

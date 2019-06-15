@@ -180,7 +180,9 @@ public class Operate {
 		String aTag = "<div>\r\n" + 
 				"         <a class=\"dele\""+ "blogid=\""+ blog2.getBlogId() + "\"" +"href=\"#\">删除博客</a>\r\n" +       
 				"        </div> ";
-		String blog ="<li>"+ "<div class=\"list-container\"> " + 
+		String blog =
+				"<li>"+ 
+						"<div class=\"list-container\"> " + 
 				"        <div class=\"userinfo\"> " + 
 				"          <div class=\"left\"> " + 
 				"            <img src=\""+ "../images/user_default.jpg" + "\" alt=\"\"> " + 
@@ -197,7 +199,7 @@ public class Operate {
 				"           " + (flag == 1?aTag:"") +
 				"        </div> " + 
 				"        <div class=\"title\"><h4><a target=\"_blank\" href=\""+ "./blog-detail.html?otherid="+ blog2.getBlogId() +"\" data-id=\"" + blog2.getBlogId() +"\">"+ blog2.getTitle() +"</a></h4></div> " + 
-				"        <div class=\"summary\" id=\"summary\">"+ getContent(blog2.getContent().substring(0, 40)) +"</div> " + 
+				"        <div class=\"summary\" id=\"summary\">"+ getContent(blog2.getContent()).substring(0, 40) +"</div> " + 
 				"      </div>"+
 					"</li>";
 		return blog;

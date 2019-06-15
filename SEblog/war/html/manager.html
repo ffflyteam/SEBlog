@@ -6,13 +6,12 @@
 	<link rel="stylesheet" href="../css/manager.css">
 	<link rel="stylesheet" href="../css/materialize.css">
 </head>
-<body>
+<body id="body">
 	<div class="container">
 		<nav class="navbar-container">
 			<div class="nav-wrapper container">
 				<a href="#!" class="brand-logo">管理博客</a>
         		<ul class="right hide-on-med-and-down">
-        		  	<li><a href="manager.html">首页</a></li>
         		  	<li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">管理员：名字</a></li>
         		</ul>
 			</div>
@@ -25,7 +24,7 @@
       				<div class="collapsible-header"><span>管理文章</span></div>
       				<div class="collapsible-body">
       					<ul>
-							<li><span>管理文章</span></li>
+							<li class="operate"><span>管理文章</span></li>
 						</ul>
       				</div>
     			</li>
@@ -33,8 +32,8 @@
     			  	<div class="collapsible-header"><span>管理账号</span></div>
     			  	<div class="collapsible-body">
 						<ul>
-							<li><span>未冻结账号</span></li>
-							<li><span>已经冻结账号</span></li>
+							<li class="operate"><span>未冻结账号</span></li>
+							<li class="operate"><span>已经冻结账号</span></li>
 						</ul>
     			  	</div>
     			</li>
@@ -42,7 +41,7 @@
     			  	<div class="collapsible-header"><span>用户反馈</span></div>
     			  	<div class="collapsible-body">
 						<ul>
-							<li><span>处理用户举报内容</span></li>
+							<li class="operate"><span>处理用户举报内容</span></li>
 						</ul>
     			  	</div>
     			</li>
@@ -76,174 +75,9 @@
 			    </div>
 			</div>
 
-			<div id="user-not-froze" style="display: none;">
+			<div data-call="blog" class="tableContainer" id="article">
 				<div>
-					<input id="not-froze-input" type="text" placeholder="请输入要查询的用户ID">
-					<button class="btn waves-effect" id="not-froze-btn">查询</button>
-				</div>
-				<table class="user-table">
-					<thead>
-						<tr>
-							<th>用户ID</th>
-							<th>用户昵称</th>
-							<th>性别</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">冻结</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">冻结</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">冻结</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">冻结</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div id="user-frozen" style="display: none;">
-				<div>
-					<input id="frozen-input" type="text" placeholder="请输入要查询的用户ID">
-					<button class="btn waves-effect" id="froze-btn">查询</button>
-				</div>
-
-				<table class="user-table">
-					<thead>
-						<tr>
-							<th>用户ID</th>
-							<th>用户昵称</th>
-							<th>性别</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">解冻</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">解冻</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">解冻</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">解冻</a>
-								<a href="#"></a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div id="user-feedback">
-				<div class="c">
-					<input id="feedback-input" type="text" placeholder="请输入要查询的用户ID">
-					<button class="btn waves-effect" id="feedback-btn">查询</button>
-				</div>
-				<table id="feedback-table">
-					<thead>
-						<tr>
-							<th>评论ID</th>
-							<th>评论者</th>
-							<th>评论内容</th>
-							<th>举报者</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>评论ID</td>
-							<td>我是评论者</td>
-							<td>哈哈哈哈哈哈哈哈</td>
-							<td>举报者</td>
-							<td>
-								<a href="#">已读</a>
-								<a href="#">删除</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<!-- <div  class="c-pages" style="width: 100%;">
-				    <div class="cp-item">
-				        <span>共</span>
-				        <span id="cp-count">0</span>
-				        <span>条</span>
-				    </div>
-				    <div class="cp-item">
-				        <span id="curr-page">1</span>
-				        <span>/</span>
-				        <span id="total-page">1</span>
-				    </div>
-				    <div class="cp-item">
-				        <button id="home">首页</button>
-				        <button id="prev">上页</button>
-				        <button id="next">下页</button>
-				        <button id="last">尾页</button>
-				    </div>
-				    <div class="cp-item">
-				        <button id="goTo">转到</button>
-				        <input type="number" id="goToPage" />
-				        <span>页</span>
-				    </div>
-				</div> -->
-			</div>
-
-			<div id="article" style="display: none;">
-				<div>
-					<input id="article-input" type="text" placeholder="请输入要查询的用户ID">
+					<input id="article-input" type="text" placeholder="请输入要查询的博客id">
 					<button class="btn waves-effect" id="article-btn">查询</button>
 				</div>
 				<table id="user-ariticle">
@@ -270,8 +104,96 @@
 						</tr>
 					</tbody>
 				</table>
-
 			</div>
+
+			<div data-call="user" class="tableContainer" id="user-not-froze" style="display: none;">
+				<div>
+					<input id="not-froze-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="not-froze-btn">查询</button>
+				</div>
+				<table class="user-table">
+					<thead>
+						<tr>
+							<th>用户ID</th>
+							<th>用户昵称</th>
+							<th>性别</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">冻结</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div data-call="user-frozen" class="tableContainer" id="user-frozen" style="display: none;">
+				<div>
+					<input id="frozen-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="froze-btn">查询</button>
+				</div>
+
+				<table class="user-table">
+					<thead>
+						<tr>
+							<th>用户ID</th>
+							<th>用户昵称</th>
+							<th>性别</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>123456</td>
+							<td>用户1</td>
+							<td>男</td>
+							<td>
+								<a href="#">解冻</a>
+								<a href="#"></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div data-call="feed" class="tableContainer" id="user-feedback" style="display: none;">
+				<div class="c">
+					<input id="feedback-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="feedback-btn">查询</button>
+				</div>
+				<table id="feedback-table">
+					<thead>
+						<tr>
+							<th>评论ID</th>
+							<th>评论者</th>
+							<th>评论内容</th>
+							<th>举报者</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="feedback-table-body">
+						<tr>
+							<td>评论ID</td>
+							<td>我是评论者</td>
+							<td>哈哈哈哈哈哈哈哈</td>
+							<td>举报者</td>
+							<td>
+								<a href="#">已读</a>
+								<a href="#">删除</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			
 		</div>
 	</div>
 	
@@ -281,6 +203,7 @@
   	</ul>
 
 
+	<script src="../manager/manager.nocache.js"></script>
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/materialize.min.js"></script>
 	<script src="../js/manager.js"></script>
