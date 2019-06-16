@@ -190,12 +190,6 @@ public class UserBlog implements EntryPoint {
 						Operate.setAlert("性别只能填写男和女", false);
 						return;
 					}
-//					Window.alert(user.toString());
-//					user.setUserName(username);
-//					user.setAddress(address);
-//					Date birthDate = new Date(birthday);
-//					user.setBirthDay(birthDate);
-//					user.setSex(Short.valueOf(sex));
 					JSONObject us = new JSONObject();
 					us.put("nickName", new JSONString(username));
 					us.put("password", new JSONString(user.getPassword()));
@@ -338,13 +332,14 @@ public class UserBlog implements EntryPoint {
 							@Override
 							public void onSuccess(Integer result) {
 								Operate.setAlert("操作成功！", true);
-								getMyBlog();
+								Window.Location.reload();
 							}
 							@Override
 							public void onFailure(Throwable caught) {
 								Operate.setAlert("取消关注失败，请重试！", false);
 							}
 						});
+						Window.alert("1111");
 					}
 				}
 			});

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.jdt.internal.compiler.ast.ReferenceExpression;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
@@ -152,18 +154,47 @@ public class Operate {
 	}
 
 	private static String AddFeedBackHelper(FeedBack feedBack) {
+		if(feedBack.getReadFlag()==1)
+			return "";
 		String content = 
-				"<tr>\r\n" + 
+				"<tr commentid=\""+feedBack.getObjectId()+"\" feedbackid=\""+ feedBack.getFeedBackId() +"\">\r\n" + 
 				"	<td>"+ feedBack.getObjectId() +"</td>\r\n" + 
-				"	<td>" +"</td>\r\n" + 
+				"	<td>评论者</td>\r\n" + 
 				"	<td>哈哈哈哈哈哈哈哈</td>\r\n" + 
-				"	<td>举报者</td>\r\n" + 
+				"	<td><a href=\"./other.html?otherid="+ feedBack.getUserId() + "\" target=\"_blank\">"+feedBack.getUserId()+"</a></td>\r\n" + 
 				"	<td>\r\n" + 
-				"		<a href=\"#\">已读</a>\r\n" + 
-				"		<a href=\"#\">删除</a>\r\n" + 
+				"		<a class=\"setRead\" href=\"#\">已读</a>\r\n" + 
+				"		<a class=\"delecomment\" href=\"#\">删除</a>\r\n" + 
 				"	</td>\r\n" + 
 				"</tr>";
 		return content;
+	}
+
+	public static void addBlog(Blog result) {
+		String content =
+				"<tr>\r\n" + 
+				"	<td>"+ result.getBlogId() +"</td>\r\n" + 
+				"	<td><a target=\"_blank\" href=\"./other.html?ohterid="+ result.getUser().getAccountId() +"\">"+ result.getUser().getAccountId() +"</td>\r\n" + 
+				"	<td><a target=\"_blank\" href=\"./blog-detail.html?id="+ result.getBlogId() +"\">"+ result.getTitle() +"</a></td>\r\n" + 
+				"	<td>"+ result.getPublishDateTime() +"</td>\r\n" + 
+				"	<td>"+ result.getTransfersNum() +"</td>\r\n" + 
+				"	<td>"+ result.getCollectsNum() +"</td>\r\n" + 
+				"	<td><a blogid=\"" + result.getBlogId() + "\" id=\"deleblog\" href=\"#\">删除</a></td>\r\n" + 
+				"</tr>";
+		DOM.getElementById("user-ariticle-body").setInnerHTML(content);
+	}
+
+	public static void addUser(User result) {
+		String content = 
+				"<tr>\r\n" + 
+				"	<td>"+ result.getAccountId() +"</td>\r\n" + 
+				"	<td><a href=\"./other.html?otherid="+ result.getAccountId() + "\" target=\"_blank\">"+ result.getUserName() +"</td>\r\n" + 
+				"	<td>"+ (result.getSex()==0?"女":"男")+"</td>\r\n" + 
+				"	<td>\r\n" + 
+				"		<a id=\"operate\" href=\"#\">"+ (result.getStat()==0?"冻结":"解冻") +"</a>\r\n" + 
+				"	</td>\r\n" + 
+				"</tr>";
+		DOM.getElementById("user-table-body").setInnerHTML(content);
 	}
 	
 	

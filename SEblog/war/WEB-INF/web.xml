@@ -436,7 +436,7 @@
   		<!-- 将反馈标为已读 -->
   <servlet>
   	<servlet-name>managersetReadFlagServlet</servlet-name>
-  	<servlet-class>com.manager.server.GetUserFeedBackServiceImpl</servlet-class>
+  	<servlet-class>com.manager.server.SetFeedBackReadFlagServiceImpl</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>managersetReadFlagServlet</servlet-name>

@@ -210,7 +210,6 @@ public class Detail implements EntryPoint{
 
 			@Override
 			public void onSuccess(List<Comment> result) {
-				Window.alert(result.toString());
 				Operate.loadComment(result, "comment-container", 0);
 				setCommentOperate();
 				jubao();
@@ -262,7 +261,6 @@ public class Detail implements EntryPoint{
 			public void onBrowserEvent(Event event) {
 				if(DOM.eventGetType(event)==Event.ONCLICK) {
 					String content = Operate.getValue("replay-text");
-					Window.alert(content);
 					if(content.equals(null)) {
 						Operate.setAlert("评论内容不能为空", false);
 					}
@@ -304,7 +302,6 @@ public class Detail implements EntryPoint{
 
 						@Override
 						public void onSuccess(Integer result) {
-							Window.alert(result+"");
 							if(result==1) {
 								Operate.setAlert("举报成功啦~我们会有管理员进行处理", true);
 							}else {
@@ -346,7 +343,6 @@ public class Detail implements EntryPoint{
 						String id = event.getCurrentTarget().getParentElement().getParentElement()
 						.getParentElement().getParentElement().getId();
 						huifuId = Integer.valueOf(id);
-						Window.alert("回复"+id);
 					}
 				}
 			});
@@ -361,7 +357,6 @@ public class Detail implements EntryPoint{
 						String id = event.getCurrentTarget().getParentElement().getParentElement()
 						.getParentElement().getParentElement().getId();
 						seehuifuId = Integer.valueOf(id);
-						Window.alert("see"+id);
 						comment.getCommentDetail(seehuifuId, new AsyncCallback<List<Comment>>() {
 							@Override
 							public void onFailure(Throwable caught) {

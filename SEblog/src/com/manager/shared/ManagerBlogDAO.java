@@ -21,7 +21,9 @@ public class ManagerBlogDAO {
 			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentsNum FROM comments GROUP BY ObjectId) AS D ON D.ObjectId = A.BlogId "
 			+ "ORDER BY PublishDateTime DESC";
 	private static final String SELECT_ALL_COMMENTS = "SELECT * FROM `comments` WHERE ObjectId = ? ORDER BY LikeNum DESC";
-	private static final String SELECT_COMMENT_BY_ID = "SELECT * FROM `comments` WHERE CommentId = ?";
+	private static final String SELECT_COMMENT_BY_ID = "SELECT CommentId,UserId,A.ObjectId,CommentDateTime,Content,LikeNum,CommentNum FROM "
+			+ "(SELECT CommentId,UserId,ObjectId,CommentDateTime,Content,LikeNum FROM `comments` WHERE CommentId = ?) AS A "
+			+ "LEFT JOIN (SELECT ObjectId,COUNT(*) AS CommentNum FROM comments GROUP BY ObjectId) AS B ON B.ObjectId = A.CommentId";
 	public static final ManagerBlogDAO instance = new ManagerBlogDAO();
 	
 	private static final ConcurrentHashMap<Integer, Blog> blogSecondDAO = new ConcurrentHashMap<>();
@@ -100,9 +102,13 @@ public class ManagerBlogDAO {
 		}
 		ResultSet rs = DBConnection.instance.executeCommand(SELECT_COMMENT_BY_ID, new Object[] {commentId});
 		try {
-			User user = ManagerIndexDAO.instance.getUserInfo(rs.getInt("UserId"));
-			Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"));
-			return comment;
+			if(rs.next()) {
+				User user = ManagerIndexDAO.instance.getUserInfo(rs.getInt("UserId"));
+				Comment comment = new Comment(rs.getInt("CommentId"), rs.getInt("ObjectId"), user, rs.getDate("CommentDateTime"), rs.getString("Content"), rs.getInt("CommentNum"));
+				return comment;
+			}else {
+				return null;
+			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 			return null;

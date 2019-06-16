@@ -1,8 +1,10 @@
 package com.manager.client;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FeedBack {
+public class FeedBack implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int feedBackId;
 	private int objectId;
 	private int userId;

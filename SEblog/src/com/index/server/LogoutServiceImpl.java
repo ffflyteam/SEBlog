@@ -1,7 +1,7 @@
 package com.index.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.user.client.LogoutService;
+import com.index.client.LogoutService;
 
 @SuppressWarnings("serial")
 public class LogoutServiceImpl extends RemoteServiceServlet implements LogoutService{

@@ -9,12 +9,7 @@ import com.manager.shared.ManagerIndexDAO;
 public class UserInfoServiceImpl extends RemoteServiceServlet implements UserInfoService{
 
 	@Override
-	public User getUserInfo() {
-		Object id;
-		if((id = this.getThreadLocalRequest().getSession().getAttribute("accountId")) == null) {
-			return null;
-		}
-		int accountId = Integer.parseInt((String) id);
+	public User getUserInfo(int accountId) {
 		User user = ManagerIndexDAO.instance.getUserInfo(accountId);
 		return user;
 	}

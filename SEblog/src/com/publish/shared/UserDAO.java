@@ -17,6 +17,7 @@ import com.publish.client.Message;
 import com.publish.client.User;
 
 
+
 public class UserDAO {
 	//�û���Ϣ
 	private static final String INSERT_USER_INFO = "INSERT INTO `user_info` VALUES(?,?,?,?,?,?,0)";

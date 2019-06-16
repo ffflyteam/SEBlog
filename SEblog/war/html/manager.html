@@ -11,9 +11,9 @@
 		<nav class="navbar-container">
 			<div class="nav-wrapper container">
 				<a href="#!" class="brand-logo">管理博客</a>
-        		<ul class="right hide-on-med-and-down">
-        		  	<li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">管理员：名字</a></li>
-        		</ul>
+        		<!-- <ul class="right hide-on-med-and-down">
+        		  	<li id="us"><a class='dropdown-button' href='#' data-activates='dropdown1' id="name">管理员</a></li>
+        		</ul> -->
 			</div>
 		</nav>
 
@@ -32,8 +32,7 @@
     			  	<div class="collapsible-header"><span>管理账号</span></div>
     			  	<div class="collapsible-body">
 						<ul>
-							<li class="operate"><span>未冻结账号</span></li>
-							<li class="operate"><span>已经冻结账号</span></li>
+							<li class="operate"><span>管理用户账号</span></li>
 						</ul>
     			  	</div>
     			</li>
@@ -51,7 +50,7 @@
 		<!-- 操作内容 -->
 		<div class="content-container">
 
-			<div  class="c-pages" style="width: 100%;">
+			<!-- <div  class="c-pages" style="width: 100%;">
 			    <div class="cp-item">
 			        <span>共</span>
 			        <span id="cp-count">0</span>
@@ -73,7 +72,7 @@
 			        <input type="number" id="goToPage" />
 			        <span>页</span>
 			    </div>
-			</div>
+			</div> -->
 
 			<div data-call="blog" class="tableContainer" id="article">
 				<div>
@@ -84,7 +83,7 @@
 					<thead>
 						<tr>
 							<th>文章ID</th>
-							<th>文章作者</th>
+							<th>作者ID</th>
 							<th>文章标题</th>
 							<th>发表时间</th>
 							<th>转载量</th>
@@ -92,24 +91,16 @@
 							<th>操作</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><a href="#">123321</a></td>
-							<td>用户ID</td>
-							<td>第一个博客</td>
-							<td>2016-10-12 12:00:00</td>
-							<td>1000</td>
-							<td>10000</td>
-							<td><a href="#">删除</a></td>
-						</tr>
+					<tbody id="user-ariticle-body">
+						
 					</tbody>
 				</table>
 			</div>
 
 			<div data-call="user" class="tableContainer" id="user-not-froze" style="display: none;">
 				<div>
-					<input id="not-froze-input" type="text" placeholder="请输入要查询的用户ID">
-					<button class="btn waves-effect" id="not-froze-btn">查询</button>
+					<input id="user-input" type="text" placeholder="请输入要查询的用户ID">
+					<button class="btn waves-effect" id="userSearch-btn">查询</button>
 				</div>
 				<table class="user-table">
 					<thead>
@@ -120,21 +111,13 @@
 							<th>操作</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>123456</td>
-							<td>用户1</td>
-							<td>男</td>
-							<td>
-								<a href="#">冻结</a>
-								<a href="#"></a>
-							</td>
-						</tr>
+					<tbody id="user-table-body">
+						
 					</tbody>
 				</table>
 			</div>
 
-			<div data-call="user-frozen" class="tableContainer" id="user-frozen" style="display: none;">
+<!-- 			<div data-call="user-frozen" class="tableContainer" id="user-frozen" style="display: none;">
 				<div>
 					<input id="frozen-input" type="text" placeholder="请输入要查询的用户ID">
 					<button class="btn waves-effect" id="froze-btn">查询</button>
@@ -161,13 +144,10 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</div> -->
 
 			<div data-call="feed" class="tableContainer" id="user-feedback" style="display: none;">
-				<div class="c">
-					<input id="feedback-input" type="text" placeholder="请输入要查询的用户ID">
-					<button class="btn waves-effect" id="feedback-btn">查询</button>
-				</div>
+				
 				<table id="feedback-table">
 					<thead>
 						<tr>

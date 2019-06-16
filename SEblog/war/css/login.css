@@ -1,26 +1,46 @@
 * {
 	padding: 0;
 	margin: 0;
+	font-size: 16px;
 }
 body#body {
-	background: url(../images/login.jpg) no-repeat;
+	background-color: rgb(240,240,240);
 }
 .container {
 	width: 432px;
-	border: 1px solid black;
+	border: 1px solid #ccc;
 	overflow: hidden;
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
+	position: absolute;
+	top: 10%;
+	left: 50%;
+	margin-left: -216px;
 }
+.container a {
+	display: block;
+	color: orange;
+	border: 1px solid orange;
+	text-align: center;
+	height: 40px;
+	font-size: 18px;
+	line-height: 40px;
+}
+.container a:hover {
+	cursor: pointer;
+	color: #fff;
+	background-color: orange;
+}
+
 .container label {
 	font-size: 14px;
 }
 #select-container {
 	height: 50px;
 	text-align: center;
-	background-color: red;
-	border-bottom: 1px solid black;
+	/*background-color: red;*/
+	border-bottom: 1px solid #ccc;
 	/*margin-top: 10px;*/
 }
 #select-container span {
@@ -30,16 +50,20 @@ body#body {
 	line-height: 50px;
 	cursor: pointer;
 }
+#select-container span:hover {
+	background-color: orange;
+	color: #fff;
+}
 /*设置选中标签的样式*/
 .invisible {
 	display: none;
 }
 .selected {
-	background-color: #666;
-
+	background-color: orange;
+	color: #fff;
 }
 #select-login {
-	border-right: 1px solid black;
+	border-right: 1px solid #ccc;
 }
 
 

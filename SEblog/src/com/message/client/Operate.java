@@ -182,7 +182,6 @@ public class Operate {
 	
 	public static native NodeList<Element> getChildren(String id)
 	/*-{
-		console.log($doc.getElementById(id).children);
 	  	return $doc.getElementById(id).children;
 	}-*/;
 }

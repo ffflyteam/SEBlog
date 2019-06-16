@@ -92,7 +92,6 @@ public class Login implements EntryPoint {
 					info.put("accountId", userName);
 					info.put("password",passWord);
 					String form = info.toString();
-					Window.alert(form);
 					loginService.login(form, new AsyncCallback<int []>() {
 
 						@Override
@@ -103,7 +102,7 @@ public class Login implements EntryPoint {
 						public void onSuccess(int[] result) {
 							String desc;
 							if(result[0] == 0) {
-								if(result[1]==0) {
+								if(username!="12") {
 									Window.open("./index.html","_self", null);
 								}
 								else {
@@ -166,7 +165,6 @@ public class Login implements EntryPoint {
 						@Override
 						public void onSuccess(Integer result) {
 							// TODO Auto-generated method stub
-							Window.alert(result.toString());
 							if(result == 0) {
 								Operate.setAlert("注册成功，请登录", true);
 								Window.Location.reload();

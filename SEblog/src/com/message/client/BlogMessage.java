@@ -12,6 +12,8 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import sun.applet.resources.MsgAppletViewer;
+
 public class BlogMessage implements EntryPoint {
 	
 	public User user;
@@ -25,11 +27,10 @@ public class BlogMessage implements EntryPoint {
 	private final DeleteMessageServiceAsync delemess = GWT.create(DeleteMessageService.class);
 	
 	public void onModuleLoad() {
+		setMessageListSwtich();
 		getUserInfo();
 		
 		getAllMessage();
-		
-		setMessageListSwtich();
 		
 		userLogout();
 	}
@@ -60,6 +61,7 @@ public class BlogMessage implements EntryPoint {
 			}
 			@Override
 			public void onSuccess(List<Message> result) {
+				Window.alert("获取消息");
 				Operate.addMessage(result);
 				setReadAndDeleteClick();
 			}

@@ -49,12 +49,10 @@ public class Index implements EntryPoint{
 			@Override
 			public void onFailure(Throwable caught) {
 				Operate.setAlert("请刷新页面获取热门博客", false);
-				Window.alert("aaa");
 			}
 
 			@Override
 			public void onSuccess(Map<Integer, List<Blog>> result) {
-				Window.alert(result.toString());
 				Operate.addArticle(result,0);
 			}
 			
@@ -78,7 +76,6 @@ public class Index implements EntryPoint{
 						aTargetElement.addClassName("selected");
 						String type = aTargetElement.getParentElement().getAttribute("type");
 						final int typeNum = Integer.valueOf(type);
-						Window.alert(type);
 						article.index(new AsyncCallback<Map<Integer,List<Blog>>>() {
 
 							@Override
